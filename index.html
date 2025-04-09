@@ -5,6 +5,26 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>The Legend of Zelda: Link's Awakening</title>
+	<style>
+		 /* Center the canvas in the window */
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			height: 100vh; /* Full viewport height */
+			background-color: black; /* Optional: Set a background color */
+			overflow: hidden; /* Prevent scrollbars */
+		}
+
+		/* Scale the canvas while preserving the aspect ratio */
+		canvas {
+			width: 800px; /* Scaled width */
+			height: 720px; /* Scaled height */
+			image-rendering: pixelated; /* Ensure pixelated scaling */
+			image-rendering: crisp-edges; /* Fallback for some browsers */
+		}
+	</style>
 </head>
 
 <body>
@@ -13,9 +33,8 @@
 	<!-- <h1> The Legend of Zelda: Link's Awakening </h1> -->
 
 	<!-- Canvas -->
-	<canvas id="game-layer" width="160" height="144" style="width: 30%; height: 30%;"></canvas>
+	<canvas id="game-layer" width="160" height="144"></canvas>
 
-	
 	<!-- All classes -->
 	<script src="texture.js"></script>
 	<script src="sprite.js"></script>

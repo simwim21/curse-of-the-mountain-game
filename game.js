@@ -8,7 +8,6 @@ var previousTimestamp;
 var keyboard = [];
 var interacted;
 
-
 // Control keyboard events
 
 function keyDown(keycode)

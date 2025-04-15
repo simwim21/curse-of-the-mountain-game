@@ -1,4 +1,7 @@
-
+LEFT = 0;
+RIGHT = 1;
+UP = 2;
+DOWN = 3;
 // Sprite. Draws a sprite using the current keyframe of a selected animation.
 
 function Sprite(x, y, width, height, fps, spritesheet)

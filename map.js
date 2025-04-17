@@ -7,6 +7,9 @@ function Map()
 
     this.tilesetImage = new Image();
     this.currentLevelIndex = 0;
+
+    this.loaded = false;
+
 }
 
 Map.prototype.loadMapData = function (mapPath) {
@@ -17,6 +20,7 @@ Map.prototype.loadMapData = function (mapPath) {
             this.renderLevel(0); // Render the level after loading the map data
         })
         .catch(error => console.error('Error loading map:', error));
+
 };
 
 Map.prototype.renderLevel = function (levelIndex) {
@@ -64,6 +68,8 @@ Map.prototype.renderLevel = function (levelIndex) {
     this.tilesetImage.onload = () => {
         console.log('Tileset image loaded.');
     };
+
+    this.loaded = true;
 };
 
 Map.prototype.renderTiles = function () {
@@ -121,6 +127,8 @@ Map.prototype.renderTiles = function () {
 };
 
 Map.prototype.isBlocked = function(pixelX, pixelY) {
+
+    if (!this.loaded) return true; // No collision data available
 
     const minX = pixelX;
     const minY = pixelY;

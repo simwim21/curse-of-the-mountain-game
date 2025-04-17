@@ -14,6 +14,9 @@ function Scene()
 
 	this.buzzblob = new Buzzblob(50, 50, 16, 16, 7, this.levelManager);
 	this.buzzblob.loadAnimations();
+
+	this.firepit = new Firepit(16, 16, 16, 16, 7, this.levelManager);
+	this.firepit.loadAnimations();
 	
 	// Store current time
 	this.currentTime = 0
@@ -22,6 +25,12 @@ function Scene()
 
 Scene.prototype.update = function(deltaTime)
 {
+
+	if (window.paused) {
+		console.log("Game is paused. No updates will occur.");
+		return;
+	}
+
 	// Keep track of time
 	this.currentTime += deltaTime;
 	
@@ -34,6 +43,8 @@ Scene.prototype.update = function(deltaTime)
 
 	// Update sprites
 	this.link.linkSprite.update(deltaTime);
+	this.link.swordSprite.update(deltaTime);
+	this.firepit.FirepitSprite.update(deltaTime * 0.5);
 	this.buzzblob.BuzzblobSprite.update(deltaTime * 0.5);
 }
 
@@ -50,10 +61,13 @@ Scene.prototype.draw = function ()
 	// Tiles Rendering
 	this.map.renderTiles();
 
-	// Draw link sprite
+	// Draw sprites
+	this.firepit.FirepitSprite.draw();
 	this.buzzblob.BuzzblobSprite.draw();
-	this.link.linkSprite.draw();
 
-	console.log("Link X: " + this.link.linkSprite.x + " Link Y: " + this.link.linkSprite.y);
+	// Draw Link
+	this.link.linkSprite.draw();
+	this.link.swordSprite.draw();
+
 }
 

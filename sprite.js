@@ -19,6 +19,8 @@ function Sprite(x, y, width, height, fps, spritesheet)
 	this.timeInKeyframe = 0;
 	
 	this.spritesheet = spritesheet
+
+    this.visible = true;
 }
 
 
@@ -38,12 +40,16 @@ Sprite.prototype.numAnimation = function ()
 	return this.animations.length;
 }
 
+Sprite.prototype.setVisibility = function (visible) {
+    this.visible = visible;
+}
+
 // Add a keyframe to animation animationId. Keyframe must be an array [sx, sy, sWidth, sHieght]
 // that defines the rectangle of the keyframe inside the spritesheet
 // (sx, sy) = Minimum coordinates of the rectangle
 // (sWidth, sHeight) = Size of rectangle
 
-Sprite.prototype.addKeyframe = function (animationIndex, frameData, mirrored = false) {
+Sprite.prototype.addKeyframe = function (animationIndex, frameData, mirrored = false, offsetX = 0, offsetY = 0) {
     let [sx, sy, sw, sh] = frameData;
 
     if (animationIndex >= 0 && animationIndex < this.animations.length) {
@@ -52,7 +58,9 @@ Sprite.prototype.addKeyframe = function (animationIndex, frameData, mirrored = f
             sy: sy,
             sw: sw,
             sh: sh,
-            mirrored: mirrored
+            mirrored: mirrored,
+            ox: offsetX,
+            oy: offsetY
         });
     }
 };
@@ -91,6 +99,11 @@ Sprite.prototype.update = function(deltaTime)
 Sprite.prototype.draw = function ()
 {
     // Check that current animation & keyframe ids are valid
+
+    if (!this.visible) {
+        return;
+    }
+
     if (this.currentAnimation >= this.animations.length)
         return;
     if (this.currentKeyframe >= this.animations[this.currentAnimation].length)
@@ -104,7 +117,7 @@ Sprite.prototype.draw = function ()
 
     // Get current keyframe
     var keyframe = this.animations[this.currentAnimation][this.currentKeyframe];
-    var { sx, sy, sw, sh, mirrored } = keyframe;
+    var { sx, sy, sw, sh, mirrored, ox, oy } = keyframe;
 
     context.save();
 
@@ -112,11 +125,11 @@ Sprite.prototype.draw = function ()
         context.scale(-1, 1); // Flip horizontally
         context.drawImage(this.spritesheet.img,
                           sx, sy, sw, sh,
-                          -this.x - this.width, this.y, this.width, this.height);
+                          -this.x - sw + ox, this.y + oy, sw, sh);
     } else {
         context.drawImage(this.spritesheet.img,
                           sx, sy, sw, sh,
-                          this.x, this.y, this.width, this.height);
+                          this.x + ox, this.y + oy, sw, sh);
     }
 
     context.restore();

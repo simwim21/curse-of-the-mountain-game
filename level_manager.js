@@ -1,5 +1,4 @@
 
-
 function LevelManager(map) {
     this.map = map;
     this.dynamicEntities = []; // player, enemies, etc.
@@ -7,32 +6,25 @@ function LevelManager(map) {
     this.levelList = [];
 }
 
-LevelManager.prototype.levelInitializer = function() 
+LevelManager.prototype.levelInitializer = function() // Sets the logic which level is next to which level
 {
-    this.levelList.push(new Level(0, 1, -1, 2, -1)); // Level 0 => Left=1, Up=2
-    this.levelList.push(new Level(1, -1, 0, -1, -1)); // Level 1 => Right=0
-    this.levelList.push(new Level(2, -1, -1, -1, 0)); // Level 2 => Down=0
+    this.levelList.push(new Level(0, 1, -1, 2, -1, this.map)); // Level 0 => Left=1, Up=2
+    this.levelList.push(new Level(1, -1, 0, -1, -1, this.map)); // Level 1 => Right=0
+    this.levelList.push(new Level(2, -1, -1, -1, 0, this.map)); // Level 2 => Down=0
 }
 
 LevelManager.prototype.addEntity = function(entity) {
     this.dynamicEntities.push(entity);
 };
 
-LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
-    const tileX = Math.floor(x / this.map.gridSize);
-    const tileY = Math.floor(y / this.map.gridSize);
+LevelManager.prototype.loadLevel = function() {
+    
+}
 
-    // Check map collisions
-    if (this.map.isBlocked(x, y)) return true;
+LevelManager.prototype.drawDynamicEntities = function() {
 
-    // Check other entities (except self)
-    for (let entity of this.dynamicEntities) {
-        if (entity === requestingEntity) continue;
-        if (entity.x === x && entity.y === y) return true; // refine this with bounding box
-    }
+}
 
-    return false;
-};
 
 LevelManager.prototype.changeLevel = function(x, y)
 {
@@ -63,7 +55,21 @@ LevelManager.prototype.changeLevel = function(x, y)
         return;  
     }
 
-
-
-
 }
+
+// Collision Handling
+LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
+    const tileX = Math.floor(x / this.map.gridSize);
+    const tileY = Math.floor(y / this.map.gridSize);
+
+    // Check map collisions
+    if (this.map.isBlocked(x, y)) return true;
+
+    // Check other entities (except self)
+    for (let entity of this.dynamicEntities) {
+        if (entity === requestingEntity) continue;
+        if (entity.x === x && entity.y === y) return true; // refine this with bounding box
+    }
+
+    return false;
+};

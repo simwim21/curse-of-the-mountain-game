@@ -3,15 +3,32 @@ const LINK_STAND_LEFT = 0;
 const LINK_STAND_RIGHT = 1;
 const LINK_STAND_DOWN = 2;
 const LINK_STAND_UP = 3;
+
 const LINK_WALK_LEFT = 4;
 const LINK_WALK_RIGHT = 5;
 const LINK_WALK_DOWN = 6;
 const LINK_WALK_UP = 7;
-const LINK_SWING_LEFT = 9;
-const LINK_SWING_RIGHT = 10;
-const LINK_SWING_DOWN = 11;
-const LINK_SWING_UP = 12;
-const LINK_FALLING = 13;
+
+const LINK_SWING_LEFT = 8;
+const LINK_SWING_RIGHT = 9;
+const LINK_SWING_DOWN = 10;
+const LINK_SWING_UP = 11;
+
+const LINK_FALLING = 12;
+
+
+
+const SWORD_SWING_LEFT = 0;
+const SWORD_LEFT = 1
+
+const SWORD_SWING_RIGHT = 2;
+const SWORD_RIGHT = 3;
+
+const SWORD_SWING_DOWN = 4;
+const SWORD_DOWN = 5;
+
+const SWORD_SWING_UP = 6;
+const SWORD_UP = 7;
 
 
 // Link. Draws Link using the current keyframe of a selected animation.
@@ -20,9 +37,13 @@ function Link(x, y, width, height, fps, world)
 {
     this.texture = new Texture("images/sprites/link.png");
     this.linkSprite = new Sprite(x, y, width, height, fps, this.texture);
+	this.swordSprite = new Sprite(x, y, width, height, fps, this.texture);
 
 	this.levelManager = world;
 	this.levelManager.addEntity(this);
+
+	this.runningAnimation = false;
+	this.runningAnimationCouter = 0;
 
 }
 
@@ -51,11 +72,11 @@ Link.prototype.loadAnimations = function()
 
 	this.linkSprite.addAnimation();
 	this.linkSprite.addKeyframe(LINK_WALK_DOWN, [1, 11, 16, 16]);
-	this.linkSprite.addKeyframe(LINK_WALK_DOWN, [1, 11, 16, 16], true); // TODO: MIRROR
+	this.linkSprite.addKeyframe(LINK_WALK_DOWN, [1, 11, 16, 16], true);
 
 	this.linkSprite.addAnimation();
 	this.linkSprite.addKeyframe(LINK_WALK_UP, [18, 11, 16, 16]);
-	this.linkSprite.addKeyframe(LINK_WALK_UP, [18, 11, 16, 16], true); // TODO: MIRROR
+	this.linkSprite.addKeyframe(LINK_WALK_UP, [18, 11, 16, 16], true);
 
 	this.linkSprite.addAnimation();
 	this.linkSprite.addKeyframe(LINK_SWING_LEFT, [169, 137, 16, 16]);
@@ -67,18 +88,98 @@ Link.prototype.loadAnimations = function()
 	this.linkSprite.addKeyframe(LINK_SWING_RIGHT, [199, 137, 16, 16], true);
 	this.linkSprite.addKeyframe(LINK_SWING_RIGHT, [232, 137, 16, 16], true);
 
-	// this.linkSprite.addAnimation();
-	// this.linkSprite.addKeyframe(LINK_FALLING, [253, 121, 16, 16]);
-	// this.linkSprite.addKeyframe(LINK_FALLING, [270, 121, 16, 16], true);
-	// this.linkSprite.addKeyframe(LINK_FALLING, [287, 121, 16, 16]);
+	this.linkSprite.addAnimation();
+	this.linkSprite.addKeyframe(LINK_SWING_DOWN, [17, 121, 16, 16]);
+	this.linkSprite.addKeyframe(LINK_SWING_DOWN, [47, 121, 16, 16]);
+	this.linkSprite.addKeyframe(LINK_SWING_DOWN, [64, 121, 16, 16]);
 
-    this.linkSprite.setAnimation(LINK_STAND_LEFT);
+	this.linkSprite.addAnimation();
+	this.linkSprite.addKeyframe(LINK_SWING_UP, [85, 137, 16, 16]);
+	this.linkSprite.addKeyframe(LINK_SWING_UP, [118, 137, 16, 16]);
+	this.linkSprite.addKeyframe(LINK_SWING_UP, [148, 137, 16, 16]);
+
+	this.linkSprite.setAnimation(LINK_STAND_LEFT);
+
+
+	// SWORD ANIMATIONS
+	this.swordSprite.visible = false;
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_SWING_LEFT, [169, 121, 8, 16], false, 0, -16);
+	this.swordSprite.addKeyframe(SWORD_SWING_LEFT, [186, 124, 16, 16], false, -13, -13);
+	this.swordSprite.addKeyframe(SWORD_SWING_LEFT, [216, 137, 16, 16], false, -16, 0);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_LEFT, [216, 137, 16, 16], false, -16, 0);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_SWING_RIGHT, [169, 121, 8, 16], false, 8, -16);
+	this.swordSprite.addKeyframe(SWORD_SWING_RIGHT, [186, 124, 16, 16], true, -13, -13);
+	this.swordSprite.addKeyframe(SWORD_SWING_RIGHT, [216, 137, 16, 16], true, -16, 0);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_RIGHT, [216, 137, 16, 16], true, -16, 0);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_SWING_DOWN, [1, 121, 16, 16], false, -13, 0);
+	this.swordSprite.addKeyframe(SWORD_SWING_DOWN, [34, 134, 16, 16], false, -13, 15);
+	this.swordSprite.addKeyframe(SWORD_SWING_DOWN, [72, 137, 8, 16], false, 8, 16);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_DOWN, [72, 137, 8, 16], false, 8, 16);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_SWING_UP, [101, 129, 16, 16], false, 16, -5);
+	this.swordSprite.addKeyframe(SWORD_SWING_UP, [131, 124, 16, 16], false, 13, -13);
+	this.swordSprite.addKeyframe(SWORD_SWING_UP, [148, 121, 8, 16], false, 0, -16);
+
+	this.swordSprite.addAnimation();
+	this.swordSprite.addKeyframe(SWORD_UP, [148, 121, 8, 16], false, 0, -16);
+
+
+
 
 
 }
 
 Link.prototype.updateAnimation = function()
-{
+{	
+	if (!this.runningAnimation) {
+		this.swordSprite.setVisibility(false);
+	}
+	if (this.runningAnimation) {
+		if (this.linkSprite.currentKeyframe >= this.linkSprite.animations[this.linkSprite.currentAnimation].length - 1 ) {
+			this.swordSprite.setVisibility(false);
+			setTimeout(() => {
+				this.runningAnimation = false;
+			}, 300);
+			
+			if (this.linkSprite.currentAnimation == LINK_SWING_LEFT) {
+				this.linkSprite.setAnimation(LINK_STAND_LEFT);
+				this.swordSprite.setAnimation(SWORD_LEFT);
+			}
+			else if (this.linkSprite.currentAnimation == LINK_SWING_RIGHT) {
+				this.linkSprite.setAnimation(LINK_STAND_RIGHT);
+				this.swordSprite.setAnimation(SWORD_RIGHT);
+			}
+			else if (this.linkSprite.currentAnimation == LINK_SWING_DOWN) {
+				this.linkSprite.setAnimation(LINK_STAND_DOWN);
+				this.swordSprite.setAnimation(SWORD_DOWN);
+			}
+			else if (this.linkSprite.currentAnimation == LINK_SWING_UP) {
+				this.linkSprite.setAnimation(LINK_STAND_UP);
+				this.swordSprite.setAnimation(SWORD_UP);
+			}
+		}
+		return;
+	}
+
+	if (keyboard[89] && !this.runningAnimation) {
+		this.swordSwing();
+		this.swordSprite.visible = true;
+		return;
+	}
+	
     // Move Link sprite
 	if(keyboard[37] && !this.levelManager.isCollision(this.linkSprite.x -1, this.linkSprite.y +0, this)) // KEY_LEFT
 	{
@@ -109,7 +210,7 @@ Link.prototype.updateAnimation = function()
 			this.linkSprite.y += 1;
 	}
     
-	else
+	else if (!this.runningAnimation)
 	{
 		if(this.linkSprite.currentAnimation == LINK_WALK_LEFT)
 			this.linkSprite.setAnimation(LINK_STAND_LEFT);
@@ -121,9 +222,58 @@ Link.prototype.updateAnimation = function()
 			this.linkSprite.setAnimation(LINK_STAND_DOWN);
 	}
 
-	
-
 	this.checkChangeLevel();
+}
+
+Link.prototype.swordSwing = function() {
+
+	this.swordSprite.x = this.linkSprite.x;
+	this.swordSprite.y = this.linkSprite.y;
+
+	this.runningAnimation = true;
+	if (this.linkSprite.currentAnimation == LINK_WALK_LEFT || this.linkSprite.currentAnimation == LINK_STAND_LEFT) {
+		this.linkSprite.setAnimation(LINK_SWING_LEFT);
+		this.swordSprite.setAnimation(SWORD_SWING_LEFT);
+	}
+	else if (this.linkSprite.currentAnimation == LINK_WALK_RIGHT || this.linkSprite.currentAnimation == LINK_STAND_RIGHT) {
+		this.linkSprite.setAnimation(LINK_SWING_RIGHT);
+		this.swordSprite.setAnimation(SWORD_SWING_RIGHT);
+	}
+	else if (this.linkSprite.currentAnimation == LINK_WALK_UP || this.linkSprite.currentAnimation == LINK_STAND_UP) {
+		this.linkSprite.setAnimation(LINK_SWING_UP);
+		this.swordSprite.setAnimation(SWORD_SWING_UP);
+	}
+	else if (this.linkSprite.currentAnimation == LINK_WALK_DOWN || this.linkSprite.currentAnimation == LINK_STAND_DOWN) {
+		this.linkSprite.setAnimation(LINK_SWING_DOWN);
+		this.swordSprite.setAnimation(SWORD_SWING_DOWN);
+	}
+
+}
+
+Link.prototype.endSword = function() {
+	if (this.linkSprite.currentKeyframe >= this.linkSprite.animations[this.linkSprite.currentAnimation].length - 1 ) {
+			this.runningAnimation = false;
+			setTimeout(() => {
+				this.swordSprite.setVisibility(false);
+			}, 300);
+			
+			if (this.linkSprite.currentAnimation == LINK_SWING_LEFT) {
+				this.linkSprite.setAnimation(LINK_STAND_LEFT);
+				this.swordSprite.setAnimation(SWORD_SWING_LEFT);
+			}
+			else if (this.linkSprite.currentAnimation == LINK_SWING_RIGHT) {
+				this.linkSprite.setAnimation(LINK_STAND_RIGHT);
+				this.swordSprite.setAnimation(SWORD_SWING_RIGHT);
+			}
+			else if (this.linkSprite.currentAnimation == LINK_SWING_DOWN) {
+				this.linkSprite.setAnimation(LINK_STAND_DOWN);
+				this.swordSprite.setAnimation(SWORD_SWING_DOWN);
+			}
+			else if (this.linkSprite.currentAnimation == LINK_SWING_UP) {
+				this.linkSprite.setAnimation(LINK_STAND_UP);
+				this.swordSprite.setAnimation(SWORD_SWING_UP);
+			}
+		}
 }
 
 Link.prototype.checkChangeLevel = function()

@@ -33,9 +33,9 @@ Buzzblob.prototype.loadAnimations = function()
 
 Buzzblob.prototype.updateAnimation = function()
 {
+
     if (this.counter % 120 == 0)
     {
-        this.counter = 0;
         this.direction = Math.floor(Math.random() * 4);
         this.counter = 0;
     }

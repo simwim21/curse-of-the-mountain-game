@@ -12,14 +12,16 @@ function Scene()
 	this.link = new Link(72, 64, 16, 16, 7, this.levelManager);
 	this.link.loadAnimations();
 
-	this.buzzblob = new Buzzblob(50, 50, 16, 16, 7, this.levelManager);
-	this.buzzblob.loadAnimations();
+	// this.buzzblob = new Buzzblob(50, 50, 16, 16, 7, this.levelManager);
+	// this.buzzblob.loadAnimations();
 
-	this.firepit = new Firepit(16, 16, 16, 16, 7, this.levelManager);
-	this.firepit.loadAnimations();
+	// this.firepit = new Firepit(16, 16, 16, 16, 7, this.levelManager);
+	// this.firepit.loadAnimations();
 	
 	// Store current time
 	this.currentTime = 0
+
+	this.startGame = true;
 }
 
 
@@ -36,16 +38,12 @@ Scene.prototype.update = function(deltaTime)
 	
 	// Update Map
 
+	this.levelManager.updateSprites(deltaTime);
+
+	// Update Player
 	this.link.updateAnimation(this.map.collisionData);
-	this.buzzblob.updateAnimation(this.map.collisionData);
-	
-
-
-	// Update sprites
 	this.link.linkSprite.update(deltaTime);
 	this.link.swordSprite.update(deltaTime);
-	this.firepit.FirepitSprite.update(deltaTime * 0.5);
-	this.buzzblob.BuzzblobSprite.update(deltaTime * 0.5);
 }
 
 Scene.prototype.draw = function ()
@@ -62,8 +60,7 @@ Scene.prototype.draw = function ()
 	this.map.renderTiles();
 
 	// Draw sprites
-	this.firepit.FirepitSprite.draw();
-	this.buzzblob.BuzzblobSprite.draw();
+	this.levelManager.drawSprites();
 
 	// Draw Link
 	this.link.linkSprite.draw();

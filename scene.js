@@ -6,6 +6,8 @@ function Scene()
 	this.map = new Map();
 	this.map.loadMapData('levels/map.json');
 
+	this.toolbar = new Toolbar();
+
 	this.levelManager = new LevelManager(this.map);
 	this.levelManager.levelInitializer();
 
@@ -58,6 +60,7 @@ Scene.prototype.draw = function ()
 
 	// Tiles Rendering
 	this.map.renderTiles();
+	this.toolbar.draw();
 
 	// Draw sprites
 	this.levelManager.drawSprites();

@@ -18,7 +18,7 @@ function Sprite(x, y, width, height, fps, spritesheet)
 	this.animations = [];
 	this.timeInKeyframe = 0;
 	
-	this.spritesheet = spritesheet
+	this.spritesheet = spritesheet;
 
     this.visible = true;
 }

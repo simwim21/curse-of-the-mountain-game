@@ -21,6 +21,8 @@ Map.prototype.loadMapData = function (mapPath) {
         })
         .catch(error => console.error('Error loading map:', error));
 
+        
+
 };
 
 Map.prototype.renderLevel = function (levelIndex) {
@@ -39,27 +41,45 @@ Map.prototype.renderLevel = function (levelIndex) {
     this.levelWidth = level.pxWid / this.mapData.defaultGridSize;
     this.levelHeight = level.pxHei / this.mapData.defaultGridSize;
     this.gridSize = this.mapData.defaultGridSize;
-    this.collisionGridSize = this.mapData.defaultGridSize/2;
+    this.collisionGridSize = this.mapData.defaultGridSize / 2;
 
     this.tileData = {};
     this.collisionData = []; // Array to store wall collision tiles
+    this.entityData = []; // Array to store entity data
+    this.enemyData = [];
 
     level.layerInstances.forEach(layer => {
         if (layer.__type === "Tiles") {
             this.tileData[layer.__identifier] = layer.gridTiles;
-        } else if (layer.__type === "IntGrid") {
+        } else if (layer.__type === "IntGrid" && layer.__identifier == "Collisions") {
             // Extract collision data from IntGrid layers
             layer.intGridCsv.forEach((value, index) => {
                 if (value === 1) { // Assuming 1 represents a wall
                     const x = index % layer.__cWid;
                     const y = Math.floor(index / layer.__cWid);
-                    this.collisionData.push({ x: x * this.collisionGridSize, y: y * this.collisionGridSize});
+                    this.collisionData.push({ x: x * this.collisionGridSize, y: y * this.collisionGridSize });
                 }
             });
+        } else if (layer.__type === "Entities" && layer.__identifier == "Entities") {
+            // Extract entity data from Entities layers
+            layer.entityInstances.forEach(entity => {
+                this.entityData.push({
+                    id: entity.__identifier, // Entity ID
+                    x: entity.px[0], // X position in pixels
+                    y: entity.px[1]  // Y position in pixels
+                });
+            });
+        } else if (layer.__type === "Entities" && layer.__identifier == "Enemies") {
+            // Extract enemy data from Enemies layers
+            layer.entityInstances.forEach(enemy => {
+                this.enemyData.push({
+                    id: enemy.__identifier, // enemy ID
+                    x: enemy.px[0], // X position in pixels
+                    y: enemy.px[1]  // Y position in pixels
+                });
+            });
         }
-    }
-
-);
+    });
 
     const tileset = this.mapData.defs.tilesets[0];
     const imagePath = tileset.relPath.startsWith("../") ? tileset.relPath.substring(3) : tileset.relPath;
@@ -70,6 +90,18 @@ Map.prototype.renderLevel = function (levelIndex) {
     };
 
     this.loaded = true;
+
+    // if (this.collisionData.length > 0) {
+    //     console.log("Collision data:", this.collisionData); // Debugging log
+    // }
+
+    // if (this.entityData.length > 0) {
+    //     console.log("Entity data:", this.entityData); // Debugging log
+    // }
+
+    // if (this.enemyData.length > 0) {
+    //    console.log("Enemy data:", this.enemyData); // Debugging log
+    //}
 };
 
 Map.prototype.renderTiles = function () {

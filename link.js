@@ -40,7 +40,6 @@ function Link(x, y, width, height, fps, world)
 	this.swordSprite = new Sprite(x, y, width, height, fps, this.texture);
 
 	this.levelManager = world;
-	this.levelManager.addEntity(this);
 
 	this.runningAnimation = false;
 	this.runningAnimationCouter = 0;
@@ -225,6 +224,30 @@ Link.prototype.updateAnimation = function()
 	this.checkChangeLevel();
 }
 
+Link.prototype.checkChangeLevel = function()
+{
+	if (this.linkSprite.x == 0) {
+		this.levelManager.changeLevel(-1, 0);
+		this.linkSprite.x = 143;
+		return;
+	}
+	if (this.linkSprite.x == 143) {
+		this.levelManager.changeLevel(1, 0);
+		this.linkSprite.x = 1;
+		return;
+	}
+	if (this.linkSprite.y == 0) {
+		this.levelManager.changeLevel(0, -1);
+		this.linkSprite.y = 111;
+		return;
+	}
+	if (this.linkSprite.y == 111) {
+		this.levelManager.changeLevel(0, 1);
+		this.linkSprite.y = 1;
+		return;
+	}
+}
+
 Link.prototype.swordSwing = function() {
 
 	this.swordSprite.x = this.linkSprite.x;
@@ -276,29 +299,7 @@ Link.prototype.endSword = function() {
 		}
 }
 
-Link.prototype.checkChangeLevel = function()
-{
-	if (this.linkSprite.x == 0) {
-		this.levelManager.changeLevel(-1, 0);
-		this.linkSprite.x = 143;
-		return;
-	}
-	if (this.linkSprite.x == 144) {
-		this.levelManager.changeLevel(1, 0);
-		this.linkSprite.x = 1;
-		return;
-	}
-	if (this.linkSprite.y == 0) {
-		this.levelManager.changeLevel(0, -1);
-		this.linkSprite.y = 111;
-		return;
-	}
-	if (this.linkSprite.y == 112) {
-		this.levelManager.changeLevel(0, 1);
-		this.linkSprite.y = 1;
-		return;
-	}
-}
+
 
 Link.prototype.checkHurtbox = function()
 {

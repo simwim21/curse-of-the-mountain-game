@@ -7,25 +7,23 @@ const BUZZBLOB_WALK = 1;
 function Buzzblob(x, y, width, height, fps, world)
 {
     this.texture = new Texture("images/sprites/minor_enemies.png");
-    this.BuzzblobSprite = new Sprite(x, y, width, height, fps, this.texture);
+    this.Sprite = new Sprite(x, y, width, height, fps, this.texture);
 
     this.levelManager = world;
-
-    this.levelManager.addEntity(this);
 }
 
 Buzzblob.prototype.loadAnimations = function() 
 {
-    this.BuzzblobSprite.addAnimation();
-    this.BuzzblobSprite.addKeyframe(BUZZBLOB_STAND, [285, 21, 16, 16]);
+    this.Sprite.addAnimation();
+    this.Sprite.addKeyframe(BUZZBLOB_STAND, [285, 21, 16, 16]);
 
-    this.BuzzblobSprite.addAnimation();
-    this.BuzzblobSprite.addKeyframe(BUZZBLOB_WALK, [285, 21, 16, 16]);
-    this.BuzzblobSprite.addKeyframe(BUZZBLOB_WALK, [302, 21, 16, 16],true);
-    this.BuzzblobSprite.addKeyframe(BUZZBLOB_WALK, [285, 21, 16, 16]);
-    this.BuzzblobSprite.addKeyframe(BUZZBLOB_WALK, [302, 21, 16, 16]);
+    this.Sprite.addAnimation();
+    this.Sprite.addKeyframe(BUZZBLOB_WALK, [285, 21, 16, 16]);
+    this.Sprite.addKeyframe(BUZZBLOB_WALK, [302, 21, 16, 16],true);
+    this.Sprite.addKeyframe(BUZZBLOB_WALK, [285, 21, 16, 16]);
+    this.Sprite.addKeyframe(BUZZBLOB_WALK, [302, 21, 16, 16]);
 
-    this.BuzzblobSprite.setAnimation(BUZZBLOB_WALK);
+    this.Sprite.setAnimation(BUZZBLOB_WALK);
 
     this.direction = -1;
     this.counter = 0;
@@ -41,28 +39,28 @@ Buzzblob.prototype.updateAnimation = function()
     }
 
     if (this.counter % 8 == 0) {
-        if (this.direction == 0 && this.BuzzblobSprite.x >= 1)
+        if (this.direction == 0 && this.Sprite.x >= 1)
         {
-            if (!this.levelManager.isCollision(this.BuzzblobSprite.x - 1, this.BuzzblobSprite.y, this)) {
-                this.BuzzblobSprite.x -= 1;
+            if (!this.levelManager.isCollision(this.Sprite.x - 1, this.Sprite.y, this)) {
+                this.Sprite.x -= 1;
             }
         }
-        else if (this.direction == 1 && this.BuzzblobSprite.x < 144)
+        else if (this.direction == 1 && this.Sprite.x < 144)
         {
-            if (!this.levelManager.isCollision(this.BuzzblobSprite.x + 1, this.BuzzblobSprite.y, this)) {
-                this.BuzzblobSprite.x += 1;
+            if (!this.levelManager.isCollision(this.Sprite.x + 1, this.Sprite.y, this)) {
+                this.Sprite.x += 1;
             }
         }
-        else if (this.direction == 2 && this.BuzzblobSprite.y >= 1)
+        else if (this.direction == 2 && this.Sprite.y >= 1)
         {
-            if (!this.levelManager.isCollision(this.BuzzblobSprite.x, this.BuzzblobSprite.y - 1, this)) {
-                this.BuzzblobSprite.y -= 1;
+            if (!this.levelManager.isCollision(this.Sprite.x, this.Sprite.y - 1, this)) {
+                this.Sprite.y -= 1;
             }
         }
-        else if (this.direction == 3 && this.BuzzblobSprite.y < 144)
+        else if (this.direction == 3 && this.Sprite.y < 144)
         {
-            if (!this.levelManager.isCollision(this.BuzzblobSprite.x, this.BuzzblobSprite.y + 1, this)) {
-                this.BuzzblobSprite.y += 1;
+            if (!this.levelManager.isCollision(this.Sprite.x, this.Sprite.y + 1, this)) {
+                this.Sprite.y += 1;
             }
         }
     }

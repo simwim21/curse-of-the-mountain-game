@@ -26,9 +26,25 @@ function LevelManager(map) {
 
 LevelManager.prototype.levelInitializer = function() // Sets the logic which level is next to which level
 {
+    // Left, Right, Up, Down
     this.levelList.push(new Level(0, 1, -1, 2, -1, this.map)); // Level 0 => Left=1, Up=2
     this.levelList.push(new Level(1, -1, 0, -1, -1, this.map)); // Level 1 => Right=0
-    this.levelList.push(new Level(2, -1, -1, -1, 0, this.map)); // Level 2 => Down=0
+    this.levelList.push(new Level(2, -1, -1, 3, 0, this.map)); // Level 2 => Down=0, Up=3
+    this.levelList.push(new Level(3, 12, 4, -1, 2, this.map)); // Level 3 => Down =2, Left=12, Right=4, Up=?
+    this.levelList.push(new Level(4, 3, -1, 5, -1, this.map)); // Level 4 => Left=3, Up=5
+    this.levelList.push(new Level(5, -1, 6, 7, 4, this.map)); // Level 5 => Right=6, Up=7, Down=4
+    this.levelList.push(new Level(6, 5, -1, -1, -1, this.map)); // Level 6 => Left=5
+    this.levelList.push(new Level(7, 8, -1, -1, 5, this.map)); // Level 7 => Left=8, Down=5
+    this.levelList.push(new Level(8, 9, 7, -1, -1, this.map)); // Level 8 => Left=9, Right=7
+    this.levelList.push(new Level(9, 11, 8, -1, 10, this.map)); // Level 9 => Left=11, Right=8, Down=10
+    this.levelList.push(new Level(10, -1, -1, 9, 12, this.map)); // Level 10 => Up=9, down=12
+    this.levelList.push(new Level(11, -1, 9, 16, -1, this.map)); // Level 11 => Right=9, Up=16
+    this.levelList.push(new Level(12, 13, 3, 10, -1, this.map)); // Level 12 => Left=3, Down=10
+    this.levelList.push(new Level(13, -1, 12, -1, -1, this.map)); // Level 13 => Up=14
+    this.levelList.push(new Level(14, -1, -1, -1, -1, this.map)); // Level 14 => Down=13
+    this.levelList.push(new Level(15, -1, -1, -1, -1, this.map)); // Level 15 => Up=16
+    this.levelList.push(new Level(16, -1, -1, -1, 11, this.map)); // Level 16 => Left=11, Down=15
+
 }
 
 LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
@@ -70,6 +86,10 @@ LevelManager.prototype.fillCurrentLevelEnemies = function(enemyData) {
         if (enemyData[i].id == "BuzzBlob") {
             buzzblob = new Buzzblob(enemyData[i].x, enemyData[i].y, 16, 16, 7, this)
             this.currentLevelEnemies.push(buzzblob);
+        }
+        else if (enemyData[i].id == "Guard") {
+            guard = new Guard(enemyData[i].x, enemyData[i].y, 16, 16, 7, this)
+            this.currentLevelEnemies.push(guard);
         }
         // else if (enemyData[i].id == "Chest") {
         //     chest = new Chest(enemyData[i].x, enemyData[i].y, 16, 16, 7, this.map)

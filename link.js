@@ -151,7 +151,7 @@ Link.prototype.updateAnimation = function()
 			this.swordSprite.setVisibility(false);
 			setTimeout(() => {
 				this.runningAnimation = false;
-			}, 300);
+			}, 100);
 			
 			if (this.linkSprite.currentAnimation == LINK_SWING_LEFT) {
 				this.linkSprite.setAnimation(LINK_STAND_LEFT);

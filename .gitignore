@@ -1,1 +1,2 @@
-/map/backups/*
+# Ignore the map/backups directory
+levels/map/backups/

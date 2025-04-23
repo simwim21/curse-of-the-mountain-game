@@ -57,7 +57,7 @@ Buzzblob.prototype.updateAnimation = function()
                 this.Sprite.y -= 1;
             }
         }
-        else if (this.direction == 3 && this.Sprite.y < 144)
+        else if (this.direction == 3 && this.Sprite.y < 112)
         {
             if (!this.levelManager.isCollision(this.Sprite.x, this.Sprite.y + 1, this)) {
                 this.Sprite.y += 1;

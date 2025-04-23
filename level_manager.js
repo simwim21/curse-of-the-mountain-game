@@ -1,4 +1,3 @@
-
 function LevelManager(map) {
     this.map = map;
     this.currentLevelEntities = []; // Immovable (interactable) objects in thw world
@@ -22,6 +21,10 @@ function LevelManager(map) {
             clearInterval(checkEnemyData); // Stop checking once initialized
         }
     }, 100); // Check every 100ms
+}
+
+LevelManager.prototype.addLink = function(link) {
+    this.link = link;
 }
 
 LevelManager.prototype.levelInitializer = function() // Sets the logic which level is next to which level
@@ -58,11 +61,11 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
     
     for (let i = 0; i < entityData.length; i++) {
         if (entityData[i].id == "Firepit") {
-            firepit = new Firepit(entityData[i].x, entityData[i].y, 16, 16, 7, this)
+            firepit = new Firepit(entityData[i].x, entityData[i].y, 16, 16, 3, this)
             this.currentLevelEntities.push(firepit);
         }
         else if (entityData[i].id == "Chest") {
-            chest = new Chest(entityData[i].x, entityData[i].y, 16, 16, 7, this)
+            chest = new Chest(entityData[i].x, entityData[i].y, 16, 16, 1, this)
             this.currentLevelEntities.push(chest);
         }
 
@@ -84,11 +87,11 @@ LevelManager.prototype.fillCurrentLevelEnemies = function(enemyData) {
     
     for (let i = 0; i < enemyData.length; i++) {
         if (enemyData[i].id == "BuzzBlob") {
-            buzzblob = new Buzzblob(enemyData[i].x, enemyData[i].y, 16, 16, 7, this)
+            buzzblob = new Buzzblob(enemyData[i].x, enemyData[i].y, 16, 16, 4, this)
             this.currentLevelEnemies.push(buzzblob);
         }
         else if (enemyData[i].id == "Guard") {
-            guard = new Guard(enemyData[i].x, enemyData[i].y, 16, 16, 7, this)
+            guard = new Guard(enemyData[i].x, enemyData[i].y, 16, 16, 5, this)
             this.currentLevelEnemies.push(guard);
         }
         // else if (enemyData[i].id == "Chest") {
@@ -184,7 +187,53 @@ LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
     // Check map collisions
     if (this.map.isBlocked(x, y)) return true;
 
-    // Check other entities (except self)
+    // Check collisions with other enemies (except the requesting entity)
+    for (let i = 0; i < this.currentLevelEnemies.length; i++) {
+        const enemy = this.currentLevelEnemies[i];
 
-    return false;
+        // Skip the requesting entity itself
+        if (enemy === requestingEntity) continue;
+
+        // Check for bounding box collision
+        if (
+            x < enemy.Sprite.x + enemy.Sprite.width && // Left side of requestingEntity is left of enemy's right side
+            x + requestingEntity.Sprite.width > enemy.Sprite.x && // Right side of requestingEntity is right of enemy's left side
+            y < enemy.Sprite.y + enemy.Sprite.height && // Top side of requestingEntity is above enemy's bottom side
+            y + requestingEntity.Sprite.height > enemy.Sprite.y // Bottom side of requestingEntity is below enemy's top side
+        ) {
+            return true; // Collision detected
+        }
+    }
+
+    // Check collisions with other entities (except the requesting entity)
+    for (let i = 0; i < this.currentLevelEntities.length; i++) {
+        const entity = this.currentLevelEntities[i];
+
+        // Skip the requesting entity itself
+        if (entity === requestingEntity) continue;
+
+        // Check for bounding box collision
+        if (
+            x < entity.Sprite.x + entity.Sprite.width && // Left side of requestingEntity is left of entity's right side
+            x + requestingEntity.Sprite.width > entity.Sprite.x && // Right side of requestingEntity is right of entity's left side
+            y < entity.Sprite.y + entity.Sprite.height && // Top side of requestingEntity is above entity's bottom side
+            y + requestingEntity.Sprite.height > entity.Sprite.y // Bottom side of requestingEntity is below entity's top side
+        ) {
+            return true; // Collision detected
+        }
+    }
+
+    // Check collision with Link (if the requesting entity is not Link itself)
+    if (this.link && requestingEntity !== this.link) {
+        if (
+            x < this.link.Sprite.x + this.link.Sprite.width && // Left side of requestingEntity is left of Link's right side
+            x + requestingEntity.Sprite.width > this.link.Sprite.x && // Right side of requestingEntity is right of Link's left side
+            y < this.link.Sprite.y + this.link.Sprite.height && // Top side of requestingEntity is above Link's bottom side
+            y + requestingEntity.Sprite.height > this.link.Sprite.y // Bottom side of requestingEntity is below Link's top side
+        ) {
+            return true; // Collision detected with Link
+        }
+    }
+
+    return false; // No collision
 };

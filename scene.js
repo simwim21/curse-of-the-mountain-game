@@ -44,7 +44,7 @@ Scene.prototype.update = function(deltaTime)
 
 	// Update Player
 	this.link.updateAnimation(this.map.collisionData);
-	this.link.linkSprite.update(deltaTime);
+	this.link.Sprite.update(deltaTime);
 	this.link.swordSprite.update(deltaTime);
 }
 
@@ -66,7 +66,7 @@ Scene.prototype.draw = function ()
 	this.levelManager.drawSprites();
 
 	// Draw Link
-	this.link.linkSprite.draw();
+	this.link.Sprite.draw();
 	this.link.swordSprite.draw();
 
 }

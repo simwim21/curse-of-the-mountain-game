@@ -10,6 +10,8 @@ function Guard(x, y, width, height, fps, world)
     this.Sprite = new Sprite(x, y, width, height, fps, this.texture);
 
     this.levelManager = world;
+
+    this.Box = new Box(x + 4, y + 3, 8, 13); // Create a box for collision detection
 }
 
 Guard.prototype.loadAnimations = function() 
@@ -43,24 +45,28 @@ Guard.prototype.updateAnimation = function()
         {
             if (!this.levelManager.isCollision(this.Sprite.x - 1, this.Sprite.y, this)) {
                 this.Sprite.x -= 1;
+                this.Box.x -= 1;
             }
         }
         else if (this.direction == 1 && this.Sprite.x < 144)
         {
             if (!this.levelManager.isCollision(this.Sprite.x + 1, this.Sprite.y, this)) {
                 this.Sprite.x += 1;
+                this.Box.x += 1;
             }
         }
         else if (this.direction == 2 && this.Sprite.y >= 1)
         {
             if (!this.levelManager.isCollision(this.Sprite.x, this.Sprite.y - 1, this)) {
                 this.Sprite.y -= 1;
+                this.Box.y -= 1;
             }
         }
         else if (this.direction == 3 && this.Sprite.y < 144)
         {
             if (!this.levelManager.isCollision(this.Sprite.x, this.Sprite.y + 1, this)) {
                 this.Sprite.y += 1;
+                this.Box.y += 1;
             }
         }
     }

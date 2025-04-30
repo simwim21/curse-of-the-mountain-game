@@ -158,14 +158,14 @@ Map.prototype.renderTiles = function () {
     // this.context.restore();
 };
 
-Map.prototype.isBlocked = function(pixelX, pixelY) {
+Map.prototype.isBlocked = function(pixelX, pixelY, pixelWidth, pixelHeight) { 
 
     if (!this.loaded) return true; // No collision data available
 
     const minX = pixelX;
     const minY = pixelY;
-    const maxX = pixelX + this.gridSize;
-    const maxY = pixelY + this.gridSize;
+    const maxX = pixelX + pixelWidth;
+    const maxY = pixelY + pixelHeight;
 
     // console.log(`${pixelX}, ${pixelY}, ${minX}, ${minY}, ${maxX}, ${maxY}`);
 

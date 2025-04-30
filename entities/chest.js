@@ -10,6 +10,8 @@ function Chest(x, y, width, height, fps, world)
 
     this.levelManager = world;
 
+    this.Box = new Box(x, y, width, height); // Create a box for collision detection
+
 }
 
 Chest.prototype.loadAnimations = function() 
@@ -21,6 +23,7 @@ Chest.prototype.loadAnimations = function()
     this.Sprite.addKeyframe(CHEST_OPENED, [916, 613, 16, 16]);
 
     this.Sprite.setAnimation(CHEST_CLOSED);
+
 
 }
 

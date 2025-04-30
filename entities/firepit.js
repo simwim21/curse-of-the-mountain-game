@@ -10,6 +10,8 @@ function Firepit(x, y, width, height, fps, world)
 
     this.levelManager = world;
 
+    this.Box = new Box(x, y, width, height); // Create a box for collision detection
+
 }
 
 Firepit.prototype.loadAnimations = function() 

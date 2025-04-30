@@ -24,4 +24,5 @@ Toolbar.prototype.draw = function () {
         this.position.x, this.position.y, // Destination position on the canvas
         this.width, this.height // Destination size on the canvas
     );
+
 };

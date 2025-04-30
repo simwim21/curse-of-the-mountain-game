@@ -48,6 +48,7 @@ function Link(x, y, width, height, fps, world)
 	this.maxHealth = 5;
 	this.currentHealth = this.maxHealth;
 
+	this.Box = new Box(x + 3, y + 1, 10, 15);
 }
 
 Link.prototype.loadAnimations = function() 
@@ -184,33 +185,42 @@ Link.prototype.updateAnimation = function()
 	}
 	
     // Move Link sprite
-	if(keyboard[37] && !this.levelManager.isCollision(this.Sprite.x -1, this.Sprite.y +0, this)) // KEY_LEFT
+	if(keyboard[37] && !this.levelManager.isCollision(this.Box.x -1, this.Box.y +0, this)) // KEY_LEFT
 	{
 		if(this.Sprite.currentAnimation != LINK_WALK_LEFT)
 			this.Sprite.setAnimation(LINK_WALK_LEFT);
-		if(this.Sprite.x >= 1)
+		if(this.Sprite.x >= 1) {
 			this.Sprite.x -= 1;
+			this.Box.x -= 1;
+		}
+
 	}
-	else if(keyboard[39] && !this.levelManager.isCollision(this.Sprite.x +1, this.Sprite.y +0, this)) // KEY_RIGHT
+	else if(keyboard[39] && !this.levelManager.isCollision(this.Box.x +1, this.Box.y +0, this)) // KEY_RIGHT
 	{
 		if(this.Sprite.currentAnimation != LINK_WALK_RIGHT)
 			this.Sprite.setAnimation(LINK_WALK_RIGHT);
-		if(this.Sprite.x < 144)
+		if(this.Sprite.x < 144) {
 			this.Sprite.x += 1;
+			this.Box.x += 1;
+		}
 	}
-	else if(keyboard[38] && !this.levelManager.isCollision(this.Sprite.x +0, this.Sprite.y -1, this)) // KEY_UP	
+	else if(keyboard[38] && !this.levelManager.isCollision(this.Box.x +0, this.Box.y -1, this)) // KEY_UP	
 	{
 		if(this.Sprite.currentAnimation != LINK_WALK_UP)
 			this.Sprite.setAnimation(LINK_WALK_UP);
-		if(this.Sprite.y >= 1)
+		if(this.Sprite.y >= 1) {
 			this.Sprite.y -= 1;
+			this.Box.y -= 1;
+		}
 	}
-	else if (keyboard[40] && !this.levelManager.isCollision(this.Sprite.x +0, this.Sprite.y +1, this)) // KEY_DOWN
+	else if (keyboard[40] && !this.levelManager.isCollision(this.Box.x +0, this.Box.y +1, this)) // KEY_DOWN
 	{
 		if(this.Sprite.currentAnimation != LINK_WALK_DOWN)
 			this.Sprite.setAnimation(LINK_WALK_DOWN);
-		if(this.Sprite.y < 112)
+		if(this.Sprite.y < 112) {
 			this.Sprite.y += 1;
+			this.Box.y += 1;
+		}
 	}
     
 	else if (!this.runningAnimation)
@@ -230,24 +240,29 @@ Link.prototype.updateAnimation = function()
 
 Link.prototype.checkChangeLevel = function()
 {
-	if (this.Sprite.x == 0) {
+	if (this.Sprite.x == 0) { // Links
+		console.log("Link x == 0");
 		this.levelManager.changeLevel(-1, 0);
 		this.Sprite.x = 143;
+		this.Box.x = 146;
 		return;
 	}
 	if (this.Sprite.x == 143) {
 		this.levelManager.changeLevel(1, 0);
 		this.Sprite.x = 1;
+		this.Box.x = 4;
 		return;
 	}
 	if (this.Sprite.y == 0) {
 		this.levelManager.changeLevel(0, -1);
 		this.Sprite.y = 111;
+		this.Box.y = 112;
 		return;
 	}
 	if (this.Sprite.y == 111) {
 		this.levelManager.changeLevel(0, 1);
 		this.Sprite.y = 1;
+		this.Box.y = 2;
 		return;
 	}
 }

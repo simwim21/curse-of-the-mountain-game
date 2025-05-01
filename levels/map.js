@@ -1,4 +1,4 @@
-{
+const mapData = {
 	"__header__": {
 		"fileType": "LDtk Project JSON",
 		"app": "LDtk",
@@ -4246,4 +4246,4 @@
 	],
 	"worlds": [],
 	"dummyWorldIid": "c3d33f11-1030-11f0-b656-1fc6c87be383"
-}
+};

@@ -4,7 +4,7 @@
 function Scene()
 {
 	this.map = new Map();
-	this.map.loadMapData('levels/map.json');
+	this.map.loadMapData();
 
 	this.toolbar = new Toolbar();
 

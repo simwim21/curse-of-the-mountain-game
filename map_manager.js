@@ -1,5 +1,4 @@
-function Map()
-{
+function Map() {
     this.mapData = null; // Placeholder for map data
 
     this.canvas = document.getElementById("game-layer");
@@ -9,20 +8,17 @@ function Map()
     this.currentLevelIndex = 0;
 
     this.loaded = false;
-
 }
 
-Map.prototype.loadMapData = function (mapPath) {
-    fetch(mapPath)
-        .then(response => response.json())
-        .then(data => {
-            this.mapData = data;
-            this.renderLevel(0); // Render the level after loading the map data
-        })
-        .catch(error => console.error('Error loading map:', error));
+Map.prototype.loadMapData = function () {
+    // Directly assign the mapData object from map.js
+    this.mapData = mapData;
 
-        
-
+    if (this.mapData) {
+        this.renderLevel(0); // Render the level after loading the map data
+    } else {
+        console.error('Error: Map data is not available.');
+    }
 };
 
 Map.prototype.renderLevel = function (levelIndex) {
@@ -132,42 +128,15 @@ Map.prototype.renderTiles = function () {
             );
         });
     }
-
-    // // Overlay red boxes for collision tiles (debug)
-    // this.context.save();
-    // this.context.fillStyle = 'rgba(255, 0, 0, 1)'; // semi-transparent red
-
-    // this.collisionData.forEach(coord => {
-    //     let tileX, tileY;
-
-    //     if (typeof coord === 'string') {
-    //         [tileX, tileY] = coord.split(',').map(Number);
-    //     } else {
-    //         tileX = coord.x / this.gridSize;
-    //         tileY = coord.y / this.gridSize;
-    //     }
-
-    //     this.context.fillRect(
-    //         tileX * this.gridSize,
-    //         tileY * this.gridSize,
-    //         this.collisionGridSize,
-    //         this.collisionGridSize
-    //     );
-    // });
-
-    // this.context.restore();
 };
 
-Map.prototype.isBlocked = function(pixelX, pixelY, pixelWidth, pixelHeight) { 
-
+Map.prototype.isBlocked = function (pixelX, pixelY, pixelWidth, pixelHeight) {
     if (!this.loaded) return true; // No collision data available
 
     const minX = pixelX;
     const minY = pixelY;
     const maxX = pixelX + pixelWidth;
     const maxY = pixelY + pixelHeight;
-
-    // console.log(`${pixelX}, ${pixelY}, ${minX}, ${minY}, ${maxX}, ${maxY}`);
 
     for (let i = 0; i < this.collisionData.length; i++) {
         const tile = this.collisionData[i];

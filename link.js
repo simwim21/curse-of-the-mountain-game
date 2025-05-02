@@ -1,4 +1,3 @@
-
 const LINK_STAND_LEFT = 0;
 const LINK_STAND_RIGHT = 1;
 const LINK_STAND_DOWN = 2;
@@ -58,6 +57,9 @@ function Link(x, y, width, height, fps, world)
     this.hasMushroom = false;
 
 	this.Box = new Box(x + 3, y + 1, 10, 15);
+
+	this.currentPickupItem = null;
+	this.isHoldingItem = false;
 }
 
 Link.prototype.loadAnimations = function() 
@@ -197,6 +199,9 @@ Link.prototype.updateAnimation = function()
         if (this.checkInteraction()) {
 			this.Sprite.setAnimation(LINK_PICK_UP_LIGHT_ITEM);
 		}
+    } else if (Object.values(keyboard).some(key => key)) { // If any other key is pressed
+        this.isHoldingItem = false; // Stop holding the item
+        this.currentPickupItem = null; // Clear the picked-up item
     }
 
 	if (keyboard[89] && !this.runningAnimation) {
@@ -368,28 +373,57 @@ Link.prototype.checkInteraction = function() {
             if (entity instanceof Flower) {
                 this.hasFlower = true;
                 this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
-				this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
-
+                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+                this.currentPickupItem = entity; // Set the picked-up item
+                this.isHoldingItem = true; // Mark as holding an item
+				this.pickUpItemOffsetX = - 4;
+				this.pickUpItemOffsetY = - 14;
                 console.log("Picked up a flower!");
-				return true;
+                return true;
             } else if (entity instanceof Mushroom) {
                 this.hasMushroom = true;
                 this.levelManager.currentLevelEntities.splice(i, 1); // Remove the mushroom from the level
-				this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the mushroom sprite from the level
-                console.log("Picked up a myterious mushroom!");
-				return true;
+                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the mushroom sprite from the level
+                this.currentPickupItem = entity; 
+                this.isHoldingItem = true; 
+				this.pickUpItemOffsetX = - 4;
+				this.pickUpItemOffsetY = - 14;
+                console.log("Picked up a mysterious mushroom!");
+                return true;
             } else if (entity instanceof OldTree) {
-				if (this.hasFlower = true) this.hasKey = true;
+				if (this.hasFlower = true) {
+					this.hasKey = true; 
+					this.currentPickupItem = new Key(0, 0, 8, 16, 1, this.levelManager);
+					this.currentPickupItem.loadAnimations(); // Load the key's animations
+					this.isHoldingItem = true; 
+					this.pickUpItemOffsetX = 0;
+					this.pickUpItemOffsetY = - 14;
+					console.log("Gave the Old Tree a Flower! He gave you a Key!");
+					return true;
+				}
 				else console.log("You need a flower to get the key!");
 			}
         }
     }
-	return false;
+    return false;
 };
 
+
+Link.prototype.drawPickupItem = function() {
+    if (this.isHoldingItem && this.currentPickupItem) {
+        this.currentPickupItem.Sprite.x = this.Sprite.x + this.pickUpItemOffsetX; // Align with Link's position
+        this.currentPickupItem.Sprite.y = this.Sprite.y + this.pickUpItemOffsetY; // Draw above Link
+        this.currentPickupItem.Sprite.draw(); // Draw the item
+    }
+};
 
 
 Link.prototype.checkHurtbox = function()
 {
 
 }
+
+Link.prototype.draw = function() {
+    this.Sprite.draw(); // Draw Link
+    this.drawPickupItem(); // Draw the picked-up item above Link
+};

@@ -13,17 +13,13 @@ function Scene()
 
 	this.link = new Link(72, 64, 16, 16, 7, this.levelManager);
 	this.link.loadAnimations();
-
-	// this.buzzblob = new Buzzblob(50, 50, 16, 16, 7, this.levelManager);
-	// this.buzzblob.loadAnimations();
-
-	// this.firepit = new Firepit(16, 16, 16, 16, 7, this.levelManager);
-	// this.firepit.loadAnimations();
 	
 	// Store current time
 	this.currentTime = 0
 
 	this.toolbar = new Toolbar(this.link);
+
+	this.levelManager.addToolbar(this.toolbar);
 
 	this.startGame = true;
 }
@@ -69,7 +65,7 @@ Scene.prototype.draw = function ()
 	this.levelManager.drawSprites();
 
 	// Draw Link
-	this.link.Sprite.draw();
+	this.link.draw();
 	this.link.swordSprite.draw();
 
 }

@@ -16,7 +16,10 @@ function Toolbar(link) {
     this.backgroundSpriteX = 1;
     this.backgroundSpriteY = 1;
 
+    this.textTime = 0;
+
 }
+
 
 Toolbar.prototype.draw = function () {
     // Draw the toolbar background
@@ -31,8 +34,6 @@ Toolbar.prototype.draw = function () {
     this.drawItems();
     this.drawHealth();
     this.drawRupees();
-    
-
 };
 
 Toolbar.prototype.drawRupees = function () {
@@ -60,7 +61,6 @@ Toolbar.prototype.drawRupees = function () {
         this.position.x + 88, this.position.y + 8,
         8, 8
     );
-
 };
 
 Toolbar.prototype.drawHealth = function () {

@@ -27,6 +27,10 @@ LevelManager.prototype.addLink = function(link) {
     this.link = link;
 }
 
+LevelManager.prototype.addToolbar = function(toolbar) {
+    this.toolbar = toolbar;
+}
+
 LevelManager.prototype.levelInitializer = function() // Sets the logic which level is next to which level
 {
     // Left, Right, Up, Down

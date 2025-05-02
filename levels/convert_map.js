@@ -1,3 +1,7 @@
+
+// Call this function with >> node .\convert_map.js
+
+
 const fs = require('fs');
 
 const jsonFile = 'map.json';

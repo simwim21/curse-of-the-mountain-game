@@ -387,7 +387,7 @@ Link.prototype.checkInteraction = function() {
                 this.currentPickupItem = entity; 
                 this.isHoldingItem = true; 
 				this.pickUpItemOffsetX = - 4;
-				this.pickUpItemOffsetY = - 14;
+				this.pickUpItemOffsetY = - 13;
                 console.log("Picked up a mysterious mushroom!");
                 return true;
             } else if (entity instanceof OldTree) {
@@ -397,7 +397,7 @@ Link.prototype.checkInteraction = function() {
 					this.currentPickupItem.loadAnimations(); // Load the key's animations
 					this.isHoldingItem = true; 
 					this.pickUpItemOffsetX = 0;
-					this.pickUpItemOffsetY = - 14;
+					this.pickUpItemOffsetY = - 15;
 					console.log("Gave the Old Tree a Flower! He gave you a Key!");
 					return true;
 				}

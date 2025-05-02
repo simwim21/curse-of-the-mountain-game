@@ -73,12 +73,18 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             this.currentLevelEntities.push(flowerStatue);
         }
         else if (entityData[i].id == "Flower") {
+            if (this.link.hasFlower) continue;
             flower = new Flower(entityData[i].x, entityData[i].y, 16, 16, 1, this)
             this.currentLevelEntities.push(flower);
         }
         else if (entityData[i].id == "OldTree") {
             oldTree = new OldTree(entityData[i].x, entityData[i].y, 32, 32, 1, this)
             this.currentLevelEntities.push(oldTree);
+        }
+        else if (entityData[i].id == "MushroomOfSight") {
+            if (this.link.hasMushroom) continue;
+            mushroom = new Mushroom(entityData[i].x, entityData[i].y, 16, 16, 1, this)
+            this.currentLevelEntities.push(mushroom);
         }
 
         //console.log(this.currentLevelEntities.length);

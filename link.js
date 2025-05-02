@@ -14,7 +14,8 @@ const LINK_SWING_RIGHT = 9;
 const LINK_SWING_DOWN = 10;
 const LINK_SWING_UP = 11;
 
-const LINK_FALLING = 12;
+const LINK_PICK_UP_LIGHT_ITEM = 12;
+const LINK_PICK_UP_HEAVY_ITEM = 13;
 
 
 
@@ -45,8 +46,14 @@ function Link(x, y, width, height, fps, world)
 	this.runningAnimation = false;
 	this.runningAnimationCouter = 0;
 
-	this.maxHealth = 5;
+	this.maxHealth = 6;
 	this.currentHealth = this.maxHealth;
+
+	this.hasSword = true;
+    this.hasShield = true;
+    this.hasFlower = false;
+    this.hasKey = false;
+    this.hasMushroom = false;
 
 	this.Box = new Box(x + 3, y + 1, 10, 15);
 }
@@ -101,6 +108,12 @@ Link.prototype.loadAnimations = function()
 	this.Sprite.addKeyframe(LINK_SWING_UP, [85, 137, 16, 16]);
 	this.Sprite.addKeyframe(LINK_SWING_UP, [118, 137, 16, 16]);
 	this.Sprite.addKeyframe(LINK_SWING_UP, [148, 137, 16, 16]);
+
+	this.Sprite.addAnimation();
+	this.Sprite.addKeyframe(LINK_PICK_UP_LIGHT_ITEM, [404, 11, 16, 16]);
+
+	this.Sprite.addAnimation();
+	this.Sprite.addKeyframe(LINK_PICK_UP_HEAVY_ITEM, [421, 11, 16, 16]);
 
 	this.Sprite.setAnimation(LINK_STAND_LEFT);
 
@@ -177,6 +190,12 @@ Link.prototype.updateAnimation = function()
 		}
 		return;
 	}
+
+	if (keyboard[69]) { // Assuming "E" key for interaction
+        if (this.checkInteraction()) {
+			this.Sprite.setAnimation(LINK_PICK_UP_LIGHT_ITEM);
+		}
+    }
 
 	if (keyboard[89] && !this.runningAnimation) {
 		this.swordSwing();
@@ -332,6 +351,39 @@ Link.prototype.endSword = function() {
 			}
 		}
 }
+
+Link.prototype.checkInteraction = function() {
+    for (let i = 0; i < this.levelManager.currentLevelEntities.length; i++) {
+        const entity = this.levelManager.currentLevelEntities[i];
+        // Check if Link is near the entity
+        if (
+            this.Sprite.x < entity.Box.x + entity.Box.width &&
+            this.Sprite.x + this.Sprite.width > entity.Box.x &&
+            this.Sprite.y < entity.Box.y + entity.Box.height &&
+            this.Sprite.y + this.Sprite.height > entity.Box.y
+        ) {
+            // Handle pickup
+            if (entity instanceof Flower) {
+                this.hasFlower = true;
+                this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
+				this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+
+                console.log("Picked up a flower!");
+				return true;
+            } else if (entity instanceof Mushroom) {
+                this.hasMushroom = true;
+                this.levelManager.currentLevelEntities.splice(i, 1); // Remove the mushroom from the level
+				this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the mushroom sprite from the level
+                console.log("Picked up a myterious mushroom!");
+				return true;
+            } else if (entity instanceof OldTree) {
+				if (this.hasFlower = true) this.hasKey = true;
+				else console.log("You need a flower to get the key!");
+			}
+        }
+    }
+	return false;
+};
 
 
 

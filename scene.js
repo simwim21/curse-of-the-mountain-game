@@ -6,7 +6,7 @@ function Scene()
 	this.map = new Map();
 	this.map.loadMapData();
 
-	this.toolbar = new Toolbar();
+	
 
 	this.levelManager = new LevelManager(this.map);
 	this.levelManager.levelInitializer();
@@ -22,6 +22,8 @@ function Scene()
 	
 	// Store current time
 	this.currentTime = 0
+
+	this.toolbar = new Toolbar(this.link);
 
 	this.startGame = true;
 }
@@ -46,6 +48,7 @@ Scene.prototype.update = function(deltaTime)
 	this.link.updateAnimation(this.map.collisionData);
 	this.link.Sprite.update(deltaTime);
 	this.link.swordSprite.update(deltaTime);
+
 }
 
 Scene.prototype.draw = function ()

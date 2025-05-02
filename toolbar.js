@@ -27,6 +27,125 @@ Toolbar.prototype.draw = function () {
         this.position.x, this.position.y, // Destination position on the canvas
         this.width, this.height // Destination size on the canvas
     );
+
+    this.drawItems();
+    this.drawHealth();
+    this.drawRupees();
+    
+
+};
+
+Toolbar.prototype.drawRupees = function () {
+    const tens = Math.floor(this.link.rupeeCount / 10); // Extract tens digit
+    const ones = this.link.rupeeCount % 10; // Extract ones digit
+
+    this.context.drawImage(
+        this.texture.img,
+        41, 22,
+        24, 8,
+        this.position.x + 80, this.position.y + 8,
+        24, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        70 + ones * 9, 22,
+        8, 8,
+        this.position.x + 96, this.position.y + 8,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        70 + tens * 9, 22,
+        8, 8,
+        this.position.x + 88, this.position.y + 8,
+        8, 8
+    );
+
+};
+
+Toolbar.prototype.drawHealth = function () {
+
+    this.context.drawImage(
+        this.texture.img,
+        10, 22,
+        8, 8,
+        this.position.x + 80, this.position.y,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        10, 22,
+        8, 8,
+        this.position.x + 88, this.position.y,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        10, 22,
+        8, 8,
+        this.position.x + 96, this.position.y,
+        8, 8
+    );
+
+    if (this.link.currentHealth > 0) {
+        this.context.drawImage(
+            this.texture.img,
+            19, 22,
+            8, 8,
+            this.position.x + 80, this.position.y,
+            8, 8
+        );
+    }
+    if (this.link.currentHealth > 1) {
+        this.context.drawImage(
+            this.texture.img,
+            28, 22,
+            8, 8,
+            this.position.x + 80, this.position.y,
+            8, 8
+        );
+    }
+    if (this.link.currentHealth > 2) {
+        this.context.drawImage(
+            this.texture.img,
+            19, 22,
+            8, 8,
+            this.position.x + 88, this.position.y,
+            8, 8
+        );
+    }
+    if (this.link.currentHealth > 3) {
+        this.context.drawImage(
+            this.texture.img,
+            28, 22,
+            8, 8,
+            this.position.x + 88, this.position.y,
+            8, 8
+        );
+    }
+    if (this.link.currentHealth > 4) {
+        this.context.drawImage(
+            this.texture.img,
+            19, 22,
+            8, 8,
+            this.position.x + 96, this.position.y,
+            8, 8
+        );
+    }
+    if (this.link.currentHealth > 5) {
+        this.context.drawImage(
+            this.texture.img,
+            28, 22,
+            8, 8,
+            this.position.x + 96, this.position.y,
+            8, 8
+        );
+    }
+
+
+}
+
+Toolbar.prototype.drawItems = function () {
     if (this.link.hasSword) {
         this.context.drawImage(
             this.texture.img,
@@ -125,5 +244,4 @@ Toolbar.prototype.draw = function () {
             16, 16
         )
     }
-
-};
+}

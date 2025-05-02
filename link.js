@@ -49,6 +49,8 @@ function Link(x, y, width, height, fps, world)
 	this.maxHealth = 6;
 	this.currentHealth = this.maxHealth;
 
+	this.rupeeCount = 0;
+
 	this.hasSword = true;
     this.hasShield = true;
     this.hasFlower = false;
@@ -191,7 +193,7 @@ Link.prototype.updateAnimation = function()
 		return;
 	}
 
-	if (keyboard[69]) { // Assuming "E" key for interaction
+	if (keyboard[67]) { // Assuming "C" key for interaction
         if (this.checkInteraction()) {
 			this.Sprite.setAnimation(LINK_PICK_UP_LIGHT_ITEM);
 		}

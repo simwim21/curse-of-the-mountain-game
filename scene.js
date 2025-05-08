@@ -6,8 +6,6 @@ function Scene()
 	this.map = new Map();
 	this.map.loadMapData();
 
-	
-
 	this.levelManager = new LevelManager(this.map);
 	this.levelManager.levelInitializer();
 
@@ -20,6 +18,8 @@ function Scene()
 	this.toolbar = new Toolbar(this.link);
 
 	this.levelManager.addToolbar(this.toolbar);
+
+	this.mask = new Mask(document.getElementById("game-layer"), this.link, this.levelManager);
 
 	this.startGame = true;
 }
@@ -73,6 +73,8 @@ Scene.prototype.draw = function ()
 	// Draw Link
 	this.link.draw();
 	this.link.swordSprite.draw();
+
+	this.mask.render();
 
 }
 

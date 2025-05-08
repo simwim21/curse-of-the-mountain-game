@@ -8,6 +8,7 @@ function LevelManager(map) {
     
     this.levelList = [];
 
+
     const checkEntityData = setInterval(() => {
         if (this.map.entityData && this.map.entityData.length > 0) {
             this.fillCurrentLevelEntities(this.map.entityData);
@@ -21,6 +22,8 @@ function LevelManager(map) {
             clearInterval(checkEnemyData); // Stop checking once initialized
         }
     }, 100); // Check every 100ms
+
+    
 }
 
 LevelManager.prototype.addLink = function(link) {

@@ -221,10 +221,10 @@ LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
 
         // Check for bounding box collision
         if (
-            x < enemy.Box.x + enemy.Box.width && // Left side of requestingEntity is left of enemy's right side
-            x + requestingEntity.Box.width > enemy.Box.x && // Right side of requestingEntity is right of enemy's left side
-            y < enemy.Box.y + enemy.Box.height && // Top side of requestingEntity is above enemy's bottom side
-            y + requestingEntity.Box.height > enemy.Box.y // Bottom side of requestingEntity is below enemy's top side
+            x < enemy.Box.x + enemy.Box.width && 
+            x + requestingEntity.Box.width > enemy.Box.x &&
+            y < enemy.Box.y + enemy.Box.height && 
+            y + requestingEntity.Box.height > enemy.Box.y 
         ) {
             return true; // Collision detected
         }
@@ -239,10 +239,10 @@ LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
 
         // Check for bounding box collision
         if (
-            x < entity.Box.x + entity.Box.width && // Left side of requestingEntity is left of entity's right side
-            x + requestingEntity.Box.width > entity.Box.x && // Right side of requestingEntity is right of entity's left side
-            y < entity.Box.y + entity.Box.height && // Top side of requestingEntity is above entity's bottom side
-            y + requestingEntity.Box.height > entity.Box.y // Bottom side of requestingEntity is below entity's top side
+            x < entity.Box.x + entity.Box.width &&  
+            x + requestingEntity.Box.width > entity.Box.x &&
+            y < entity.Box.y + entity.Box.height && 
+            y + requestingEntity.Box.height > entity.Box.y 
         ) {
             return true; // Collision detected
         }
@@ -251,10 +251,10 @@ LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
     // Check collision with Link (if the requesting entity is not Link itself)
     if (this.link && requestingEntity !== this.link) {
         if (
-            x < this.link.Box.x + this.link.Box.width && // Left side of requestingEntity is left of Link's right side
-            x + requestingEntity.Box.width > this.link.Box.x && // Right side of requestingEntity is right of Link's left side
-            y < this.link.Box.y + this.link.Box.height && // Top side of requestingEntity is above Link's bottom side
-            y + requestingEntity.Box.height > this.link.Box.y // Bottom side of requestingEntity is below Link's top side
+            x < this.link.Box.x + this.link.Box.width && 
+            x + requestingEntity.Box.width > this.link.Box.x && 
+            y < this.link.Box.y + this.link.Box.height && 
+            y + requestingEntity.Box.height > this.link.Box.y 
         ) {
             return true; // Collision detected with Link
         }

@@ -85,10 +85,10 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             oldTree = new OldTree(entityData[i].x, entityData[i].y, 32, 32, 1, this)
             this.currentLevelEntities.push(oldTree);
         }
-        else if (entityData[i].id == "MushroomOfSight") {
-            if (this.link.hasMushroom) continue;
-            mushroom = new Mushroom(entityData[i].x, entityData[i].y, 16, 16, 1, this)
-            this.currentLevelEntities.push(mushroom);
+        else if (entityData[i].id == "Lantern") {
+            if (this.link.hasLantern) continue;
+            lantern = new Lantern(entityData[i].x, entityData[i].y, 9, 16, 1, this)
+            this.currentLevelEntities.push(lantern);
         }
 
         //console.log(this.currentLevelEntities.length);

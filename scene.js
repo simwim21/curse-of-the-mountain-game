@@ -33,6 +33,12 @@ Scene.prototype.update = function(deltaTime)
 		return;
 	}
 
+	if (keyboard[73]) {
+		this.link.hasKey = true;
+		this.link.hasFlower = true;
+		this.link.hasLantern = true;
+	}
+
 	// Keep track of time
 	this.currentTime += deltaTime;
 	

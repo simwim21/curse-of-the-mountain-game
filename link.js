@@ -54,7 +54,7 @@ function Link(x, y, width, height, fps, world)
     this.hasShield = true;
     this.hasFlower = false;
     this.hasKey = false;
-    this.hasMushroom = false;
+    this.hasLantern = false;
 
 	this.Box = new Box(x + 3, y + 1, 10, 15);
 
@@ -380,15 +380,15 @@ Link.prototype.checkInteraction = function() {
 				this.pickUpItemOffsetY = - 14;
                 console.log("Picked up a flower!");
                 return true;
-            } else if (entity instanceof Mushroom) {
-                this.hasMushroom = true;
-                this.levelManager.currentLevelEntities.splice(i, 1); // Remove the mushroom from the level
-                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the mushroom sprite from the level
+            } else if (entity instanceof Lantern) {
+                this.hasLantern = true;
+                this.levelManager.currentLevelEntities.splice(i, 1); // Remove the lantern from the level
+                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the lantern sprite from the level
                 this.currentPickupItem = entity; 
                 this.isHoldingItem = true; 
-				this.pickUpItemOffsetX = - 4;
-				this.pickUpItemOffsetY = - 13;
-                console.log("Picked up a mysterious mushroom!");
+				this.pickUpItemOffsetX = - 1;
+				this.pickUpItemOffsetY = - 15;
+                console.log("Picked up a mysterious lantern! You can now see in the dark!");
                 return true;
             } else if (entity instanceof OldTree) {
 				if (this.hasFlower = true) {

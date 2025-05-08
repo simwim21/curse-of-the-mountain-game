@@ -1,9 +1,9 @@
 // Old Tree
 
-function Mushroom(x, y, width, height, fps, world)
+function Lantern(x, y, width, height, fps, world)
 {
     this.texture = new Texture("images/items/Weapons_Items_HUD.png");
-    this.Sprite = new Sprite(x, y, width, height, fps, this.texture);
+    this.Sprite = new Sprite(x + 3, y, width, height, fps, this.texture);
 
     this.levelManager = world;
 
@@ -11,15 +11,15 @@ function Mushroom(x, y, width, height, fps, world)
 
 }
 
-Mushroom.prototype.loadAnimations = function() 
+Lantern.prototype.loadAnimations = function() 
 {
     this.Sprite.addAnimation();
-    this.Sprite.addKeyframe(0, [229, 1, 16, 16]);
+    this.Sprite.addKeyframe(0, [406, 264, 9, 16]);
 
     this.Sprite.setAnimation(0);
 
 }
 
-Mushroom.prototype.updateAnimation = function(collisionData) {
+Lantern.prototype.updateAnimation = function(collisionData) {
     return;
 }

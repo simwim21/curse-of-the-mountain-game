@@ -431,7 +431,7 @@ const mapData = {
 			"fieldDefs": []
 		},
 		{
-			"identifier": "MushroomOfSight",
+			"identifier": "Lantern",
 			"uid": 34,
 			"tags": [],
 			"exportToToc": false,
@@ -2099,7 +2099,7 @@ const mapData = {
 					"gridTiles": [],
 					"entityInstances": [
 						{
-							"__identifier": "MushroomOfSight",
+							"__identifier": "Lantern",
 							"__grid": [7,3],
 							"__pivot": [0,0],
 							"__tags": [],

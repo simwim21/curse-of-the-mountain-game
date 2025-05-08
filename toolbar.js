@@ -31,6 +31,14 @@ Toolbar.prototype.draw = function () {
         this.width, this.height // Destination size on the canvas
     );
 
+    this.context.drawImage(
+        this.texture.img,
+        84, 69,
+        16, 16,
+        this.position.x + 104 , this.position.y,
+        56, 16
+    );
+
     this.drawItems();
     this.drawHealth();
     this.drawRupees();
@@ -197,13 +205,6 @@ Toolbar.prototype.drawItems = function () {
     if (this.link.hasFlower && !this.link.hasKey) {
         this.context.drawImage(
             this.texture.img,
-            81, 243,
-            16, 16,
-            this.position.x + 144, this.position.y,
-            16, 16
-        )
-        this.context.drawImage(
-            this.texture.img,
             137, 369,
             16, 16,
             this.position.x + 144, this.position.y,
@@ -214,34 +215,20 @@ Toolbar.prototype.drawItems = function () {
     if (this.link.hasKey) {
         this.context.drawImage(
             this.texture.img,
-            81, 243,
-            16, 16,
-            this.position.x + 144, this.position.y,
-            16, 16
-        )
-        this.context.drawImage(
-            this.texture.img,
             337, 22,
             8, 16,
-            this.position.x + 148, this.position.y,
+            this.position.x + 148, this.position.y - 1,
             8, 16
         )
     }
 
-    if (this.link.hasMushroom) {
+    if (this.link.hasLantern) {
         this.context.drawImage(
             this.texture.img,
-            81, 243,
-            16, 16,
-            this.position.x + 128, this.position.y,
-            16, 16
-        )
-        this.context.drawImage(
-            this.texture.img,
-            229, 1,
-            16, 16,
-            this.position.x + 128, this.position.y,
-            16, 16
+            406, 264,
+            9, 16,
+            this.position.x + 135, this.position.y - 1,
+            9, 16
         )
     }
 }

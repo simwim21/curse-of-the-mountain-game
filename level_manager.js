@@ -116,13 +116,9 @@ LevelManager.prototype.fillCurrentLevelEnemies = function(enemyData) {
             this.currentLevelEnemies.push(buzzblob);
         }
         else if (enemyData[i].id == "Guard") {
-            guard = new Guard(enemyData[i].x, enemyData[i].y, 16, 16, 5, this)
+            guard = new Guard(enemyData[i].x, enemyData[i].y, 17, 18, 4, this)
             this.currentLevelEnemies.push(guard);
         }
-        // else if (enemyData[i].id == "Chest") {
-        //     chest = new Chest(enemyData[i].x, enemyData[i].y, 16, 16, 7, this.map)
-        //     this.currentLevelEnemies.push(chest);
-        // }
 
         // console.log(this.currentLevelEnemies);
 

@@ -6,7 +6,7 @@ function Mask(canvas, link, levelManager) {
     this.levelManager = levelManager;
 
     this.defaultRadius = 15;  
-    this.lanternRadius = 50; 
+    this.lanternRadius = 60; 
 }
 
 Mask.prototype.render = function () {

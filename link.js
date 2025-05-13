@@ -16,7 +16,10 @@ const LINK_SWING_UP = 11;
 const LINK_PICK_UP_LIGHT_ITEM = 12;
 const LINK_PICK_UP_HEAVY_ITEM = 13;
 
-
+const LINK_BLOCK_LEFT = 14;
+const LINK_BLOCK_RIGHT = 15;
+const LINK_BLOCK_DOWN = 16;
+const LINK_BLOCK_UP = 17;
 
 const SWORD_SWING_LEFT = 0;
 const SWORD_LEFT = 1
@@ -44,6 +47,8 @@ function Link(x, y, width, height, fps, world)
 
 	this.runningAnimation = false;
 	this.runningAnimationCouter = 0;
+
+	this.isBlocking = false;
 
 	this.maxHealth = 6;
 	this.currentHealth = this.maxHealth;
@@ -118,6 +123,18 @@ Link.prototype.loadAnimations = function()
 
 	this.Sprite.addAnimation();
 	this.Sprite.addKeyframe(LINK_PICK_UP_HEAVY_ITEM, [421, 11, 16, 16]);
+
+	this.Sprite.addAnimation();
+	this.Sprite.addKeyframe(LINK_BLOCK_LEFT, [103, 59, 16, 16]);
+
+	this.Sprite.addAnimation();
+	this.Sprite.addKeyframe(LINK_BLOCK_RIGHT, [137, 59, 16, 16]);
+
+	this.Sprite.addAnimation();
+	this.Sprite.addKeyframe(LINK_BLOCK_DOWN, [35, 59, 16, 16]);
+
+	this.Sprite.addAnimation();
+	this.Sprite.addKeyframe(LINK_BLOCK_UP, [69, 59, 16, 16]);
 
 	this.Sprite.setAnimation(LINK_STAND_LEFT);
 
@@ -195,8 +212,35 @@ Link.prototype.updateAnimation = function()
 		return;
 	}
 
+	// Handle blocking (X key)
+if (keyboard[88]) {
+    if (this.Sprite.currentAnimation == LINK_STAND_LEFT || this.Sprite.currentAnimation == LINK_WALK_LEFT || this.Sprite.currentAnimation == LINK_BLOCK_LEFT) {
+        this.Sprite.setAnimation(LINK_BLOCK_LEFT);
+    } else if (this.Sprite.currentAnimation == LINK_STAND_RIGHT || this.Sprite.currentAnimation == LINK_WALK_RIGHT || this.Sprite.currentAnimation == LINK_BLOCK_RIGHT) {
+        this.Sprite.setAnimation(LINK_BLOCK_RIGHT);
+    } else if (this.Sprite.currentAnimation == LINK_STAND_DOWN || this.Sprite.currentAnimation == LINK_WALK_DOWN || this.Sprite.currentAnimation == LINK_BLOCK_DOWN) {
+        this.Sprite.setAnimation(LINK_BLOCK_DOWN);
+    } else if (this.Sprite.currentAnimation == LINK_STAND_UP || this.Sprite.currentAnimation == LINK_WALK_UP || this.Sprite.currentAnimation == LINK_BLOCK_UP) {
+        this.Sprite.setAnimation(LINK_BLOCK_UP);
+    }
+    this.isBlocking = true;
+    return;
+} else if (this.isBlocking) {
+    //
+    if (this.Sprite.currentAnimation == LINK_BLOCK_LEFT) {
+        this.Sprite.setAnimation(LINK_STAND_LEFT);
+    } else if (this.Sprite.currentAnimation == LINK_BLOCK_RIGHT) {
+        this.Sprite.setAnimation(LINK_STAND_RIGHT);
+    } else if (this.Sprite.currentAnimation == LINK_BLOCK_DOWN) {
+        this.Sprite.setAnimation(LINK_STAND_DOWN);
+    } else if (this.Sprite.currentAnimation == LINK_BLOCK_UP) {
+        this.Sprite.setAnimation(LINK_STAND_UP);
+    }
+    this.isBlocking = false;
+}
+
 	if (keyboard[67]) { // Assuming "C" key for interaction
-        if (this.checkInteraction()) {
+        if (this.checkInteraction()) { // ONLY RETURNS TRIE IF AN OBJECT IS PICKED UP
 			this.Sprite.setAnimation(LINK_PICK_UP_LIGHT_ITEM);
 		}
     } else if (Object.values(keyboard).some(key => key)) { // If any other key is pressed
@@ -403,6 +447,19 @@ Link.prototype.checkInteraction = function() {
 				}
 				else console.log("You need a flower to get the key!");
 			}
+			else if (entity instanceof Chest) {
+				if (entity.Sprite.currentAnimation == CHEST_OPENED) {
+					console.log("The chest is already opened!");
+					return false;
+				}
+				entity.Sprite.currentAnimation = CHEST_OPENED;
+				chestItem = new DropItem(entity.Sprite.x + 4, entity.Sprite.y, 8, 16, 1, this.levelManager);
+				chestItem.loadAnimations();
+				chestItem.findValidLandingPosition(this.levelManager.map.collisionData, this.levelManager.currentLevelEntities);
+				this.levelManager.currentLevelDropItems.push(chestItem);
+				this.levelManager.currentLevelDropItemSprites.push(chestItem.Sprite);
+				return false;
+			}	
         }
     }
     return false;

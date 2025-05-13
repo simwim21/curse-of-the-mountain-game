@@ -5,6 +5,9 @@ function LevelManager(map) {
 
     this.currentLevelEnemies = []; // Enemies in the world
     this.currentLevelEnemySprites = [];
+
+    this.currentLevelDropItems = []; // Items dropped by enemies
+    this.currentLevelDropItemSprites = [];
     
     this.levelList = [];
 
@@ -144,6 +147,13 @@ LevelManager.prototype.updateSprites = function(deltaTime) {
     for (let i = 0; i < this.currentLevelEnemySprites.length; i++) {
         this.currentLevelEnemySprites[i].update(deltaTime);
     }
+
+    for (let i = 0; i < this.currentLevelDropItems.length; i++) {
+        this.currentLevelDropItems[i].updateAnimation(this.map.collisionData, this.currentLevelEntities);
+    }
+    for (let i = 0; i < this.currentLevelDropItemSprites.length; i++) {
+        this.currentLevelDropItemSprites[i].update(deltaTime);
+    }
 }
 
 LevelManager.prototype.drawSprites = function() {
@@ -154,6 +164,9 @@ LevelManager.prototype.drawSprites = function() {
 
     for (let i = 0; i < this.currentLevelEnemySprites.length; i++) {
         this.currentLevelEnemySprites[i].draw();
+    }
+    for (let i = 0; i < this.currentLevelDropItemSprites.length; i++) {
+        this.currentLevelDropItemSprites[i].draw();
     }
 
 }

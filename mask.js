@@ -6,7 +6,7 @@ function Mask(canvas, link, levelManager) {
     this.levelManager = levelManager;
 
     this.defaultRadius = 15;  
-    this.lanternRadius = 60; 
+    this.lanternRadius = 50; 
 }
 
 Mask.prototype.render = function () {
@@ -15,6 +15,19 @@ Mask.prototype.render = function () {
             this.levelManager.map.currentLevelIndex !== 13) {
             return;
     }
+
+    // --- Entrance gradient (add your condition and positions) ---
+    // if (this.levelManager.map.currentLevelIndex === 12) {
+    //     const entranceGradient = this.context.createRadialGradient(
+    //         144, 82, /* innerRadius */ 10,
+    //         144, 82, /* outerRadius */ 50
+    //     );
+    //     entranceGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
+    //     entranceGradient.addColorStop(1, "rgba(0, 0, 0, 0.99)");
+    //     this.context.globalCompositeOperation = "source-over";
+    //     this.context.fillStyle = entranceGradient;
+    //     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height - 16);
+    // }
 
     const radius = this.link.hasLantern ? this.lanternRadius : this.defaultRadius;
 
@@ -36,6 +49,7 @@ Mask.prototype.render = function () {
     this.context.globalCompositeOperation = "source-over";
     this.context.fillStyle = gradient;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height -16);
+
 
     this.context.restore();
 };

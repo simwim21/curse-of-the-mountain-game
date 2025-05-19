@@ -30,7 +30,7 @@ function Guard(x, y, width, height, fps, world)
 
     this.Box = new Box(x + 4, y + 3, 9, 15); // Create a box for collision detection
 
-    this.maxHealth = 5;
+    this.maxHealth = 4;
     this.currentHealth = this.maxHealth;
 }
 

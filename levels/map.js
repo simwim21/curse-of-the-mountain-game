@@ -11,7 +11,7 @@ const mapData = {
 	"iid": "c3d33f10-1030-11f0-b656-f16f470585c0",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 35,
+	"nextUid": 36,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "GridVania",
@@ -451,6 +451,41 @@ const mapData = {
 			"lineOpacity": 1,
 			"hollow": false,
 			"color": "#3E2731",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileRenderMode": "FitInside",
+			"tileRect": null,
+			"uiTileRect": null,
+			"nineSliceBorders": [],
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": []
+		},
+		{
+			"identifier": "Bat",
+			"uid": 35,
+			"tags": [],
+			"exportToToc": false,
+			"allowOutOfBounds": false,
+			"doc": null,
+			"width": 16,
+			"height": 16,
+			"resizableX": false,
+			"resizableY": false,
+			"minWidth": null,
+			"maxWidth": null,
+			"minHeight": null,
+			"maxHeight": null,
+			"keepAspectRatio": false,
+			"tileOpacity": 1,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#733E39",
 			"renderMode": "Rectangle",
 			"showName": true,
 			"tilesetId": null,
@@ -1673,7 +1708,40 @@ const mapData = {
 					"seed": 221326,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Guard",
+							"__grid": [4,3],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "5fa6f850-1030-11f0-8325-151655174994",
+							"width": 16,
+							"height": 16,
+							"defUid": 17,
+							"px": [64,48],
+							"fieldInstances": [],
+							"__worldX": 224,
+							"__worldY": -208
+						},
+						{
+							"__identifier": "Bat",
+							"__grid": [7,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "c349f640-1030-11f0-8325-63ee618d9d31",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [112,32],
+							"fieldInstances": [],
+							"__worldX": 272,
+							"__worldY": -224
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -1699,22 +1767,6 @@ const mapData = {
 					"overrideTilesetUid": null,
 					"gridTiles": [],
 					"entityInstances": [
-						{
-							"__identifier": "Guard",
-							"__grid": [4,3],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#EAD4AA",
-							"iid": "fdb87410-1030-11f0-8325-690f4c250d72",
-							"width": 16,
-							"height": 16,
-							"defUid": 17,
-							"px": [64,48],
-							"fieldInstances": [],
-							"__worldX": 224,
-							"__worldY": -208
-						},
 						{
 							"__identifier": "Chest",
 							"__grid": [7,5],
@@ -1938,7 +1990,24 @@ const mapData = {
 					"seed": 6434738,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Guard",
+							"__grid": [2,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "300c6c40-1030-11f0-8325-a3d2f7845981",
+							"width": 16,
+							"height": 16,
+							"defUid": 17,
+							"px": [32,32],
+							"fieldInstances": [],
+							"__worldX": 192,
+							"__worldY": -352
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -1981,35 +2050,19 @@ const mapData = {
 							"__worldY": -288
 						},
 						{
-							"__identifier": "Guard",
+							"__identifier": "Chest",
 							"__grid": [2,1],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
-							"iid": "010bbdc0-1030-11f0-8325-39183d2df08a",
-							"width": 16,
-							"height": 16,
-							"defUid": 17,
-							"px": [32,16],
-							"fieldInstances": [],
-							"__worldX": 192,
-							"__worldY": -368
-						},
-						{
-							"__identifier": "Chest",
-							"__grid": [1,1],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
 							"__smartColor": "#FEAE34",
-							"iid": "c43d0ad0-1030-11f0-8325-c787848c91bb",
+							"iid": "2ea05920-1030-11f0-8325-61063de5a765",
 							"width": 16,
 							"height": 16,
 							"defUid": 5,
-							"px": [16,16],
+							"px": [32,16],
 							"fieldInstances": [],
-							"__worldX": 176,
+							"__worldX": 192,
 							"__worldY": -368
 						}
 					]
@@ -2209,7 +2262,56 @@ const mapData = {
 					"seed": 4256774,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Bat",
+							"__grid": [3,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "c61cc550-1030-11f0-8325-63041431bef4",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [48,32],
+							"fieldInstances": [],
+							"__worldX": 368,
+							"__worldY": -352
+						},
+						{
+							"__identifier": "Bat",
+							"__grid": [6,5],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "c70613e0-1030-11f0-8325-5f1c96419e47",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [96,80],
+							"fieldInstances": [],
+							"__worldX": 416,
+							"__worldY": -304
+						},
+						{
+							"__identifier": "Bat",
+							"__grid": [3,5],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "c7f555e0-1030-11f0-8325-19fb2f87d8b1",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [48,80],
+							"fieldInstances": [],
+							"__worldX": 368,
+							"__worldY": -304
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -2442,7 +2544,40 @@ const mapData = {
 					"seed": 6764877,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Guard",
+							"__grid": [3,3],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "5586f5a0-1030-11f0-8325-21d031bdad1c",
+							"width": 16,
+							"height": 16,
+							"defUid": 17,
+							"px": [48,48],
+							"fieldInstances": [],
+							"__worldX": 208,
+							"__worldY": -464
+						},
+						{
+							"__identifier": "BuzzBlob",
+							"__grid": [7,5],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "56d71c50-1030-11f0-8325-5711f9f7d365",
+							"width": 16,
+							"height": 16,
+							"defUid": 15,
+							"px": [112,80],
+							"fieldInstances": [],
+							"__worldX": 272,
+							"__worldY": -432
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -2467,40 +2602,7 @@ const mapData = {
 					"seed": 450445,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": [
-						{
-							"__identifier": "Guard",
-							"__grid": [3,3],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#EAD4AA",
-							"iid": "0be4d740-1030-11f0-8325-634988afe79b",
-							"width": 16,
-							"height": 16,
-							"defUid": 17,
-							"px": [48,48],
-							"fieldInstances": [],
-							"__worldX": 208,
-							"__worldY": -464
-						},
-						{
-							"__identifier": "BuzzBlob",
-							"__grid": [6,5],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#3E8948",
-							"iid": "0d50ea60-1030-11f0-8325-af08facfa98f",
-							"width": 16,
-							"height": 16,
-							"defUid": 15,
-							"px": [96,80],
-							"fieldInstances": [],
-							"__worldX": 256,
-							"__worldY": -432
-						}
-					]
+					"entityInstances": []
 				},
 				{
 					"__identifier": "Collisions",
@@ -2691,7 +2793,40 @@ const mapData = {
 					"seed": 5186270,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Guard",
+							"__grid": [3,5],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "93dc4bc0-1030-11f0-8325-a5a9b7972c3f",
+							"width": 16,
+							"height": 16,
+							"defUid": 17,
+							"px": [48,80],
+							"fieldInstances": [],
+							"__worldX": 48,
+							"__worldY": -432
+						},
+						{
+							"__identifier": "Guard",
+							"__grid": [5,3],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "94b609f0-1030-11f0-8325-15c95c4ce9ab",
+							"width": 16,
+							"height": 16,
+							"defUid": 17,
+							"px": [80,48],
+							"fieldInstances": [],
+							"__worldX": 80,
+							"__worldY": -464
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -2748,38 +2883,6 @@ const mapData = {
 							"fieldInstances": [],
 							"__worldX": 112,
 							"__worldY": -480
-						},
-						{
-							"__identifier": "Guard",
-							"__grid": [5,2],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#EAD4AA",
-							"iid": "110a9700-1030-11f0-8325-775285beae48",
-							"width": 16,
-							"height": 16,
-							"defUid": 17,
-							"px": [80,32],
-							"fieldInstances": [],
-							"__worldX": 80,
-							"__worldY": -480
-						},
-						{
-							"__identifier": "Guard",
-							"__grid": [4,5],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#EAD4AA",
-							"iid": "1205e6f0-1030-11f0-8325-b7e1785ce181",
-							"width": 16,
-							"height": 16,
-							"defUid": 17,
-							"px": [64,80],
-							"fieldInstances": [],
-							"__worldX": 64,
-							"__worldY": -432
 						}
 					]
 				},
@@ -2978,7 +3081,24 @@ const mapData = {
 					"seed": 7227672,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Guard",
+							"__grid": [2,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "7af357c0-1030-11f0-8325-23a815138f6d",
+							"width": 16,
+							"height": 16,
+							"defUid": 17,
+							"px": [32,32],
+							"fieldInstances": [],
+							"__worldX": -128,
+							"__worldY": -480
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -3019,22 +3139,6 @@ const mapData = {
 							"fieldInstances": [],
 							"__worldX": -32,
 							"__worldY": -496
-						},
-						{
-							"__identifier": "Guard",
-							"__grid": [2,2],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#EAD4AA",
-							"iid": "158fd100-1030-11f0-8325-477ee1979523",
-							"width": 16,
-							"height": 16,
-							"defUid": 17,
-							"px": [32,32],
-							"fieldInstances": [],
-							"__worldX": -128,
-							"__worldY": -480
 						}
 					]
 				},
@@ -3233,7 +3337,56 @@ const mapData = {
 					"seed": 7474558,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "BuzzBlob",
+							"__grid": [5,1],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "6f5b5b10-1030-11f0-8325-818dd6c0aafd",
+							"width": 16,
+							"height": 16,
+							"defUid": 15,
+							"px": [80,16],
+							"fieldInstances": [],
+							"__worldX": -80,
+							"__worldY": -368
+						},
+						{
+							"__identifier": "Bat",
+							"__grid": [1,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "d0e5d940-1030-11f0-8325-495088f2c16b",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [16,32],
+							"fieldInstances": [],
+							"__worldX": -144,
+							"__worldY": -352
+						},
+						{
+							"__identifier": "Bat",
+							"__grid": [8,5],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "d186fb40-1030-11f0-8325-874511835caf",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [128,80],
+							"fieldInstances": [],
+							"__worldX": -32,
+							"__worldY": -304
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -3258,24 +3411,7 @@ const mapData = {
 					"seed": 8943990,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": [
-						{
-							"__identifier": "BuzzBlob",
-							"__grid": [5,1],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#3E8948",
-							"iid": "217e2b10-1030-11f0-8325-658d123731da",
-							"width": 16,
-							"height": 16,
-							"defUid": 15,
-							"px": [80,16],
-							"fieldInstances": [],
-							"__worldX": -80,
-							"__worldY": -368
-						}
-					]
+					"entityInstances": []
 				},
 				{
 					"__identifier": "Collisions",
@@ -3473,7 +3609,40 @@ const mapData = {
 					"seed": 8082888,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "BuzzBlob",
+							"__grid": [8,1],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "809f5e80-1030-11f0-8325-5b500f923cc0",
+							"width": 16,
+							"height": 16,
+							"defUid": 15,
+							"px": [128,16],
+							"fieldInstances": [],
+							"__worldX": -192,
+							"__worldY": -496
+						},
+						{
+							"__identifier": "BuzzBlob",
+							"__grid": [2,5],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "8141e010-1030-11f0-8325-1989580d5fcd",
+							"width": 16,
+							"height": 16,
+							"defUid": 15,
+							"px": [32,80],
+							"fieldInstances": [],
+							"__worldX": -288,
+							"__worldY": -432
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -3498,40 +3667,7 @@ const mapData = {
 					"seed": 8333712,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": [
-						{
-							"__identifier": "BuzzBlob",
-							"__grid": [7,1],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#3E8948",
-							"iid": "19489340-1030-11f0-8325-995d7f8375e2",
-							"width": 16,
-							"height": 16,
-							"defUid": 15,
-							"px": [112,16],
-							"fieldInstances": [],
-							"__worldX": -208,
-							"__worldY": -496
-						},
-						{
-							"__identifier": "BuzzBlob",
-							"__grid": [2,4],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#3E8948",
-							"iid": "19c58b70-1030-11f0-8325-675eccd457cb",
-							"width": 16,
-							"height": 16,
-							"defUid": 15,
-							"px": [32,64],
-							"fieldInstances": [],
-							"__worldX": -288,
-							"__worldY": -448
-						}
-					]
+					"entityInstances": []
 				},
 				{
 					"__identifier": "Collisions",
@@ -3722,7 +3858,40 @@ const mapData = {
 					"seed": 3849339,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "BuzzBlob",
+							"__grid": [7,2],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "6b43d700-1030-11f0-8325-3356d1d114b3",
+							"width": 16,
+							"height": 16,
+							"defUid": 15,
+							"px": [112,32],
+							"fieldInstances": [],
+							"__worldX": -48,
+							"__worldY": -224
+						},
+						{
+							"__identifier": "Bat",
+							"__grid": [2,6],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "8d111fc0-1030-11f0-8325-3b27d302cd0e",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [32,96],
+							"fieldInstances": [],
+							"__worldX": -128,
+							"__worldY": -160
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",
@@ -3763,22 +3932,6 @@ const mapData = {
 							"fieldInstances": [],
 							"__worldX": -144,
 							"__worldY": -192
-						},
-						{
-							"__identifier": "BuzzBlob",
-							"__grid": [7,2],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#3E8948",
-							"iid": "1ff0fb60-1030-11f0-8325-4b01c9d2987e",
-							"width": 16,
-							"height": 16,
-							"defUid": 15,
-							"px": [112,32],
-							"fieldInstances": [],
-							"__worldX": -48,
-							"__worldY": -224
 						}
 					]
 				},

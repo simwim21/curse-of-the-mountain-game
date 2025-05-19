@@ -12,3 +12,8 @@ Box.prototype.updatePosition = function (x, y) {
     this.y = y;
 };
 
+Box.prototype.updateSize = function (width, height) {
+    this.width = width;
+    this.height = height;
+};
+

@@ -1,5 +1,6 @@
 IS_HEALTH = 0;
 IS_RUPEE = 1;
+IS_BIGHEART = 2;
 
 // DropItem
 
@@ -11,6 +12,10 @@ function DropItem(x, y, width, height, fps, world)
     this.levelManager = world;
 
     this.identity = Math.floor(Math.random() * 2);
+
+    if (this.levelManager.link.currentHealth <= 3) {
+        this.identity = Math.floor(Math.random() * 3) + Math.floor(Math.random() * 2) * Math.floor(Math.random() * 2);
+    }
 
     this.startPos = { x: x, y: y };
     this.startTime = 0;
@@ -26,6 +31,11 @@ DropItem.prototype.loadAnimations = function()
     else if (this.identity == IS_RUPEE) {
         this.Sprite.addAnimation();
         this.Sprite.addKeyframe(0, [175, 22, 8, 16]);
+    }
+    else if (this.identity == IS_BIGHEART) {
+        this.Sprite.addAnimation();
+        this.Sprite.addKeyframe(0, [254, 22, 16, 16]);
+        this.Sprite.addKeyframe(0, [271, 22, 16, 16]);
     }
     this.Sprite.setAnimation(0);
 }

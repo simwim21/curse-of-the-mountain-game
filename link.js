@@ -424,7 +424,11 @@ Link.prototype.checkDrops = function() {
                 }
             } else if (dropItem.identity === 1) {
                 this.rupeeCount += 1;
-            }
+            } else if (dropItem.identity === 2) {
+				this.currentHealth += 3;
+				this.levelManager.toolbar.damage();
+				
+			}
 
             this.levelManager.currentLevelDropItems.splice(i, 1);
             this.levelManager.currentLevelDropItemSprites.splice(i, 1);

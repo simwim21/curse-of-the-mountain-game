@@ -125,6 +125,10 @@ LevelManager.prototype.fillCurrentLevelEnemies = function(enemyData) {
             guard = new Guard(enemyData[i].x, enemyData[i].y, 17, 18, 4, this)
             this.currentLevelEnemies.push(guard);
         }
+        else if (enemyData[i].id == "Bat") {
+            bat = new Bat(enemyData[i].x, enemyData[i].y, 16, 16, 4, this)
+            this.currentLevelEnemies.push(bat);
+        }
 
         // console.log(this.currentLevelEnemies);
 

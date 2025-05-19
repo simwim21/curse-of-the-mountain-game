@@ -1,7 +1,7 @@
 const BUZZBLOB_STAND = 0;
 const BUZZBLOB_WALK = 1;
 
-const BOZZBLOB_HURT = 2;
+const BUZZBLOB_HURT = 2;
 
 // Buzzblob
 
@@ -31,7 +31,7 @@ Buzzblob.prototype.loadAnimations = function()
     this.Sprite.addKeyframe(BUZZBLOB_WALK, [302, 21, 16, 16]);
 
     this.Sprite.addAnimation();
-    this.Sprite.addKeyframe(BOZZBLOB_HURT, [319, 21, 16, 16]);
+    this.Sprite.addKeyframe(BUZZBLOB_HURT, [319, 21, 16, 16]);
 
 
     this.Sprite.setAnimation(BUZZBLOB_WALK);
@@ -45,7 +45,7 @@ Buzzblob.prototype.updateAnimation = function()
 
     this.checkHurtbox();
 
-    if (this.Sprite.currentAnimation == BOZZBLOB_HURT) return;
+    if (this.Sprite.currentAnimation == BUZZBLOB_HURT) return;
 
     if (this.counter % 120 == 0)
     {
@@ -172,7 +172,7 @@ Buzzblob.prototype.checkHurtbox = function() {
     if (movePerFrameY === 0 && dy !== 0) movePerFrameY = dy > 0 ? 1 : -1;
 
     // Set hurt animation and prevent multiple hits
-    this.Sprite.setAnimation(BOZZBLOB_HURT);
+    this.Sprite.setAnimation(BUZZBLOB_HURT);
     this._isHurting = true;
 
     function animateKnockback() {

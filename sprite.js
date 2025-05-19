@@ -132,6 +132,7 @@ Sprite.prototype.draw = function ()
                           this.x + ox, this.y + oy, sw, sh);
     }
 
+
     context.restore();
 }
 

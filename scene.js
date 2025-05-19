@@ -37,7 +37,6 @@ Scene.prototype.update = function(deltaTime)
 		this.link.hasKey = true;
 		this.link.hasFlower = true;
 		this.link.hasLantern = true;
-		this.link.rupeeCount = 99;
 	}
 	if (keyboard[72]) this.link.currentHealth = this.link.maxHealth;
 	if (keyboard[74]) this.link.currentHealth = 1;
@@ -75,7 +74,6 @@ Scene.prototype.draw = function ()
 
 	// Draw Link
 	this.link.draw();
-	this.link.swordSprite.draw();
 
 	this.mask.render();
 

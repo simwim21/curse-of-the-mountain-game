@@ -73,6 +73,11 @@ Toolbar.prototype.drawRupees = function () {
 
 Toolbar.prototype.drawHealth = function () {
 
+    if (this.tookDamage >= 0) {
+        this.tookDamage -= 1;;
+        return;
+    }
+
     this.context.drawImage(
         this.texture.img,
         10, 22,
@@ -231,4 +236,61 @@ Toolbar.prototype.drawItems = function () {
             9, 16
         )
     }
+}
+
+Toolbar.prototype.damage = function ()
+{
+
+    this.tookDamage = 5;
+
+    this.context.drawImage(
+        this.texture.img,
+        10, 22,
+        8, 8,
+        this.position.x + 80, this.position.y,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        10, 22,
+        8, 8,
+        this.position.x + 88, this.position.y,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        10, 22,
+        8, 8,
+        this.position.x + 96, this.position.y,
+        8, 8
+    );
+
+    this.context.drawImage(
+        this.texture.img,
+        166, 30,
+        8, 8,
+        this.position.x + 80, this.position.y,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        166, 30,
+        8, 8,
+        this.position.x + 88, this.position.y,
+        8, 8
+    );
+    this.context.drawImage(
+        this.texture.img,
+        166, 30,
+        8, 8,
+        this.position.x + 96, this.position.y,
+        8, 8
+    );
+
+
+
+
+
+
+
 }

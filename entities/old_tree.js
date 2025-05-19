@@ -1,5 +1,8 @@
 // Old Tree
 
+const OLD_TREE = 0;
+const HAPPY_OLD_TREE = 1;
+
 function OldTree(x, y, width, height, fps, world)
 {
     this.texture = new Texture("images/tilesets/overworld.png");
@@ -14,9 +17,12 @@ function OldTree(x, y, width, height, fps, world)
 OldTree.prototype.loadAnimations = function() 
 {
     this.Sprite.addAnimation();
-    this.Sprite.addKeyframe(0, [205, 282, 32, 32]);
+    this.Sprite.addKeyframe(OLD_TREE, [205, 282, 32, 32]);
 
-    this.Sprite.setAnimation(0);
+    this.Sprite.addAnimation();
+    this.Sprite.addKeyframe(HAPPY_OLD_TREE, [164, 282, 32, 32]);
+
+    this.Sprite.setAnimation(OLD_TREE);
 
 }
 

@@ -90,6 +90,9 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
         else if (entityData[i].id == "OldTree") {
             oldTree = new OldTree(entityData[i].x, entityData[i].y, 32, 32, 1, this)
             this.currentLevelEntities.push(oldTree);
+            if (this.link.hasKey) {
+                oldTree.Sprite.setAnimation(HAPPY_OLD_TREE);;
+            }
         }
         else if (entityData[i].id == "Lantern") {
             if (this.link.hasLantern) continue;
@@ -162,8 +165,8 @@ LevelManager.prototype.drawSprites = function() {
         this.currentLevelEntitySprites[i].draw();
     }
 
-    for (let i = 0; i < this.currentLevelEnemySprites.length; i++) {
-        this.currentLevelEnemySprites[i].draw();
+    for (let i = 0; i < this.currentLevelEnemies.length; i++) {
+        this.currentLevelEnemies[i].draw();
     }
     for (let i = 0; i < this.currentLevelDropItemSprites.length; i++) {
         this.currentLevelDropItemSprites[i].draw();
@@ -185,6 +188,8 @@ LevelManager.prototype.changeLevel = function(x, y)
         this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].leftNeighbor;
         this.fillCurrentLevelEntities(this.map.entityData);
         this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
         return;  
     }
     else if (x == 1) {
@@ -192,6 +197,8 @@ LevelManager.prototype.changeLevel = function(x, y)
         this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].rightNeighbor;
         this.fillCurrentLevelEntities(this.map.entityData);
         this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
         return;  
     }
     else if (y == -1) {
@@ -199,6 +206,8 @@ LevelManager.prototype.changeLevel = function(x, y)
         this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].upNeighbor;
         this.fillCurrentLevelEntities(this.map.entityData);
         this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
         return;  
     }
     else if (y == 1) {
@@ -206,6 +215,8 @@ LevelManager.prototype.changeLevel = function(x, y)
         this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].downNeighbor;
         this.fillCurrentLevelEntities(this.map.entityData);
         this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
         return;  
     }
 
@@ -215,31 +226,68 @@ LevelManager.prototype.changeLevel = function(x, y)
 
 // Collision Handling
 LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
-    const tileX = Math.floor(x / this.map.gridSize);
-    const tileY = Math.floor(y / this.map.gridSize);
 
-    // Check map collisions
+    // 1. Check map collisions
     if (this.map.isBlocked(x, y, requestingEntity.Box.width, requestingEntity.Box.height)) return true;
 
-    // Check collisions with other enemies (except the requesting entity)
+
+    // 2. Check collision with Link (if the requesting entity is not Link itself)
+    if (this.link && requestingEntity !== this.link) {
+        if (
+            x - 1 < this.link.Box.x + this.link.Box.width && 
+            x + requestingEntity.Box.width + 1 > this.link.Box.x && 
+            y - 1 < this.link.Box.y + this.link.Box.height && 
+            y + requestingEntity.Box.height + 1 > this.link.Box.y 
+        ) {
+            return true; // Collision detected with Link
+        }
+    }
+
+    // 3. Check collisions with other enemies (except the requesting entity)
     for (let i = 0; i < this.currentLevelEnemies.length; i++) {
         const enemy = this.currentLevelEnemies[i];
 
         // Skip the requesting entity itself
         if (enemy === requestingEntity) continue;
 
-        // Check for bounding box collision
+        // Check for bounding box collision with enemy itself
         if (
             x < enemy.Box.x + enemy.Box.width && 
             x + requestingEntity.Box.width > enemy.Box.x &&
             y < enemy.Box.y + enemy.Box.height && 
             y + requestingEntity.Box.height > enemy.Box.y 
         ) {
-            return true; // Collision detected
+            if (requestingEntity instanceof Link) {
+                this.link.handleDamage(enemy.Box);
+            }
+            return true;
+        }
+
+        // --- NEW: Check for collision with guard's spear if visible ---
+        if (enemy.spearSprite && enemy.spearSprite.visible) {
+            // Calculate spear hitbox based on current keyframe
+            const spearAnim = enemy.spearSprite.animations[enemy.spearSprite.currentAnimation];
+            const spearKeyframe = spearAnim[enemy.spearSprite.currentKeyframe];
+            const spearX = enemy.spearSprite.x + (spearKeyframe.ox || 0);
+            const spearY = enemy.spearSprite.y + (spearKeyframe.oy || 0);
+            const spearW = spearKeyframe.sw;
+            const spearH = spearKeyframe.sh;
+
+            if (
+                x < spearX + spearW &&
+                x + requestingEntity.Box.width > spearX &&
+                y < spearY + spearH &&
+                y + requestingEntity.Box.height > spearY
+            ) {
+                if (requestingEntity instanceof Link) {
+                    this.link.handleDamage({ x: spearX, y: spearY, width: spearW, height: spearH });
+                }
+                return true;
+            }
         }
     }
 
-    // Check collisions with other entities (except the requesting entity)
+    // 4. Check collisions with other entities (except the requesting entity)
     for (let i = 0; i < this.currentLevelEntities.length; i++) {
         const entity = this.currentLevelEntities[i];
 
@@ -254,18 +302,6 @@ LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
             y + requestingEntity.Box.height > entity.Box.y 
         ) {
             return true; // Collision detected
-        }
-    }
-
-    // Check collision with Link (if the requesting entity is not Link itself)
-    if (this.link && requestingEntity !== this.link) {
-        if (
-            x < this.link.Box.x + this.link.Box.width && 
-            x + requestingEntity.Box.width > this.link.Box.x && 
-            y < this.link.Box.y + this.link.Box.height && 
-            y + requestingEntity.Box.height > this.link.Box.y 
-        ) {
-            return true; // Collision detected with Link
         }
     }
 

@@ -32,8 +32,8 @@ DropItem.prototype.loadAnimations = function()
 
 DropItem.prototype.findValidLandingPosition = function(collisionData, entities) {
     // Try to find a nearby valid position (spiral outwards)
-    const maxRadius = 24; // How far to search from startPos
-    const step = 2; // Step size in pixels
+    const maxRadius = 30; 
+    const step = 2;
     const w = this.Sprite.width;
     const h = this.Sprite.height;
 

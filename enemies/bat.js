@@ -46,12 +46,12 @@ Bat.prototype.updateAnimation = function()
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // Movement speed
-    const approachSpeed = 3;
-    const retreatSpeed = 2;
+    const approachSpeed = 2;
+    const retreatSpeed = 1;
     const minDistance = 10; // If closer than this, retreat
     const maxDistance = 80; // If further than this, approach
 
-    // --- Track movement for stuck detection ---
+    // Track movement for stuck detection
     if (!this._lastMoveCheck) {
         this._lastMoveCheck = Date.now();
         this._lastPos = { x: this.Box.x, y: this.Box.y };
@@ -80,11 +80,13 @@ Bat.prototype.updateAnimation = function()
             // Enlarge the bat's hitbox to ensure contact
             const originalWidth = this.Box.width;
             const originalHeight = this.Box.height;
-            this.Box.updateSize(originalWidth + 20, originalHeight + 20);
+            this.Box.updateSize(originalWidth + 8, originalHeight + 8);
             // Center the enlarged box on the bat
+            const originalBoxX = this.Box.x;
+            const originalBoxY = this.Box.y;
             this.Box.updatePosition(
-                this.Box.x - 6,
-                this.Box.y - 6
+                this.Sprite.x,
+                this.Sprite.y
             );
 
             // Damage Link if not invincible
@@ -96,20 +98,19 @@ Bat.prototype.updateAnimation = function()
             setTimeout(() => {
                 this.Box.updateSize(originalWidth, originalHeight);
                 this.Box.updatePosition(
-                    this.Sprite.x + 4,
-                    this.Sprite.y + 4
+                    originalBoxX,
+                    originalBoxY
                 );
             }, 100);
 
             this.state = "retreat";
-            this.stateTimer = 45 + Math.floor(Math.random() * 30); // Retreat for 0.75-1.25s
+            this.stateTimer = 30 + Math.floor(Math.random() * 100);
         } else {
             // --- Check if stuck ---
             const now = Date.now();
-            if (now - this._lastMoveCheck > 150) {
+            if (now - this._lastMoveCheck > 200) {
                 const distMoved = Math.abs(this.Box.x - this._lastPos.x) + Math.abs(this.Box.y - this._lastPos.y);
                 if (distMoved < 1) {
-                    // Bat hasn't moved, switch to retreat
                     this.state = "retreat";
                     this.stateTimer = 45 + Math.floor(Math.random() * 30);
                 }
@@ -176,7 +177,7 @@ Bat.prototype.checkHurtbox = function() {
                 batBox.x + batBox.width <= linkBox.x &&
                 batBox.x + batBox.width >= linkBox.x - 16 &&
                 batBox.y < linkBox.y + linkBox.height &&
-                batBox.y + batBox.height > linkBox.y;
+                batBox.y + batBox.height > linkBox.y - 16 ;
             break;
         case LINK_SWING_RIGHT:
             // Bat must be right of Link, within 16px, and overlap vertically
@@ -184,14 +185,14 @@ Bat.prototype.checkHurtbox = function() {
                 batBox.x >= linkBox.x + linkBox.width &&
                 batBox.x <= linkBox.x + linkBox.width + 16 &&
                 batBox.y < linkBox.y + linkBox.height &&
-                batBox.y + batBox.height > linkBox.y;
+                batBox.y + batBox.height > linkBox.y - 16;
             break;
         case LINK_SWING_UP:
             // Bat must be above Link, within 16px, and overlap horizontally
             inFront =
                 batBox.y + batBox.height <= linkBox.y &&
                 batBox.y + batBox.height >= linkBox.y - 16 &&
-                batBox.x < linkBox.x + linkBox.width &&
+                batBox.x < linkBox.x + linkBox.width + 16 &&
                 batBox.x + batBox.width > linkBox.x;
             break;
         case LINK_SWING_DOWN:
@@ -200,7 +201,7 @@ Bat.prototype.checkHurtbox = function() {
                 batBox.y >= linkBox.y + linkBox.height &&
                 batBox.y <= linkBox.y + linkBox.height + 16 &&
                 batBox.x < linkBox.x + linkBox.width &&
-                batBox.x + batBox.width > linkBox.x;
+                batBox.x + batBox.width > linkBox.x - 16;
             break;
     }
 

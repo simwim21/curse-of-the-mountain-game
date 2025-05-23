@@ -21,6 +21,10 @@ function Scene()
 
 	this.mask = new Mask(document.getElementById("game-layer"), this.link, this.levelManager);
 
+	this.soundManager = new SoundManager();
+	this.soundManager.addLink(this.link);
+	this.levelManager.addSoundManager(this.soundManager);
+
 	this.startGame = true;
 }
 
@@ -36,6 +40,7 @@ Scene.prototype.update = function(deltaTime)
 	if (keyboard[73]) {
 		this.link.hasKey = true;
 		this.link.hasFlower = true;
+		this.link.flowerHealth = 3;
 		this.link.hasLantern = true;
 	}
 	if (keyboard[72]) this.link.currentHealth = this.link.maxHealth;
@@ -68,6 +73,7 @@ Scene.prototype.draw = function ()
 	// Tiles Rendering
 	this.map.renderTiles();
 	this.toolbar.draw();
+
 
 	// Draw sprites
 	this.levelManager.drawSprites();

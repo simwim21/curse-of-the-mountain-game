@@ -208,14 +208,33 @@ Toolbar.prototype.drawItems = function () {
     }
 
     if (this.link.hasFlower && !this.link.hasKey) {
-        this.context.drawImage(
-            this.texture.img,
-            137, 369,
-            16, 16,
-            this.position.x + 144, this.position.y,
-            16, 16
-        )
+        if (this.link.flowerHealth == 3) {
+            this.context.drawImage(
+                this.texture.img,
+                137, 369,
+                16, 16,
+                this.position.x + 144, this.position.y,
+                16, 16
+            )
+        } else if (this.link.flowerHealth == 2) {
+            this.context.drawImage(
+                this.texture.img,
+                171, 369,
+                16, 16,
+                this.position.x + 144, this.position.y,
+                16, 16
+            )
+        } else if (this.link.flowerHealth == 1) {
+            this.context.drawImage(
+                this.texture.img,
+                154, 369,
+                16, 16,
+                this.position.x + 144, this.position.y,
+                16, 16
+            )
+        }
     }
+
 
     if (this.link.hasKey) {
         this.context.drawImage(

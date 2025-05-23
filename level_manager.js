@@ -37,6 +37,11 @@ LevelManager.prototype.addToolbar = function(toolbar) {
     this.toolbar = toolbar;
 }
 
+LevelManager.prototype.addSoundManager = function(soundManager)
+{
+    this.soundManager = soundManager;
+}
+
 LevelManager.prototype.levelInitializer = function() // Sets the logic which level is next to which level
 {
     // Left, Right, Up, Down

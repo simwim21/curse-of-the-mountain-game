@@ -179,6 +179,9 @@ Link.prototype.loadAnimations = function()
 
 Link.prototype.updateAnimation = function()
 {	
+
+	console.log("flower:", this.hasFlower);
+	
 	if (!this.runningAnimation) {
 		this.swordSprite.setVisibility(false);
 	}
@@ -379,6 +382,7 @@ Link.prototype.swordSwing = function() {
 	this.swordSprite.y = this.Sprite.y;
 
 	this.runningAnimation = true;
+	this.levelManager.soundManager.playSound("attack");
 	if (this.Sprite.currentAnimation == LINK_WALK_LEFT || this.Sprite.currentAnimation == LINK_STAND_LEFT) {
 		this.Sprite.setAnimation(LINK_SWING_LEFT);
 		this.swordSprite.setAnimation(SWORD_SWING_LEFT);
@@ -421,12 +425,16 @@ Link.prototype.checkDrops = function() {
                 if (this.currentHealth < this.maxHealth) {
                     this.currentHealth += 1;
 					this.levelManager.toolbar.damage();
+					this.levelManager.soundManager.playSound("small_heal");
                 }
             } else if (dropItem.identity === 1) {
                 this.rupeeCount += 1;
+				this.levelManager.soundManager.playSound("rupee");
+
             } else if (dropItem.identity === 2) {
 				this.currentHealth += 3;
 				this.levelManager.toolbar.damage();
+				this.levelManager.soundManager.playSound("big_heal");
 				
 			}
 
@@ -450,12 +458,14 @@ Link.prototype.checkInteraction = function() {
             // Handle pickup
             if (entity instanceof Flower) {
                 this.hasFlower = true;
+				this.flowerHealth = 3;
                 this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
                 this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
                 this.currentPickupItem = entity; // Set the picked-up item
                 this.isHoldingItem = true; // Mark as holding an item
 				this.pickUpItemOffsetX = - 4;
 				this.pickUpItemOffsetY = - 14;
+				this.levelManager.soundManager.playSound("good");
                 console.log("Picked up a flower!");
                 return true;
             } else if (entity instanceof Lantern) {
@@ -466,10 +476,12 @@ Link.prototype.checkInteraction = function() {
                 this.isHoldingItem = true; 
 				this.pickUpItemOffsetX = - 1;
 				this.pickUpItemOffsetY = - 15;
+				this.levelManager.soundManager.playSound("good");
                 console.log("Picked up a mysterious lantern! You can now see in the dark!");
                 return true;
             } else if (entity instanceof OldTree) {
-				if (this.hasFlower = true) {
+				console.log("Does link have the flower? " + this.hasFlower);
+				if (this.hasFlower === true) {
 					this.hasFlower = false;
 					this.hasKey = true; 
 					this.currentPickupItem = new Key(0, 0, 8, 16, 1, this.levelManager);
@@ -478,6 +490,7 @@ Link.prototype.checkInteraction = function() {
 					this.pickUpItemOffsetX = 0;
 					this.pickUpItemOffsetY = - 15;
 					entity.Sprite.setAnimation(HAPPY_OLD_TREE);
+					this.levelManager.soundManager.playSound("good");
 					console.log("Gave the Old Tree a Flower! He gave you a Key!");
 					return true;
 				}
@@ -494,6 +507,7 @@ Link.prototype.checkInteraction = function() {
 				chestItem.findValidLandingPosition(this.levelManager.map.collisionData, this.levelManager.currentLevelEntities);
 				this.levelManager.currentLevelDropItems.push(chestItem);
 				this.levelManager.currentLevelDropItemSprites.push(chestItem.Sprite);
+				this.levelManager.soundManager.playSound("chest");
 				return false;
 			}	
         }
@@ -515,10 +529,6 @@ Link.prototype.handleDamage = function(hitbox) {
     // If Link is currently invincible, ignore damage
     if (this.isInvincible) return;
 
-	if (this.hasFlower) {
-		this.hasFlower = false;
-		console.log("The flower was destroyed!");
-	}
     // Calculate overlap on each side
     const dx = (this.Box.x + this.Box.width / 2) - (hitbox.x + hitbox.width / 2);
     const dy = (this.Box.y + this.Box.height / 2) - (hitbox.y + hitbox.height / 2);
@@ -539,6 +549,7 @@ Link.prototype.handleDamage = function(hitbox) {
             (direction === "DOWN" && this.Sprite.currentAnimation === LINK_BLOCK_DOWN)
         ) {
             // Blocked, no damage
+			this.levelManager.soundManager.playSound("block");
             return;
         }
     }
@@ -553,8 +564,17 @@ Link.prototype.handleDamage = function(hitbox) {
         // Take damage
         this.currentHealth -= 1;
         if (this.currentHealth < 0) this.currentHealth = 0;
+		this.levelManager.soundManager.playSound("hit");
 
         this.levelManager.toolbar.damage();
+
+		if (this.hasFlower && this.flowerHealth > 0) {
+			this.flowerHealth -= 1;
+			if (this.flowerHealth == 0) {
+				console.log("The flower was destroyed!");
+				this.hasFlower = false;
+			}
+		}
 
         // Set invincibility frames (e.g., 1 second)
         this.isInvincible = true;

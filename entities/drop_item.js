@@ -31,6 +31,7 @@ DropItem.prototype.loadAnimations = function()
     else if (this.identity == IS_RUPEE) {
         this.Sprite.addAnimation();
         this.Sprite.addKeyframe(0, [175, 22, 8, 16]);
+        this.Sprite.addKeyframe(0, [184, 22, 8, 16]);
     }
     else if (this.identity == IS_BIGHEART) {
         this.Sprite.addAnimation();

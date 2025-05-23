@@ -129,6 +129,8 @@ Guard.prototype.updateAnimation = function () {
                     this.spearSprite.y = this.Sprite.y;
                     this.spearSprite.visible = true;
                     this._attackCooldown = 60; // 60 frames = 1 second at 60fps
+                    this.levelManager.link.handleDamage(this.spearSprite);
+                    this.levelManager.link.handleDamage(this.Box);
                 }
                 else if (this.Sprite.currentAnimation != GUARD_WALK_RIGHT) {
                     this.Sprite.setAnimation(GUARD_WALK_RIGHT);
@@ -148,6 +150,8 @@ Guard.prototype.updateAnimation = function () {
                     this.spearSprite.y = this.Sprite.y;
                     this.spearSprite.visible = true;
                     this._attackCooldown = 60;
+                    this.levelManager.link.handleDamage(this.spearSprite);
+                    this.levelManager.link.handleDamage(this.Box);
                 }
                 else if (this.Sprite.currentAnimation != GUARD_WALK_LEFT) {
                     this.Sprite.setAnimation(GUARD_WALK_LEFT);
@@ -168,6 +172,8 @@ Guard.prototype.updateAnimation = function () {
                     this.spearSprite.y = this.Sprite.y;
                     this.spearSprite.visible = true;
                     this._attackCooldown = 60;
+                    this.levelManager.link.handleDamage(this.spearSprite);
+                    this.levelManager.link.handleDamage(this.Box);
                 }
                 else if (this.Sprite.currentAnimation != GUARD_WALK_DOWN) {
                     this.Sprite.setAnimation(GUARD_WALK_DOWN);
@@ -187,12 +193,16 @@ Guard.prototype.updateAnimation = function () {
                     this.spearSprite.y = this.Sprite.y;
                     this.spearSprite.visible = true;
                     this._attackCooldown = 60;
+                    this.levelManager.link.handleDamage(this.spearSprite);
+                    this.levelManager.link.handleDamage(this.Box);
                 }
                 else if (this.Sprite.currentAnimation != GUARD_WALK_UP) {
                     this.Sprite.setAnimation(GUARD_WALK_UP);
                     this.spearSprite.visible = false;
                 }
             }
+            this.levelManager.link.handleDamage(this.spearSprite);
+            this.levelManager.link.handleDamage(this.Box);
         }
     } else {
         this.animationTimer--;
@@ -234,7 +244,7 @@ Guard.prototype.checkHurtbox = function() {
                 guardBox.x + guardBox.width <= linkBox.x &&
                 guardBox.x + guardBox.width >= linkBox.x - 16 &&
                 guardBox.y < linkBox.y + linkBox.height &&
-                guardBox.y + guardBox.height > linkBox.y;
+                guardBox.y + guardBox.height > linkBox.y - 16;
             break;
         case LINK_SWING_RIGHT:
             // Guard must be right of Link, within 16px, and overlap vertically
@@ -242,14 +252,14 @@ Guard.prototype.checkHurtbox = function() {
                 guardBox.x >= linkBox.x + linkBox.width &&
                 guardBox.x <= linkBox.x + linkBox.width + 16 &&
                 guardBox.y < linkBox.y + linkBox.height &&
-                guardBox.y + guardBox.height > linkBox.y;
+                guardBox.y + guardBox.height > linkBox.y - 16;
             break;
         case LINK_SWING_UP:
             // Guard must be above Link, within 16px, and overlap horizontally
             inFront =
                 guardBox.y + guardBox.height <= linkBox.y &&
                 guardBox.y + guardBox.height >= linkBox.y - 16 &&
-                guardBox.x < linkBox.x + linkBox.width &&
+                guardBox.x < linkBox.x + linkBox.width + 16 &&
                 guardBox.x + guardBox.width > linkBox.x;
             break;
         case LINK_SWING_DOWN:
@@ -258,7 +268,7 @@ Guard.prototype.checkHurtbox = function() {
                 guardBox.y >= linkBox.y + linkBox.height &&
                 guardBox.y <= linkBox.y + linkBox.height + 16 &&
                 guardBox.x < linkBox.x + linkBox.width &&
-                guardBox.x + guardBox.width > linkBox.x;
+                guardBox.x + guardBox.width > linkBox.x - 16;
             break;
     }
 

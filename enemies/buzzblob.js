@@ -113,7 +113,7 @@ Buzzblob.prototype.checkHurtbox = function() {
                 buzzBox.x + buzzBox.width <= linkBox.x &&
                 buzzBox.x + buzzBox.width >= linkBox.x - 16 &&
                 buzzBox.y < linkBox.y + linkBox.height &&
-                buzzBox.y + buzzBox.height > linkBox.y;
+                buzzBox.y + buzzBox.height > linkBox.y - 16;
             break;
         case LINK_SWING_RIGHT:
             // Buzzblob must be right of Link, within 16px, and overlap vertically
@@ -121,14 +121,14 @@ Buzzblob.prototype.checkHurtbox = function() {
                 buzzBox.x >= linkBox.x + linkBox.width &&
                 buzzBox.x <= linkBox.x + linkBox.width + 16 &&
                 buzzBox.y < linkBox.y + linkBox.height &&
-                buzzBox.y + buzzBox.height > linkBox.y;
+                buzzBox.y + buzzBox.height > linkBox.y - 16;
             break;
         case LINK_SWING_UP:
             // Buzzblob must be above Link, within 16px, and overlap horizontally
             inFront =
                 buzzBox.y + buzzBox.height <= linkBox.y &&
                 buzzBox.y + buzzBox.height >= linkBox.y - 16 &&
-                buzzBox.x < linkBox.x + linkBox.width &&
+                buzzBox.x < linkBox.x + linkBox.width + 16 &&
                 buzzBox.x + buzzBox.width > linkBox.x;
             break;
         case LINK_SWING_DOWN:
@@ -137,7 +137,7 @@ Buzzblob.prototype.checkHurtbox = function() {
                 buzzBox.y >= linkBox.y + linkBox.height &&
                 buzzBox.y <= linkBox.y + linkBox.height + 16 &&
                 buzzBox.x < linkBox.x + linkBox.width &&
-                buzzBox.x + buzzBox.width > linkBox.x;
+                buzzBox.x + buzzBox.width > linkBox.x - 16;
             break;
     }
 

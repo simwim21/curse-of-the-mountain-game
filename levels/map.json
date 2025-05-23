@@ -569,7 +569,24 @@
 					"seed": 3255108,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Bat",
+							"__grid": [3,3],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "88466560-1030-11f0-8325-1fdfcd6d3246",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [48,48],
+							"fieldInstances": [],
+							"__worldX": 48,
+							"__worldY": 48
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",

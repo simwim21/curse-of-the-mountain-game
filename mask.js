@@ -12,7 +12,9 @@ function Mask(canvas, link, levelManager) {
 Mask.prototype.render = function () {
     if (this.levelManager.map.currentLevelIndex !== 10 &&
             this.levelManager.map.currentLevelIndex !== 12 &&
-            this.levelManager.map.currentLevelIndex !== 13) {
+            this.levelManager.map.currentLevelIndex !== 13 && 
+            this.levelManager.map.currentLevelIndex !== 9 && 
+            this.levelManager.map.currentLevelIndex !== 11) {
             return;
     }
 

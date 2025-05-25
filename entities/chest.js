@@ -28,5 +28,6 @@ Chest.prototype.loadAnimations = function()
 }
 
 Chest.prototype.updateAnimation = function(collisionData) {
+    
     return;
 }

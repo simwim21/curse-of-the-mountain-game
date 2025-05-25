@@ -207,7 +207,7 @@ Toolbar.prototype.drawItems = function () {
         )
     }
 
-    if (this.link.hasFlower && !this.link.hasKey) {
+    if (this.link.hasFlower && !this.link.hasKey1) {
         if (this.link.flowerHealth == 3) {
             this.context.drawImage(
                 this.texture.img,
@@ -236,7 +236,7 @@ Toolbar.prototype.drawItems = function () {
     }
 
 
-    if (this.link.hasKey) {
+    if (this.link.hasKey1) {
         this.context.drawImage(
             this.texture.img,
             337, 22,

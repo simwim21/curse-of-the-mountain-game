@@ -11,6 +11,8 @@ function SoundManager() {
     this.good = AudioFX("sounds/good.mp3");
     this.chest = AudioFX("sounds/chest.mp3");
     this.block = AudioFX("sounds/block.mp3");
+    this.button = AudioFX("sounds/button.mp3");
+    this.stones = AudioFX("sounds/stones.mp3");
 
     console.log("SoundManager initialized");
 }
@@ -28,10 +30,12 @@ SoundManager.prototype.addLevelManager = function(levelManager)
 SoundManager.prototype.playSound = function(sound)
 {
     if (sound == "hit") {
+        this.hit.stop();
         this.hit.play();
         return;
     }
     if (sound == "attack") {
+        this.hit.stop();
         this.attack.play();
         return;
     }
@@ -61,7 +65,18 @@ SoundManager.prototype.playSound = function(sound)
     }
     if (sound == "block") 
     {
+        this.block.stop();
         this.block.play();
+        return;
+    }
+    if (sound == "button") 
+    {
+        this.button.play();
+        return;
+    }
+    if (sound == "stones") 
+    {
+        this.stones.play();
         return;
     }
 

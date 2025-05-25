@@ -60,13 +60,16 @@ function Link(x, y, width, height, fps, world)
 	this.hasSword = true;
     this.hasShield = true;
     this.hasFlower = false;
-    this.hasKey = false;
     this.hasLantern = false;
+
+	this.hasKey1 = false; // Key for first Boss fight
 
 	this.Box = new Box(x + 3, y + 1, 10, 15);
 
 	this.currentPickupItem = null;
 	this.isHoldingItem = false;
+
+	this.isCheatInvincible = false;
 }
 
 Link.prototype.loadAnimations = function() 
@@ -180,8 +183,7 @@ Link.prototype.loadAnimations = function()
 Link.prototype.updateAnimation = function()
 {	
 
-	console.log("flower:", this.hasFlower);
-	
+
 	if (!this.runningAnimation) {
 		this.swordSprite.setVisibility(false);
 	}
@@ -483,7 +485,7 @@ Link.prototype.checkInteraction = function() {
 				console.log("Does link have the flower? " + this.hasFlower);
 				if (this.hasFlower === true) {
 					this.hasFlower = false;
-					this.hasKey = true; 
+					this.hasKey1 = true; 
 					this.currentPickupItem = new Key(0, 0, 8, 16, 1, this.levelManager);
 					this.currentPickupItem.loadAnimations(); // Load the key's animations
 					this.isHoldingItem = true; 
@@ -510,6 +512,16 @@ Link.prototype.checkInteraction = function() {
 				this.levelManager.soundManager.playSound("chest");
 				return false;
 			}	
+			else if (entity instanceof Door && this.hasKey1) {
+				this.hasKey1 = false; // Use the key
+				entity.Sprite.setAnimation(DOOR_OPENED);
+				this.levelManager.door1opened = true;
+				// this.levelManager.soundManager.playSound("door");
+				console.log("Used the key to open the door!");
+				this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
+                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+			}
+
         }
     }
     return false;
@@ -527,7 +539,7 @@ Link.prototype.drawPickupItem = function() {
 
 Link.prototype.handleDamage = function(hitbox) {
     // If Link is currently invincible, ignore damage
-    if (this.isInvincible) return;
+    if (this.isInvincible || this.isCheatInvincible) return;
 
     // Calculate overlap on each side
     const dx = (this.Box.x + this.Box.width / 2) - (hitbox.x + hitbox.width / 2);

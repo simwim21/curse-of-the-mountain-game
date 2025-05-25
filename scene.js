@@ -38,13 +38,15 @@ Scene.prototype.update = function(deltaTime)
 	}
 
 	if (keyboard[73]) {
-		this.link.hasKey = true;
+		this.link.hasKey1 = true;
 		this.link.hasFlower = true;
 		this.link.flowerHealth = 3;
 		this.link.hasLantern = true;
 	}
 	if (keyboard[72]) this.link.currentHealth = this.link.maxHealth;
 	if (keyboard[74]) this.link.currentHealth = 1;
+	if (keyboard[71]) this.link.isCheatInvincible = true;
+	if (keyboard[70]) this.link.isCheatInvincible = false;
 
 	// Keep track of time
 	this.currentTime += deltaTime;

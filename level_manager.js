@@ -26,6 +26,11 @@ function LevelManager(map) {
         }
     }, 100); // Check every 100ms
 
+    this.door1opened = false;
+    this.door2opened = false;
+    this.walllevel7opened = false;
+    this.buttonPressed = false;
+
     
 }
 
@@ -48,11 +53,11 @@ LevelManager.prototype.levelInitializer = function() // Sets the logic which lev
     this.levelList.push(new Level(0, 1, -1, 2, -1, this.map)); // Level 0 => Left=1, Up=2
     this.levelList.push(new Level(1, -1, 0, -1, -1, this.map)); // Level 1 => Right=0
     this.levelList.push(new Level(2, -1, -1, 3, 0, this.map)); // Level 2 => Down=0, Up=3
-    this.levelList.push(new Level(3, 12, 4, -1, 2, this.map)); // Level 3 => Down =2, Left=12, Right=4, Up=?
+    this.levelList.push(new Level(3, 12, 4, 17, 2, this.map)); // Level 3 => Down =2, Left=12, Right=4, Up=17(Boss1)
     this.levelList.push(new Level(4, 3, -1, 5, -1, this.map)); // Level 4 => Left=3, Up=5
     this.levelList.push(new Level(5, -1, 6, 7, 4, this.map)); // Level 5 => Right=6, Up=7, Down=4
     this.levelList.push(new Level(6, 5, -1, -1, -1, this.map)); // Level 6 => Left=5
-    this.levelList.push(new Level(7, 8, -1, -1, 5, this.map)); // Level 7 => Left=8, Down=5
+    this.levelList.push(new Level(7, 8, 18, -1, 5, this.map)); // Level 7 => Left=8, Down=5
     this.levelList.push(new Level(8, 9, 7, -1, -1, this.map)); // Level 8 => Left=9, Right=7
     this.levelList.push(new Level(9, 11, 8, -1, 10, this.map)); // Level 9 => Left=11, Right=8, Down=10
     this.levelList.push(new Level(10, -1, -1, 9, 12, this.map)); // Level 10 => Up=9, down=12
@@ -62,6 +67,12 @@ LevelManager.prototype.levelInitializer = function() // Sets the logic which lev
     this.levelList.push(new Level(14, -1, -1, -1, -1, this.map)); // Level 14 => Down=13
     this.levelList.push(new Level(15, -1, -1, -1, -1, this.map)); // Level 15 => Up=16
     this.levelList.push(new Level(16, -1, -1, -1, 11, this.map)); // Level 16 => Left=11, Down=15
+    this.levelList.push(new Level(17, -1, -1, -1, 3, this.map)); // Level 17 => Down=3
+    this.levelList.push(new Level(18, 7, -1, -1, -1, this.map)); // Level 18 => Left = 7
+    
+    this.levelList.push(new Level(19, -1, -1, 20, -1, this.map)); // Level 19 => Up=20
+    this.levelList.push(new Level(20, 21, -1, -1, 19, this.map)); // Level 20 => Down=19
+    this.levelList.push(new Level(21, -1, 20, -1, -1, this.map)); // Level 21 => Up=22
 
 }
 
@@ -95,7 +106,7 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
         else if (entityData[i].id == "OldTree") {
             oldTree = new OldTree(entityData[i].x, entityData[i].y, 32, 32, 1, this)
             this.currentLevelEntities.push(oldTree);
-            if (this.link.hasKey) {
+            if (this.link.hasKey1) {
                 oldTree.Sprite.setAnimation(HAPPY_OLD_TREE);;
             }
         }
@@ -103,6 +114,56 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             if (this.link.hasLantern) continue;
             lantern = new Lantern(entityData[i].x, entityData[i].y, 9, 16, 1, this)
             this.currentLevelEntities.push(lantern);
+        }
+        else if (entityData[i].id == "Door") {
+            if (this.map.currentLevelIndex == 3) {
+                door = new Door(entityData[i].x, entityData[i].y, 32, 16, 1, this)
+                if (this.door1opened) {
+                    door.Sprite.setAnimation(DOOR_OPENED);
+                    door.Box.x = 0;
+                    door.Box.y = 0;
+                    door.Sprite.x = -100;
+                    door.Sprite.y = -100;
+                } else {
+                    door.Sprite.setAnimation(DOOR_CLOSED);
+                }
+                this.currentLevelEntities.push(door);
+            }
+            else if (this.map.currentLevelIndex == 11) {
+                door = new Door(entityData[i].x, entityData[i].y, 32, 16, 1, this)
+                if (this.door2opened) {
+                    door.Sprite.setAnimation(DOOR_OPENED);
+                    door.Box.x = 0;
+                    door.Box.y = 0;
+                    door.Sprite.x = -100;
+                    door.Sprite.y = -100;
+                } else {
+                    door.Sprite.setAnimation(DOOR_CLOSED);
+                }
+                this.currentLevelEntities.push(door);
+            }
+
+        }
+        else if (entityData[i].id == "DestructableWall") {
+            destructableWall = new DestructableWall(entityData[i].x, entityData[i].y, 16, 16, 1, this)
+            if (this.walllevel7opened) {
+                destructableWall.Box.x = 0;
+                destructableWall.Box.y = 0;
+                destructableWall.Sprite.x = -100;
+                destructableWall.Sprite.y = -100;
+            }
+            else {
+                destructableWall.Sprite.setAnimation(WALL_CLOSED);
+            }
+            this.currentLevelEntities.push(destructableWall);
+        }
+        else if (entityData[i].id == "Button") {
+            button = new Button(entityData[i].x, entityData[i].y, 16, 16, 1, this);
+            this.currentLevelEntities.push(button);
+        }
+        else if (entityData[i].id == "Dummy") {
+            dummy = new Dummy(entityData[i].x, entityData[i].y, 16, 16, 1, this);
+            this.currentLevelEntities.push(dummy);
         }
 
         //console.log(this.currentLevelEntities.length);
@@ -184,8 +245,19 @@ LevelManager.prototype.drawSprites = function() {
 }
 
 
-LevelManager.prototype.changeLevel = function(x, y)
+LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
 {
+
+    if (newLevel !== 0) {
+        this.map.renderLevel(newLevel);
+        this.map.currentLevelIndex = newLevel;
+        this.fillCurrentLevelEntities(this.map.entityData);
+        this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
+        return;  
+    }
+
     // x == -1 -> left
     // x == 1 -> right
     // y == -1 -> up

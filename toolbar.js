@@ -239,10 +239,37 @@ Toolbar.prototype.drawItems = function () {
     if (this.link.hasKey1) {
         this.context.drawImage(
             this.texture.img,
-            337, 22,
-            8, 16,
-            this.position.x + 148, this.position.y - 1,
-            8, 16
+            192, 116,
+            7, 16,
+            this.position.x + 128, this.position.y,
+            7, 16
+        )
+    }
+    if (this.link.hasKey2) {
+        this.context.drawImage(
+            this.texture.img,
+            200, 116,
+            7, 16,
+            this.position.x + 136, this.position.y,
+            7, 16
+        )
+    }
+    if (this.link.hasKey3) {
+        this.context.drawImage(
+            this.texture.img,
+            208, 116,
+            7, 16,
+            this.position.x + 144, this.position.y,
+            7, 16
+        )
+    }
+    if (this.link.hasKey4) {
+        this.context.drawImage(
+            this.texture.img,
+            216, 116,
+            7, 16,
+            this.position.x + 152, this.position.y,
+            7, 16
         )
     }
 
@@ -251,8 +278,18 @@ Toolbar.prototype.drawItems = function () {
             this.texture.img,
             406, 264,
             9, 16,
-            this.position.x + 135, this.position.y - 1,
+            this.position.x + 118, this.position.y - 1,
             9, 16
+        )
+    }
+
+    if (this.link.hasMap) {
+        this.context.drawImage(
+            this.texture.img,
+            169, 116,
+            16, 16,
+            this.position.x + 105, this.position.y,
+            16, 16
         )
     }
 }

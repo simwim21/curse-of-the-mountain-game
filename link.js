@@ -59,6 +59,9 @@ function Link(x, y, width, height, fps, world)
 
 	this.hasSword = true;
     this.hasShield = true;
+	this.hasMap = false;
+
+	
     this.hasFlower = false;
     this.hasLantern = false;
 
@@ -481,6 +484,41 @@ Link.prototype.checkInteraction = function() {
 				this.levelManager.soundManager.playSound("good");
                 console.log("Picked up a mysterious lantern! You can now see in the dark!");
                 return true;
+            } else if (entity instanceof Key) {
+                switch (entity.id) {
+					case 1:
+						this.hasKey1 = true;
+						break;
+					case 2:
+						this.hasKey2 = true;
+						break;
+					case 3:
+						this.hasKey3 = true;
+						break;
+					case 4:
+						this.hasKey4 = true;
+						break;
+				} 
+                this.levelManager.currentLevelEntities.splice(i, 1); // Remove the lantern from the level
+                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the lantern sprite from the level
+                this.currentPickupItem = entity; 
+                this.isHoldingItem = true; 
+				this.pickUpItemOffsetX = 1;
+				this.pickUpItemOffsetY = - 15;
+				this.levelManager.soundManager.playSound("good");
+                console.log("Picked up a Key!");
+                return true;
+            } else if (entity instanceof MapEntity) {
+                this.hasMap = true;
+                this.levelManager.currentLevelEntities.splice(i, 1); // Remove the lantern from the level
+                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the lantern sprite from the level
+                this.currentPickupItem = entity; 
+                this.isHoldingItem = true; 
+				this.pickUpItemOffsetX = - 1;
+				this.pickUpItemOffsetY = - 13;
+				this.levelManager.soundManager.playSound("good");
+                console.log("Picked up an old map!");
+                return true;
             } else if (entity instanceof OldTree) {
 				console.log("Does link have the flower? " + this.hasFlower);
 				if (this.hasFlower === true) {
@@ -489,7 +527,7 @@ Link.prototype.checkInteraction = function() {
 					this.currentPickupItem = new Key(0, 0, 8, 16, 1, this.levelManager);
 					this.currentPickupItem.loadAnimations(); // Load the key's animations
 					this.isHoldingItem = true; 
-					this.pickUpItemOffsetX = 0;
+					this.pickUpItemOffsetX = 1;
 					this.pickUpItemOffsetY = - 15;
 					entity.Sprite.setAnimation(HAPPY_OLD_TREE);
 					this.levelManager.soundManager.playSound("good");
@@ -512,14 +550,36 @@ Link.prototype.checkInteraction = function() {
 				this.levelManager.soundManager.playSound("chest");
 				return false;
 			}	
-			else if (entity instanceof Door && this.hasKey1) {
-				this.hasKey1 = false; // Use the key
-				entity.Sprite.setAnimation(DOOR_OPENED);
-				this.levelManager.door1opened = true;
-				// this.levelManager.soundManager.playSound("door");
-				console.log("Used the key to open the door!");
-				this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
-                this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+			else if (entity instanceof Door) {
+				if (this.hasKey1 && this.levelManager.map.currentLevelIndex == 3) {
+					this.hasKey1 = false; // Use the key
+					TouchList.hasFlower = false;
+					entity.Sprite.setAnimation(DOOR_OPENED);
+					this.levelManager.door1opened = true;
+					this.levelManager.soundManager.playSound("door");
+					console.log("Used the key to open the door!");
+					this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
+                	this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+				}
+				if (this.hasKey2 && this.levelManager.map.currentLevelIndex == 11) {
+					this.hasKey2 = false; // Use the key
+					entity.Sprite.setAnimation(DOOR_OPENED);
+					this.levelManager.door2opened = true;
+					this.levelManager.soundManager.playSound("door");
+					console.log("Used the key to open the door!");
+					this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
+					this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+				}
+				if (this.hasKey3 && this.hasKey4 && this.levelManager.map.currentLevelIndex == 8) {
+					this.hasKey3 = false; // Use the key
+					this.hasKey4 = false; // Use the key
+					entity.Sprite.setAnimation(DOOR_OPENED);
+					this.levelManager.door3opened = true;
+					this.levelManager.soundManager.playSound("door");
+					console.log("Used the key to open the door!");
+					this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
+					this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+				}
 			}
 
         }

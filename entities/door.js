@@ -17,7 +17,13 @@ function Door(x, y, width, height, fps, world)
 Door.prototype.loadAnimations = function() 
 {
     this.Sprite.addAnimation();
-    this.Sprite.addKeyframe(DOOR_CLOSED, [954, 588, 32, 16]);
+    if (this.levelManager.map.currentLevelIndex == 8) {
+        this.Sprite.addKeyframe(DOOR_CLOSED, [954, 622, 32, 16]); 
+    }
+    else {
+        this.Sprite.addKeyframe(DOOR_CLOSED, [954, 588, 32, 16]);
+    }
+    
 
     this.Sprite.addAnimation();
     this.Sprite.addKeyframe(DOOR_OPENED, [954, 588, 32, 16]);

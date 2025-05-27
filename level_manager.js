@@ -28,6 +28,7 @@ function LevelManager(map) {
 
     this.door1opened = false;
     this.door2opened = false;
+    this.door3opened = false;
     this.walllevel7opened = false;
     this.buttonPressed = false;
 
@@ -58,14 +59,14 @@ LevelManager.prototype.levelInitializer = function() // Sets the logic which lev
     this.levelList.push(new Level(5, -1, 6, 7, 4, this.map)); // Level 5 => Right=6, Up=7, Down=4
     this.levelList.push(new Level(6, 5, -1, -1, -1, this.map)); // Level 6 => Left=5
     this.levelList.push(new Level(7, 8, 18, -1, 5, this.map)); // Level 7 => Left=8, Down=5
-    this.levelList.push(new Level(8, 9, 7, -1, -1, this.map)); // Level 8 => Left=9, Right=7
+    this.levelList.push(new Level(8, 9, 7, 14, -1, this.map)); // Level 8 => Left=9, Right=7
     this.levelList.push(new Level(9, 11, 8, -1, 10, this.map)); // Level 9 => Left=11, Right=8, Down=10
     this.levelList.push(new Level(10, -1, -1, 9, 12, this.map)); // Level 10 => Up=9, down=12
     this.levelList.push(new Level(11, -1, 9, 16, -1, this.map)); // Level 11 => Right=9, Up=16
     this.levelList.push(new Level(12, 13, 3, 10, -1, this.map)); // Level 12 => Left=3, Down=10
     this.levelList.push(new Level(13, -1, 12, -1, -1, this.map)); // Level 13 => Up=14
-    this.levelList.push(new Level(14, -1, -1, -1, -1, this.map)); // Level 14 => Down=13
-    this.levelList.push(new Level(15, -1, -1, -1, -1, this.map)); // Level 15 => Up=16
+    this.levelList.push(new Level(14, -1, -1, 15, 8, this.map)); // Level 14 => Down=13
+    this.levelList.push(new Level(15, -1, -1, -1, 14, this.map)); // Level 15 => Up=16
     this.levelList.push(new Level(16, -1, -1, -1, 11, this.map)); // Level 16 => Left=11, Down=15
     this.levelList.push(new Level(17, -1, -1, -1, 3, this.map)); // Level 17 => Down=3
     this.levelList.push(new Level(18, 7, -1, -1, -1, this.map)); // Level 18 => Left = 7
@@ -115,6 +116,11 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             lantern = new Lantern(entityData[i].x, entityData[i].y, 9, 16, 1, this)
             this.currentLevelEntities.push(lantern);
         }
+        else if (entityData[i].id == "Map") {
+            if (this.link.hasMap) continue;
+            map = new MapEntity(entityData[i].x, entityData[i].y, 16, 16, 1, this)
+            this.currentLevelEntities.push(map);
+        }
         else if (entityData[i].id == "Door") {
             if (this.map.currentLevelIndex == 3) {
                 door = new Door(entityData[i].x, entityData[i].y, 32, 16, 1, this)
@@ -133,8 +139,21 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
                 door = new Door(entityData[i].x, entityData[i].y, 32, 16, 1, this)
                 if (this.door2opened) {
                     door.Sprite.setAnimation(DOOR_OPENED);
-                    door.Box.x = 0;
-                    door.Box.y = 0;
+                    door.Box.x = -100;
+                    door.Box.y = -100;
+                    door.Sprite.x = -100;
+                    door.Sprite.y = -100;
+                } else {
+                    door.Sprite.setAnimation(DOOR_CLOSED);
+                }
+                this.currentLevelEntities.push(door);
+            }
+            else if (this.map.currentLevelIndex == 8) {
+                door = new Door(entityData[i].x, entityData[i].y, 32, 16, 1, this)
+                if (this.door3opened) {
+                    door.Sprite.setAnimation(DOOR_OPENED);
+                    door.Box.x = -100;
+                    door.Box.y = -100;
                     door.Sprite.x = -100;
                     door.Sprite.y = -100;
                 } else {
@@ -165,8 +184,12 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             dummy = new Dummy(entityData[i].x, entityData[i].y, 16, 16, 1, this);
             this.currentLevelEntities.push(dummy);
         }
+        else if (entityData[i].id == "Key") {
+            key = new Key(entityData[i].x, entityData[i].y, 7, 16, 1, this);
+            this.currentLevelEntities.push(key);
+        }
 
-        //console.log(this.currentLevelEntities.length);
+        console.log(this.currentLevelEntities[i]);
 
         this.currentLevelEntities[i].loadAnimations();
         this.currentLevelEntitySprites.push(this.currentLevelEntities[i].Sprite);

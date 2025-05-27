@@ -16,6 +16,8 @@ function Scene()
 	this.currentTime = 0
 
 	this.toolbar = new Toolbar(this.link);
+	this.mapOverlay = new MapOverlay();
+	this.showMapOverlay = false;
 
 	this.levelManager.addToolbar(this.toolbar);
 
@@ -31,23 +33,33 @@ function Scene()
 
 Scene.prototype.update = function(deltaTime)
 {
+	// Keep track of time
+	this.currentTime += deltaTime;
 
+	// Cheats
 	if (keyboard[73]) {
 		this.link.hasKey1 = true;
+		this.link.hasKey2 = true;
+		this.link.hasKey3 = true;
+		this.link.hasKey4 = true;
+
+
 		this.link.hasFlower = true;
 		this.link.flowerHealth = 3;
 		this.link.hasLantern = true;
+		this.link.hasMap = true;
 	}
 	if (keyboard[72]) this.link.currentHealth = this.link.maxHealth;
 	if (keyboard[74]) this.link.currentHealth = 1;
 	if (keyboard[71]) this.link.isCheatInvincible = true;
 	if (keyboard[70]) this.link.isCheatInvincible = false;
 
-	// Keep track of time
-	this.currentTime += deltaTime;
+	// MapOverlay
+	this.showMapOverlay = keyboard[77] && this.levelManager.link.hasMap;
+
+	
 	
 	// Update Map
-
 	this.levelManager.updateSprites(deltaTime);
 
 	// Update Player
@@ -78,7 +90,13 @@ Scene.prototype.draw = function ()
 	// Draw Link
 	this.link.draw();
 
+	// Draw Mask
 	this.mask.render();
+
+	// Draw Map
+	if (this.showMapOverlay) {
+        this.mapOverlay.paintMap();
+    }
 
 }
 

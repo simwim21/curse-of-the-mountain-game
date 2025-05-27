@@ -32,11 +32,6 @@ function Scene()
 Scene.prototype.update = function(deltaTime)
 {
 
-	if (window.paused) {
-		console.log("Game is paused. No updates will occur.");
-		return;
-	}
-
 	if (keyboard[73]) {
 		this.link.hasKey1 = true;
 		this.link.hasFlower = true;

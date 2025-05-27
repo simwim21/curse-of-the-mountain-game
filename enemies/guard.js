@@ -28,7 +28,7 @@ function Guard(x, y, width, height, fps, world)
 
     this.levelManager = world;
 
-    this.Box = new Box(x + 4, y + 3, 9, 15); // Create a box for collision detection
+    this.Box = new Box(x + 4, y + 4, 9, 14); // Create a box for collision detection
 
     this.maxHealth = 4;
     this.currentHealth = this.maxHealth;

@@ -32,6 +32,8 @@ function LevelManager(map) {
     this.walllevel7opened = false;
     this.buttonPressed = false;
 
+    this.seenDarkness = false;
+
     this.firstTalkWithVendor = true;
     this.vendorPrice = 10;
 
@@ -305,6 +307,7 @@ LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
         this.fillCurrentLevelEnemies(this.map.enemyData);
         this.currentLevelDropItems = [];
         this.currentLevelDropItemSprites = [];
+        this.checkDarkness();
         return;  
     }
     else if (x == 1) {
@@ -314,6 +317,7 @@ LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
         this.fillCurrentLevelEnemies(this.map.enemyData);
         this.currentLevelDropItems = [];
         this.currentLevelDropItemSprites = [];
+        this.checkDarkness();
         return;  
     }
     else if (y == -1) {
@@ -323,6 +327,7 @@ LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
         this.fillCurrentLevelEnemies(this.map.enemyData);
         this.currentLevelDropItems = [];
         this.currentLevelDropItemSprites = [];
+        this.checkDarkness();
         return;  
     }
     else if (y == 1) {
@@ -332,9 +337,24 @@ LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
         this.fillCurrentLevelEnemies(this.map.enemyData);
         this.currentLevelDropItems = [];
         this.currentLevelDropItemSprites = [];
+        this.checkDarkness();
         return;  
     }
 
+}
+
+LevelManager.prototype.checkDarkness = function() {
+    if (this.seenDarkness) return;
+    if (this.link.hasLantern) {
+        this.seenDarkness = true
+        return;
+    }
+    if (this.map.currentLevelIndex == 9 || this.map.currentLevelIndex == 12) {
+        if (!this.seenDarkness) {
+            this.text.write("It is so dark in here! I might need a lantern to see more.");
+            this.seenDarkness = true;
+        }
+    }
 }
 
 

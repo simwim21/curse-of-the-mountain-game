@@ -144,7 +144,7 @@ Link.prototype.loadAnimations = function()
 	this.Sprite.addAnimation();
 	this.Sprite.addKeyframe(LINK_BLOCK_UP, [69, 59, 16, 16]);
 
-	this.Sprite.setAnimation(LINK_STAND_LEFT);
+	this.Sprite.setAnimation(LINK_STAND_UP);
 
 
 	// SWORD ANIMATIONS
@@ -357,7 +357,7 @@ Link.prototype.checkChangeLevel = function()
 {
 	if (this.Sprite.x == 0) {
 		this.levelManager.changeLevel(-1, 0);
-		this.Sprite.x = 143;
+		this.Sprite.x = 142;
 		this.Box.x = 146;
 		return;
 	}
@@ -369,7 +369,7 @@ Link.prototype.checkChangeLevel = function()
 	}
 	if (this.Sprite.y == 0) {
 		this.levelManager.changeLevel(0, -1);
-		this.Sprite.y = 111;
+		this.Sprite.y = 110;
 		this.Box.y = 112;
 		return;
 	}

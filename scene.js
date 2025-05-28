@@ -8,7 +8,7 @@ function Scene()
 	this.levelManager = new LevelManager(this.map);
 	this.levelManager.levelInitializer();
 
-	this.link = new Link(72, 64, 16, 16, 7, this.levelManager);
+	this.link = new Link(72, 96, 16, 16, 7, this.levelManager);
 	this.link.loadAnimations();
 	
 	// Store current time

@@ -15,6 +15,10 @@ function MainMenu(onStartCallback) {
     this.instructionsButtonImg = new Image();
     this.instructionsButtonImg.src = "images/menu/menu_button.png";
 
+    // Load the adventure title image
+    this.titleImg = new Image();
+    this.titleImg.src = "images/menu/adventure.png";
+
     // Adjusted button positions for alignment
     this.startButton = {
         x: 440,
@@ -37,7 +41,7 @@ function MainMenu(onStartCallback) {
     this._onClick = this.handleClick.bind(this);
     this.canvas.addEventListener("click", this._onClick);
 
-    this.music = AudioFX("sounds/main_menu.mp3", { loop: true });
+    this.music = AudioFX("sounds/main_menu_louder.mp3", { loop: true });
     this.music.play();
 
     this.buttonClicked = AudioFX("sounds/menu_button_clicked.mp3");
@@ -53,11 +57,30 @@ MainMenu.prototype.draw = function() {
     // Clear the canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Draw the menu image when loaded
+    // Draw the menu background image
     if (this.menuImage.complete) {
         this.context.drawImage(this.menuImage, 0, 0, this.canvas.width, this.canvas.height);
     } else {
         this.menuImage.onload = () => this.draw();
+    }
+
+    // Draw the adventure title image, centered at the top and resized
+    if (this.titleImg.complete) {
+        // Choose a good width (e.g. 900px or 1000px) and keep aspect ratio
+        const desiredWidth = 1000;
+        const scale = desiredWidth / this.titleImg.width;
+        const desiredHeight = this.titleImg.height * scale;
+        const x = (this.canvas.width - desiredWidth) / 2;
+        const y = -40; // Top margin
+        this.context.drawImage(
+            this.titleImg,
+            x,
+            y,
+            desiredWidth,
+            desiredHeight
+        );
+    } else {
+        this.titleImg.onload = () => this.draw();
     }
 
     // Draw the start button image

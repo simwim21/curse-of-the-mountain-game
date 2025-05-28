@@ -1,6 +1,6 @@
 function SoundManager() {
 
-    this.suite = AudioFX("sounds/suite(reduced).mp3", { loop: true });
+    this.suite = AudioFX("sounds/suite_reduced.mp3", { loop: true });
     // this.suite.play();
 
     this.hit = AudioFX("sounds/hit.mp3");

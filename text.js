@@ -12,6 +12,8 @@ function Text() {
 
     this.activeText = null; // Store the current text to display
     this.isActive = false;  // Whether text box is currently shown
+
+    this.sound = AudioFX("sounds/text_popup.mp3");
 }
 
 Text.prototype.write = function(text) {
@@ -35,6 +37,8 @@ Text.prototype.update = function() {
 Text.prototype.draw = function() {
     if (!this.isActive || !this.activeText) return;
 
+    this.sound.play();
+    
     this.Sprite.draw();
 
     var canvas = document.getElementById("game-layer");

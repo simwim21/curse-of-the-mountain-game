@@ -691,6 +691,7 @@ Link.prototype.handleDamage = function(hitbox) {
 			this.flowerHealth -= 1;
 			if (this.flowerHealth == 0) {
 				console.log("The flower was destroyed!");
+				this.levelManager.text.write("Oh no! The flower was destroyed! Maybe there is another one where you found this one.");
 				this.hasFlower = false;
 			}
 		}

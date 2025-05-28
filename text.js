@@ -22,6 +22,7 @@ Text.prototype.write = function(text) {
         this.activeText = "error: too long";
         return;
     }
+    this.sound.play();
     this.activeText = text;
     this.isActive = true;
 };
@@ -37,8 +38,6 @@ Text.prototype.update = function() {
 Text.prototype.draw = function() {
     if (!this.isActive || !this.activeText) return;
 
-    this.sound.play();
-    
     this.Sprite.draw();
 
     var canvas = document.getElementById("game-layer");

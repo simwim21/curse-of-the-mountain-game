@@ -1,4 +1,3 @@
-
 // Scene. Updates and draws a single scene of the game.
 
 function Scene()
@@ -16,10 +15,12 @@ function Scene()
 	this.currentTime = 0
 
 	this.toolbar = new Toolbar(this.link);
+	this.text = new Text();
 	this.mapOverlay = new MapOverlay();
 	this.showMapOverlay = false;
 
 	this.levelManager.addToolbar(this.toolbar);
+	this.levelManager.addText(this.text);
 
 	this.mask = new Mask(document.getElementById("game-layer"), this.link, this.levelManager);
 
@@ -33,40 +34,46 @@ function Scene()
 
 Scene.prototype.update = function(deltaTime)
 {
-	// Keep track of time
-	this.currentTime += deltaTime;
+    // If text box is active, only update text and ignore all other input/game logic
+    if (this.text.isActive) {
+        this.text.update();
+        return;
+    }
 
-	// Cheats
-	if (keyboard[73]) {
-		this.link.hasKey1 = true;
-		this.link.hasKey2 = true;
-		this.link.hasKey3 = true;
-		this.link.hasKey4 = true;
+    // Keep track of time
+    this.currentTime += deltaTime;
 
+    // Cheats
+    if (keyboard[73]) {
+        this.link.hasKey1 = true;
+        this.link.hasKey2 = true;
+        this.link.hasKey3 = true;
+        this.link.hasKey4 = true;
 
-		this.link.hasFlower = true;
-		this.link.flowerHealth = 3;
-		this.link.hasLantern = true;
-		this.link.hasMap = true;
-	}
-	if (keyboard[72]) this.link.currentHealth = this.link.maxHealth;
-	if (keyboard[74]) this.link.currentHealth = 1;
-	if (keyboard[71]) this.link.isCheatInvincible = true;
-	if (keyboard[70]) this.link.isCheatInvincible = false;
+		this.link.rupeeCount = 50;
 
-	// MapOverlay
-	this.showMapOverlay = keyboard[77] && this.levelManager.link.hasMap;
+        this.link.hasFlower = true;
+        this.link.flowerHealth = 3;
+        this.link.hasLantern = true;
+        this.link.hasMap = true;
+    }
+    if (keyboard[72]) this.link.currentHealth = this.link.maxHealth;
+    if (keyboard[74]) this.link.currentHealth = 1;
+    if (keyboard[71]) this.link.isCheatInvincible = true;
+    if (keyboard[70]) this.link.isCheatInvincible = false;
 
-	
-	
-	// Update Map
-	this.levelManager.updateSprites(deltaTime);
+    // MapOverlay
+    this.showMapOverlay = keyboard[77] && this.levelManager.link.hasMap;
 
-	// Update Player
-	this.link.updateAnimation(this.map.collisionData);
-	this.link.Sprite.update(deltaTime);
-	this.link.swordSprite.update(deltaTime);
+    // Update Map
+    this.levelManager.updateSprites(deltaTime);
 
+    // Update Player
+    this.link.updateAnimation(this.map.collisionData);
+    this.link.Sprite.update(deltaTime);
+    this.link.swordSprite.update(deltaTime);
+
+    this.text.update();
 }
 
 Scene.prototype.draw = function ()
@@ -92,6 +99,8 @@ Scene.prototype.draw = function ()
 
 	// Draw Mask
 	this.mask.render();
+
+	this.text.draw();
 
 	// Draw Map
 	if (this.showMapOverlay) {

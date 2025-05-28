@@ -32,6 +32,9 @@ function LevelManager(map) {
     this.walllevel7opened = false;
     this.buttonPressed = false;
 
+    this.firstTalkWithVendor = true;
+    this.vendorPrice = 10;
+
     
 }
 
@@ -46,6 +49,10 @@ LevelManager.prototype.addToolbar = function(toolbar) {
 LevelManager.prototype.addSoundManager = function(soundManager)
 {
     this.soundManager = soundManager;
+}
+
+LevelManager.prototype.addText = function(text) {
+    this.text = text;
 }
 
 LevelManager.prototype.levelInitializer = function() // Sets the logic which level is next to which level
@@ -188,8 +195,12 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             key = new Key(entityData[i].x, entityData[i].y, 7, 16, 1, this);
             this.currentLevelEntities.push(key);
         }
+        else if (entityData[i].id == "Vendor") {
+            vendor = new Vendor(entityData[i].x, entityData[i].y, 16, 16, 1, this);
+            this.currentLevelEntities.push(vendor);
+        }
 
-        console.log(this.currentLevelEntities[i]);
+        //console.log(this.currentLevelEntities[i]);
 
         this.currentLevelEntities[i].loadAnimations();
         this.currentLevelEntitySprites.push(this.currentLevelEntities[i].Sprite);

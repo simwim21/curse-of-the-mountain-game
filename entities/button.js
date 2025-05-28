@@ -57,5 +57,6 @@ Button.prototype.updateAnimation = function(collisionData) {
         this.levelManager.soundManager.playSound("button");
         this.Sprite.setAnimation(BUTTON_OPENED);
         this.levelManager.buttonPressed = true;
+        this.levelManager.text.write("Something happened! You can hear the sound of crystals shattering in the distance.")
     }
 };

@@ -471,6 +471,7 @@ Link.prototype.checkInteraction = function() {
 				this.pickUpItemOffsetX = - 4;
 				this.pickUpItemOffsetY = - 14;
 				this.levelManager.soundManager.playSound("good");
+				this.levelManager.text.write("You picked up a flower! It looks beautiful but also very fragile.")
                 console.log("Picked up a flower!");
                 return true;
             } else if (entity instanceof Lantern) {
@@ -482,21 +483,26 @@ Link.prototype.checkInteraction = function() {
 				this.pickUpItemOffsetX = - 1;
 				this.pickUpItemOffsetY = - 15;
 				this.levelManager.soundManager.playSound("good");
+				this.levelManager.text.write("You picked up a lantern! With  this you might see more in the dark!");
                 console.log("Picked up a mysterious lantern! You can now see in the dark!");
                 return true;
             } else if (entity instanceof Key) {
                 switch (entity.id) {
 					case 1:
 						this.hasKey1 = true;
+						color = "blue";
 						break;
 					case 2:
 						this.hasKey2 = true;
+						color = "purple"
 						break;
 					case 3:
 						this.hasKey3 = true;
+						color = "red";
 						break;
 					case 4:
 						this.hasKey4 = true;
+						color = "red";
 						break;
 				} 
                 this.levelManager.currentLevelEntities.splice(i, 1); // Remove the lantern from the level
@@ -505,6 +511,7 @@ Link.prototype.checkInteraction = function() {
                 this.isHoldingItem = true; 
 				this.pickUpItemOffsetX = 1;
 				this.pickUpItemOffsetY = - 15;
+				this.levelManager.text.write("You picked up a " + color + " key! Which door does this key open?");
 				this.levelManager.soundManager.playSound("good");
                 console.log("Picked up a Key!");
                 return true;
@@ -516,6 +523,7 @@ Link.prototype.checkInteraction = function() {
                 this.isHoldingItem = true; 
 				this.pickUpItemOffsetX = - 1;
 				this.pickUpItemOffsetY = - 13;
+				this.levelManager.text.write("You found up an old map! What secrets does it contain? Press M to open the map!");
 				this.levelManager.soundManager.playSound("good");
                 console.log("Picked up an old map!");
                 return true;
@@ -531,25 +539,58 @@ Link.prototype.checkInteraction = function() {
 					this.pickUpItemOffsetY = - 15;
 					entity.Sprite.setAnimation(HAPPY_OLD_TREE);
 					this.levelManager.soundManager.playSound("good");
+					this.levelManager.text.write("Old Tree: Thank you, young hero! This flower is lovely. Take this blue key in return!");
 					console.log("Gave the Old Tree a Flower! He gave you a Key!");
 					return true;
+				} else {
+					this.levelManager.text.write("Old Tree: Ive lived in darkness so long. I just want to see a flower one more time!");
+					console.log("You need a flower to get the key!");
 				}
-				else console.log("You need a flower to get the key!");
 			}
 			else if (entity instanceof Chest) {
 				if (entity.Sprite.currentAnimation == CHEST_OPENED) {
 					console.log("The chest is already opened!");
 					return false;
 				}
-				entity.Sprite.currentAnimation = CHEST_OPENED;
-				chestItem = new DropItem(entity.Sprite.x + 4, entity.Sprite.y, 8, 16, 1, this.levelManager);
-				chestItem.loadAnimations();
-				chestItem.findValidLandingPosition(this.levelManager.map.collisionData, this.levelManager.currentLevelEntities);
-				this.levelManager.currentLevelDropItems.push(chestItem);
-				this.levelManager.currentLevelDropItemSprites.push(chestItem.Sprite);
-				this.levelManager.soundManager.playSound("chest");
-				return false;
+				if (this.levelManager.map.currentLevelIndex == 16) {
+					this.levelManager.text.write("Vendor: Are you trying to rob me? The Key will now cost 5 rupees more!");
+					this.levelManager.vendorPrice += 5;
+				} else { 
+					entity.Sprite.currentAnimation = CHEST_OPENED;
+					chestItem = new DropItem(entity.Sprite.x + 4, entity.Sprite.y, 8, 16, 1, this.levelManager);
+					chestItem.loadAnimations();
+					chestItem.findValidLandingPosition(this.levelManager.map.collisionData, this.levelManager.currentLevelEntities);
+					this.levelManager.currentLevelDropItems.push(chestItem);
+					this.levelManager.currentLevelDropItemSprites.push(chestItem.Sprite);
+					this.levelManager.soundManager.playSound("chest");
+					return false;
+				}
 			}	
+			else if (entity instanceof Vendor) {
+				if (this.levelManager.firstTalkWithVendor || this.rupeeCount < this.levelManager.vendorPrice) {
+					this.levelManager.text.write("Vendor: Hello, young hero! I love rupees. For " + this.levelManager.vendorPrice + " rupees I will sell you a key.");
+					this.levelManager.firstTalkWithVendor = false;
+					return false;
+				}
+				else if (!this.levelManager.firstTalkWithVendor && this.rupeeCount <this.levelManager.vendorPrice) {
+					this.levelManager.text.write("Vendor: You do not have enough rupees to buy a key! You need " + this.levelManager.vendorPrice + " rupees!");
+					console.log("Not enough rupees to buy a key!");
+					return false;
+				}
+				else if (this.rupeeCount >= this.levelManager.vendorPrice) {
+					this.rupeeCount -= this.levelManager.vendorPrice;
+					this.hasKey3 = true; // Give the key
+					this.currentPickupItem = new Key(0, 0, 8, 16, 2, this.levelManager);
+					this.currentPickupItem.loadAnimations();
+					this.isHoldingItem = true; 
+					this.pickUpItemOffsetX = 1;
+					this.pickUpItemOffsetY = - 15;
+					this.levelManager.soundManager.playSound("good");
+					this.levelManager.text.write("Vendor: Thank you for your purchase! Here is a red key!");
+					console.log("Bought a key from the vendor!");
+					return true;
+				}
+			}
 			else if (entity instanceof Door) {
 				if (this.hasKey1 && this.levelManager.map.currentLevelIndex == 3) {
 					this.hasKey1 = false; // Use the key
@@ -560,8 +601,7 @@ Link.prototype.checkInteraction = function() {
 					console.log("Used the key to open the door!");
 					this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
                 	this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
-				}
-				if (this.hasKey2 && this.levelManager.map.currentLevelIndex == 11) {
+				} else if (this.hasKey2 && this.levelManager.map.currentLevelIndex == 11) {
 					this.hasKey2 = false; // Use the key
 					entity.Sprite.setAnimation(DOOR_OPENED);
 					this.levelManager.door2opened = true;
@@ -569,16 +609,23 @@ Link.prototype.checkInteraction = function() {
 					console.log("Used the key to open the door!");
 					this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
 					this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+				} else if (this.levelManager.map.currentLevelIndex == 8) {
+					if (this.hasKey3 && this.hasKey4) {
+						this.hasKey3 = false; // Use the key
+						this.hasKey4 = false; // Use the key
+						entity.Sprite.setAnimation(DOOR_OPENED);
+						this.levelManager.door3opened = true;
+						this.levelManager.soundManager.playSound("door");
+						console.log("Used the key to open the door!");
+						this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
+						this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+					} else {
+						this.levelManager.text.write("It seems like this door has two keyholes!");
+						
+					}
 				}
-				if (this.hasKey3 && this.hasKey4 && this.levelManager.map.currentLevelIndex == 8) {
-					this.hasKey3 = false; // Use the key
-					this.hasKey4 = false; // Use the key
-					entity.Sprite.setAnimation(DOOR_OPENED);
-					this.levelManager.door3opened = true;
-					this.levelManager.soundManager.playSound("door");
-					console.log("Used the key to open the door!");
-					this.levelManager.currentLevelEntities.splice(i, 1); // Remove the flower from the level
-					this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the flower sprite from the level
+				else {
+					this.levelManager.text.write("This door is locked! You do not seem to have the correct key to open it!");
 				}
 			}
 

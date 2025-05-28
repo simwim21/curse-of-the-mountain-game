@@ -32,6 +32,8 @@ function Guard(x, y, width, height, fps, world)
 
     this.maxHealth = 4;
     this.currentHealth = this.maxHealth;
+
+    this.hurtsound = AudioFX("sounds/guard_hurt.wav");
 }
 
 Guard.prototype.loadAnimations = function() 
@@ -276,6 +278,7 @@ Guard.prototype.checkHurtbox = function() {
 
     // 2. Reduce health by 1
     this.currentHealth -= 1;
+    this.hurtsound.play();
 
     // 3. Knockback: move away from Link's center by 10px, smoothly, but stop if collision occurs
     const guard = this;

@@ -27,6 +27,22 @@ SoundManager.prototype.addLevelManager = function(levelManager)
     this.levelManager = levelManager;
 }
 
+SoundManager.prototype.playSuite = function()
+{
+    if (this.suite.isPlaying) {
+        return;
+    } else this.suite.play();
+}
+
+SoundManager.prototype.playSpecialMusic = function() {
+    if (this.suite.isPlaying) {
+        this.suite.stop();
+    }
+    switch (this.levelManager.map.currentLevelIndex) {
+        
+    }
+}
+
 SoundManager.prototype.playSound = function(sound)
 {
     if (sound == "hit") {

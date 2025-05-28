@@ -40,6 +40,8 @@ Scene.prototype.update = function(deltaTime)
         return;
     }
 
+	if (!this.soundManager.suite.isPlaying) this.soundManager.playSuite();
+
     // Keep track of time
     this.currentTime += deltaTime;
 

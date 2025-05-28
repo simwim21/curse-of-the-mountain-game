@@ -4,6 +4,7 @@ const FRAME_RATE = 60;
 const TIME_PER_FRAME = 1000 / FRAME_RATE;
 
 var scene = new Scene();
+
 var previousTimestamp;
 var keyboard = [];
 var interacted;
@@ -74,8 +75,16 @@ function frameUpdate(timestamp)
     window.requestAnimationFrame(frameUpdate);
 }
 
+// Hide the game canvas initially
+document.getElementById("game-layer").style.display = "none";
 
+// Show main menu and block game until "Start" is pressed
+var mainMenu = new MainMenu(function() {
+    // When start is pressed, start the game loop
+    document.getElementById("game-layer").style.display = "block";
+    mainMenu.music.stop();
+    frameUpdate(previousTimestamp);
+});
 
-// Init and launch game loop
+// Only initialize everything else after the menu is closed
 init();
-frameUpdate(previousTimestamp);

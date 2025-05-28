@@ -17,6 +17,8 @@ function Buzzblob(x, y, width, height, fps, world)
     this.currentHealth = 3;
     this.maxHealth = 3;
 
+    this.sound = AudioFX("sounds/buzzblob_sound.mp3");
+
 }
 
 Buzzblob.prototype.loadAnimations = function() 
@@ -145,6 +147,7 @@ Buzzblob.prototype.checkHurtbox = function() {
 
     // 2. Reduce health by 1
     this.currentHealth -= 1;
+    this.sound.play();
 
     // 3. Knockback: move away from Link's center by 20px, smoothly, but stop if collision occurs
     const buzz = this;

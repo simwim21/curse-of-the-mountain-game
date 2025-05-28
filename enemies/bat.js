@@ -14,6 +14,8 @@ function Bat(x, y, width, height, fps, world)
     this.maxHealth = 1;
     this.currentHealth = this.maxHealth;
 
+    this.deathsound = AudioFX("sounds/bats_death.mp3");
+
 }
 
 Bat.prototype.loadAnimations = function() 
@@ -270,6 +272,7 @@ Bat.prototype.checkHurtbox = function() {
     // 4. If health is now 0, remove from level manager and drop item
     if (this.currentHealth <= 0) {
         // Remove from enemies and sprites arrays
+        this.deathsound.play();
         const idx = this.levelManager.currentLevelEnemies.indexOf(this);
         if (idx !== -1) {
             this.levelManager.currentLevelEnemies.splice(idx, 1);

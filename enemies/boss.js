@@ -18,7 +18,7 @@ function Boss(x, y, width, height, fps, world)
     this.Genie = new Sprite(64, 16, width, height, fps, this.texture);
     this.Genie.visible = true;
 
-    this.maxHealth = 1;
+    this.maxHealth = 10;
     this.currentHealth = this.maxHealth;
 
     this.fire = AudioFX("sounds/zap.mp3");

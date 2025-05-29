@@ -23,6 +23,8 @@ function Midboss(x, y, width, height, fps, world)
     this.zap = AudioFX("sounds/zap.mp3");
     this.win = AudioFX("sounds/win.mp3");
 
+    this.sound = AudioFX("sounds/buzzblob_sound.mp3");
+
 }
 
 Midboss.prototype.loadAnimations = function() 
@@ -281,6 +283,7 @@ Midboss.prototype.checkHurtbox = function() {
 
     // 2. Reduce health by 1
     this.currentHealth -= 1;
+    this.sound.play();
 
     // 3. Knockback: move away from Link's center by 20px, smoothly, but stop if collision occurs
     const buzz = this;

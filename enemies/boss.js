@@ -18,7 +18,7 @@ function Boss(x, y, width, height, fps, world)
     this.Genie = new Sprite(64, 16, width, height, fps, this.texture);
     this.Genie.visible = true;
 
-    this.maxHealth = 10;
+    this.maxHealth = 1;
     this.currentHealth = this.maxHealth;
 
     this.fire = AudioFX("sounds/zap.mp3");
@@ -286,7 +286,7 @@ Boss.prototype.checkHurtbox = function() {
         }
         // Drop item
         this.win.play();
-        this.levelManager.text.write("You won the game!");
+        showEpilogue();
     }
 };
 

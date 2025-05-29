@@ -128,8 +128,10 @@ MainMenu.prototype.handleClick = function(event) {
 
         // Start fade out effect
         this.startFadeOut(() => {
-            this.hide();
-            if (typeof this.onStart === "function") this.onStart();
+        	this.hide();
+        	showPrologue(() => {
+        	    if (typeof this.onStart === "function") this.onStart();
+        	});
         });
 
         return;
@@ -202,12 +204,3 @@ MainMenu.prototype.hide = function() {
     this.canvas.style.display = "none";
     this.canvas.removeEventListener("click", this._onClick);
 };
-
-// Usage example (in your main game file, before starting the game loop):
-// var mainMenu = new MainMenu(function() {
-//     // This callback runs when the start startButton is pressed
-//     // Show the game canvas and start the game loop here
-//     document.getElementById("game-layer").style.display = "block";
-//     startGame(); // Your game start logic
-// });
-// document.getElementById("game-layer").style.display = "none";

@@ -1,9 +1,10 @@
 # FEHLENDE SACHEN:
 
-- [ ] Midboss
-- [ ] Boss
+- [x] Midboss
+- [x] Boss
 - [ ] Levelübergang
 - [x] Schaden von Kristallen
-- [ ] Tod/Ende
-- [ ] Vorspann/Abspann
-- [ ] Bossschlüssel Rot muss aus Kiste fallen
+- [x] Tod
+- [ ] Ende
+- [ ] Vorspann
+- [x] Bossschlüssel Rot muss aus Kiste fallen

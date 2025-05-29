@@ -32,7 +32,7 @@ SoundManager.prototype.playSuite = function()
     if (this.suite.isPlaying) {
         return;
     } else {
-        // this.suite.play();
+        this.suite.play();
     }
 }
 

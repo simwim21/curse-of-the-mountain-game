@@ -9,13 +9,11 @@ function Fire(x, y, width, height, fps, world)
 
     this.Box = new Box(x + 4, y + 4, width - 8, height - 8); // Create a box for collision detection
     
-    this.id = "Undefined";
+
+    this.sound = AudioFX("sounds/fire.mp3");
 
 }
 
-Fire.prototype.setId = function(id) {
-    this.id = id;
-}
 
 Fire.prototype.loadAnimations = function() 
 {
@@ -23,6 +21,8 @@ Fire.prototype.loadAnimations = function()
     this.Sprite.addKeyframe(0, [437, 11, 16, 16]);
 
     this.Sprite.setAnimation(0);
+
+    this.sound.play();
 }
 
 Fire.prototype.updateAnimation = function(collisionData) {

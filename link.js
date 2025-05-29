@@ -716,7 +716,10 @@ Link.prototype.handleDamage = function(hitbox) {
     ) {
         // Take damage
         this.currentHealth -= 1;
-        if (this.currentHealth < 0) this.currentHealth = 0;
+        if (this.currentHealth <= 0) {
+			this.currentHealth = 0;
+			handleLinkDeath();
+		}
 		this.levelManager.soundManager.playSound("hit");
 
         this.levelManager.toolbar.damage();

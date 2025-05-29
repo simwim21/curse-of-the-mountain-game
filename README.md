@@ -1,8 +1,11 @@
 # Game Design Document
 
 **Title:** Adventure (Course of the Mountain)
-**Course:** Computer Games UPC 2025
+
+**Course:** Computer Games, UPC 2025
+
 **Author:** Simon Wimmer
+
 **Date:** 06.06.2025
 
 
@@ -13,11 +16,11 @@ The game was designed to immerse players in a mysterious and challenging environ
 
 ## 2. Overview of the Game
 
-The game opens with a Main Menu, featuring two buttons: Start and Menu. Selecting Start launches a Prologue Sequence that sets the tone of the adventure, providing a brief background story:
+The game opens with a Main Menu. Selecting Start launches a Prologue Sequence that sets the tone of the adventure, providing a brief background story:
 
-    "For centuries the mountain stood silent, its peak shrouded in mysteries and shadows."
-    "Now there are whispers of an ancient evil disturbing the peace."
-    "The mountain awaits the hero that dares to break this curse..."
+**"For centuries the mountain stood silent, its peak shrouded in mysteries and shadows.
+Now there are whispers of an ancient evil disturbing the peace.
+The mountain awaits the hero that dares to break this curse...**
 
 Following this, the player is shown a still frame of the adventurer before the mountain, marking the beginning of the actual gameplay.
 
@@ -30,11 +33,11 @@ The adventurer begins at the entrance of a dark cave and must explore its depths
 
 Throughout the cave, the adventurer encounters various enemies:
 
-    **Bats:** Aggressive, fast and omnipresent.
+**Bats:** Aggressive, fast and omnipresent.
 
-    **Green Organisms:** Passive creatures that wander randomly, but pack a punch when touched.
+**Green Organisms:** Passive creatures that wander randomly, but pack a punch when touched.
 
-    **Cursed Soldiers:** Once part of an ancient expedition, now insane and hostile due to the curse.
+**Cursed Soldiers:** Once part of an ancient expedition, now insane and hostile due to the curse.
 
 These soldiers hint at a deeper story - a failed military occupation led by a general who brought an army into the mountain, now lost and corrupted.
 
@@ -42,19 +45,19 @@ These soldiers hint at a deeper story - a failed military occupation led by a ge
 
 The player discovers several items and faces puzzle elements:
 
-    **Lantern:** Helps illuminate dark areas.
+**Lantern:** Helps illuminate dark areas.
 
-    **Locked Doors:** Block progress until the correct keys are found.
+**Locked Doors:** Block progress until the correct keys are found.
 
-    **Old Talking Tree:** Acts as a quest-giver. Upon receiving a desired item, it rewards the adventurer with a key.
+**Old Talking Tree:** Acts as a quest-giver. Upon receiving a desired item, it rewards the adventurer with a key.
 
-    **Mega Blob Mid Boss:** A sentient, electric-powered version of the green organisms. After defeating it, the adventurer receives a second key.
+**Mega Blob Mid Boss:** A sentient, electric-powered version of the green organisms. After defeating it, the adventurer receives a second key.
 
-    **Old Map:** Displays the locations of doors and their corresponding keys.
+**Old Map:** Displays the locations of doors and their corresponding keys.
 
-    **Hidden Switch:** Found behind a breakable wall. Activating it emits an electromagnetic pulse that shatters nearby crystals, one of which hides stairs to another key.
+**Hidden Switch:** Found behind a breakable wall. Activating it emits an electromagnetic pulse that shatters nearby crystals, one of which hides stairs to another key.
 
-    **Shopkeeper Encounter:** A peaceful but unusual figure deep in the cave sells the final key to the player.
+**Shopkeeper Encounter:** A peaceful but unusual figure deep in the cave sells the final key to the player.
 
 ## 4. Final Encounter
 
@@ -68,18 +71,17 @@ With the curse broken and the genie defeated, the adventurer is recognized as th
 
 ## 6. Technical Aspects
 
-    **Core Mechanics:**
+**Core Mechanics:**
+- Exploration
+- Combat (melee + boss patterns)
+- Puzzle-solving
+- Item collection and key-based progression
 
-        - Exploration
-        - Combat (melee + boss patterns)
-        - Puzzle-solving
-        - Item collection and key-based progression
+**Narrative Delivery:** In-game text and environmental storytelling
 
-    **Narrative Delivery:** In-game text and environmental storytelling
+**Boss Design:** Each major key is tied to a unique challenge or character
 
-    **Boss Design:** Each major key is tied to a unique challenge or character
-
-    **Lighting:** Used to create atmosphere and increase challenge
+**Lighting:** Used to create atmosphere and increase challenge
 
 ## 7. Conclusion
 

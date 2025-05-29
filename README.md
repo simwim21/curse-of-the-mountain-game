@@ -1,6 +1,6 @@
 # Game Design Document
 
-**Title:** Adventure (Course of the Mountain)
+**Title:** Curse of the Mountain
 
 **Course:** Computer Games, UPC 2025
 
@@ -86,3 +86,38 @@ With the curse broken and the genie defeated, the adventurer is recognized as th
 ## 7. Conclusion
 
 The game seeks to combine classic adventure game elements with a rich, myth-inspired narrative. Through environmental puzzles, challenging enemies, and an overarching story about a forgotten curse, the game encourages exploration, critical thinking, and perseverance.
+
+
+## 8. Controls
+
+In order to navigate the depths of the cave the player has the following controls over the adventurer:
+
+**Arrow Keys:** Movement
+
+**Z:** Attack
+
+**X:** Block 
+
+**C:** Interact (open chests, pick up items, unlock doors, talk to NPCs)
+
+**M:** Map (once found)
+
+**Enter:** hides text, skips prologue
+
+In order to make the game easier for traversing and experiencing everything, the following shortcuts and cheats have been added:
+
+**G:** Toggle invincibility ON  
+
+**F:** Toggle invincibility OFF  
+
+**I:** Get all relevant items (except the flower)
+
+**H:** Fully heal  
+
+**J:** Reduce to one health
+
+**M:** Skip the the Midboss room 
+
+**B:** Skip to the Endboss room 
+
+## 9. Complete Solution

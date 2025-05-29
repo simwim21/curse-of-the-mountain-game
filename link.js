@@ -65,7 +65,11 @@ function Link(x, y, width, height, fps, world)
     this.hasFlower = false;
     this.hasLantern = false;
 
-	this.hasKey1 = false; // Key for first Boss fight
+	this.hasKey1 = false; 
+	this.hasKey2 = false;
+	this.hasKey3 = false;
+	this.hasKey4 = false;
+
 
 	this.Box = new Box(x + 3, y + 1, 10, 15);
 
@@ -508,7 +512,7 @@ Link.prototype.checkInteraction = function() {
                 this.levelManager.currentLevelEntities.splice(i, 1); // Remove the lantern from the level
                 this.levelManager.currentLevelEntitySprites.splice(i, 1); // Remove the lantern sprite from the level
                 this.currentPickupItem = entity; 
-                this.isHoldingItem = true; 
+                this.isHoldingItem = true;
 				this.pickUpItemOffsetX = 1;
 				this.pickUpItemOffsetY = - 15;
 				this.levelManager.text.write("You picked up a " + color + " key! Which door does this key open?");
@@ -555,6 +559,36 @@ Link.prototype.checkInteraction = function() {
 				if (this.levelManager.map.currentLevelIndex == 16) {
 					this.levelManager.text.write("Vendor: Are you trying to rob me? The Key will now cost 5 rupees more!");
 					this.levelManager.vendorPrice += 5;
+				} else if (this.levelManager.map.currentLevelIndex == 21 && !this.hasKey4) {
+					key = new Key(0, 0, 8, 16, 2, this.levelManager);
+					key.id = 4;
+					key.loadAnimations();
+					this.hasKey4 = true;
+					this.currentPickupItem = key; 
+                	this.isHoldingItem = true;
+					this.pickUpItemOffsetX = 1;
+					this.pickUpItemOffsetY = - 15;
+					this.levelManager.text.write("You picked up a red key! Which door does this key open?");
+					this.levelManager.soundManager.playSound("good");
+                	console.log("Picked up a Key!");
+					entity.Sprite.setAnimation(CHEST_OPENED);
+                	return true;
+
+				} else if (this.levelManager.map.currentLevelIndex == 17 && !this.hasKey2) {
+					key = new Key(0, 0, 8, 16, 2, this.levelManager);
+					key.id = 2;
+					key.loadAnimations();
+					this.hasKey2 = true;
+					this.currentPickupItem = key; 
+                	this.isHoldingItem = true;
+					this.pickUpItemOffsetX = 1;
+					this.pickUpItemOffsetY = - 15;
+					this.levelManager.text.write("You picked up a purple key! Which door does this key open?");
+					this.levelManager.soundManager.playSound("good");
+                	console.log("Picked up a Key!");
+					entity.Sprite.setAnimation(CHEST_OPENED);
+					this.levelManager.midbossDefeated = true;
+                	return true;
 				} else { 
 					entity.Sprite.currentAnimation = CHEST_OPENED;
 					chestItem = new DropItem(entity.Sprite.x + 4, entity.Sprite.y, 8, 16, 1, this.levelManager);

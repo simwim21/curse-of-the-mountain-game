@@ -35,9 +35,10 @@ function LevelManager(map) {
     this.seenDarkness = false;
 
     this.firstTalkWithVendor = true;
-    this.vendorPrice = 10;
+    this.vendorPrice = 20;
 
-    
+    this.midbossDefeated = false;	
+    this.bossDefeated = false;
 }
 
 LevelManager.prototype.addLink = function(link) {
@@ -115,10 +116,8 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
         }
         else if (entityData[i].id == "OldTree") {
             oldTree = new OldTree(entityData[i].x, entityData[i].y, 32, 32, 1, this)
+            console.log(this.link.hasKey1);
             this.currentLevelEntities.push(oldTree);
-            if (this.link.hasKey1) {
-                oldTree.Sprite.setAnimation(HAPPY_OLD_TREE);;
-            }
         }
         else if (entityData[i].id == "Lantern") {
             if (this.link.hasLantern) continue;
@@ -201,6 +200,10 @@ LevelManager.prototype.fillCurrentLevelEntities = function(entityData) {
             vendor = new Vendor(entityData[i].x, entityData[i].y, 16, 16, 1, this);
             this.currentLevelEntities.push(vendor);
         }
+        else if (entityData[i].id == "Crystal") {
+            crystal = new Crystal(entityData[i].x, entityData[i].y, 16, 16, 1, this);
+            this.currentLevelEntities.push(crystal);
+        }
 
         //console.log(this.currentLevelEntities[i]);
 
@@ -230,6 +233,14 @@ LevelManager.prototype.fillCurrentLevelEnemies = function(enemyData) {
         else if (enemyData[i].id == "Bat") {
             bat = new Bat(enemyData[i].x, enemyData[i].y, 16, 16, 4, this)
             this.currentLevelEnemies.push(bat);
+        }
+        else if (enemyData[i].id == "Midboss" && !this.midbossDefeated) {
+            midboss = new Midboss(enemyData[i].x, enemyData[i].y, 24, 16, 6, this)
+            this.currentLevelEnemies.push(midboss);
+        }
+        else if (enemyData[i].id == "Boss" && !this.bossDefeated) {
+            boss = new Boss(enemyData[i].x, enemyData[i].y, 16, 32, 6, this)
+            this.currentLevelEnemies.push(boss);
         }
 
         // console.log(this.currentLevelEnemies);
@@ -349,7 +360,7 @@ LevelManager.prototype.checkDarkness = function() {
         this.seenDarkness = true
         return;
     }
-    if (this.map.currentLevelIndex == 9 || this.map.currentLevelIndex == 12) {
+    if (this.map.currentLevelIndex == 9 || this.map.currentLevelIndex == 12 || this.map.currentLevelIndex == 18) {
         if (!this.seenDarkness) {
             this.text.write("It is so dark in here! I might need a lantern to see more.");
             this.seenDarkness = true;
@@ -361,6 +372,11 @@ LevelManager.prototype.checkDarkness = function() {
 
 // Collision Handling
 LevelManager.prototype.isCollision = function(x, y, requestingEntity) {
+
+    if (x < 0 || y < 0 || x + requestingEntity.Box.width > this.map.width ||
+        y + requestingEntity.Box.height > this.map.height) {
+        return true; // Out of bounds collision
+    }
 
     // 1. Check map collisions
     if (this.map.isBlocked(x, y, requestingEntity.Box.width, requestingEntity.Box.height)) return true;

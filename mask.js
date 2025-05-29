@@ -14,7 +14,8 @@ Mask.prototype.render = function () {
             this.levelManager.map.currentLevelIndex !== 12 &&
             this.levelManager.map.currentLevelIndex !== 13 && 
             this.levelManager.map.currentLevelIndex !== 9 && 
-            this.levelManager.map.currentLevelIndex !== 11) {
+            this.levelManager.map.currentLevelIndex !== 11 &&
+            this.levelManager.map.currentLevelIndex !== 18) {
             return;
     }
 

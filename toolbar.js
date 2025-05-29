@@ -213,7 +213,7 @@ Toolbar.prototype.drawItems = function () {
                 this.texture.img,
                 137, 369,
                 16, 16,
-                this.position.x + 144, this.position.y,
+                this.position.x + 126, this.position.y,
                 16, 16
             )
         } else if (this.link.flowerHealth == 2) {
@@ -221,7 +221,7 @@ Toolbar.prototype.drawItems = function () {
                 this.texture.img,
                 171, 369,
                 16, 16,
-                this.position.x + 144, this.position.y,
+                this.position.x + 126, this.position.y,
                 16, 16
             )
         } else if (this.link.flowerHealth == 1) {
@@ -229,7 +229,7 @@ Toolbar.prototype.drawItems = function () {
                 this.texture.img,
                 154, 369,
                 16, 16,
-                this.position.x + 144, this.position.y,
+                this.position.x + 126, this.position.y,
                 16, 16
             )
         }

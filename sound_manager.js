@@ -31,7 +31,9 @@ SoundManager.prototype.playSuite = function()
 {
     if (this.suite.isPlaying) {
         return;
-    } else this.suite.play();
+    } else {
+        // this.suite.play();
+    }
 }
 
 SoundManager.prototype.playSpecialMusic = function() {

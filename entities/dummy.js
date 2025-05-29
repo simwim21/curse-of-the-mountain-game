@@ -24,8 +24,8 @@ Dummy.prototype.loadAnimations = function()
     if (this.levelManager.buttonPressed) {
         this.Sprite.x = -100;
         this.Sprite.y = -100;
-        this.Box.x = 0;
-        this.Box.y = 0;
+        this.Box.x = -100;
+        this.Box.y = -100;
         this.uncovered = true;
     }
     else {
@@ -38,6 +38,8 @@ Dummy.prototype.updateAnimation = function(collisionData) {
     if (this.uncovered) {
         this.checkStairs();
     }
+
+    if (!this.levelManager.buttonPressed) this.spikes();
     
     return;
 }
@@ -68,6 +70,22 @@ Dummy.prototype.checkStairs = function() {
         this.levelManager.link.Box.x += 20;
     } 
     
-
-
 }
+
+Dummy.prototype.spikes = function() {
+    const link = this.levelManager.link;
+    const linkBox = link.Sprite;
+    const dummyBox = this.Box;
+
+    // Standard AABB collision check
+    const isOverlapping =
+        linkBox.x < dummyBox.x + dummyBox.width &&
+        linkBox.x + linkBox.width > dummyBox.x &&
+        linkBox.y < dummyBox.y + dummyBox.height &&
+        linkBox.y + linkBox.height > dummyBox.y;
+
+    if (isOverlapping) {
+        // Call Link's handleDamage function, passing the dummy's box as the source
+        link.handleDamage(dummyBox);
+    }
+};

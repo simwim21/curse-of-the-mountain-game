@@ -54,7 +54,7 @@ Scene.prototype.update = function(deltaTime)
 
 		this.link.rupeeCount = 50;
 
-        this.link.hasFlower = true;
+        // this.link.hasFlower = true;
         this.link.flowerHealth = 3;
         this.link.hasLantern = true;
         this.link.hasMap = true;

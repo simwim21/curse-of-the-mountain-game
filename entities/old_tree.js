@@ -22,7 +22,10 @@ OldTree.prototype.loadAnimations = function()
     this.Sprite.addAnimation();
     this.Sprite.addKeyframe(HAPPY_OLD_TREE, [164, 282, 32, 32]);
 
-    this.Sprite.setAnimation(OLD_TREE);
+    if (this.levelManager.link.hasKey1) {
+                oldTree.Sprite.setAnimation(HAPPY_OLD_TREE);
+                
+    } else this.Sprite.setAnimation(OLD_TREE);
 
 }
 

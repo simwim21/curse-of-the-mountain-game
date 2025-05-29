@@ -11,6 +11,8 @@ function Button(x, y, width, height, fps, world)
     this.levelManager = world;
 
     this.Box = new Box(0, 0, 0, 0); // Create a box for collision detection
+
+    this.crystalShatter = AudioFX("sounds/crystal-shatter.mp3");
 }
 
 Button.prototype.loadAnimations = function() 
@@ -57,6 +59,7 @@ Button.prototype.updateAnimation = function(collisionData) {
         this.levelManager.soundManager.playSound("button");
         this.Sprite.setAnimation(BUTTON_OPENED);
         this.levelManager.buttonPressed = true;
-        this.levelManager.text.write("Something happened! You can hear the sound of crystals shattering in the distance.")
+        this.levelManager.text.write("What is that? You can hear the sound of crystals shattering everywhere.");
+        this.crystalShatter.play();
     }
 };

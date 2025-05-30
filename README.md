@@ -41,7 +41,7 @@ In order to make the game easier for traversing and experiencing everything, the
 
 **J:** Reduce to one health
 
-**M:** Skip the the Midboss room 
+**N:** Skip the the Midboss room 
 
 **B:** Skip to the Endboss room 
 

@@ -63,6 +63,8 @@ Scene.prototype.update = function(deltaTime)
     if (keyboard[74]) this.link.currentHealth = 1;
     if (keyboard[71]) this.link.isCheatInvincible = true;
     if (keyboard[70]) this.link.isCheatInvincible = false;
+	if (keyboard[77]) this.levelManager.changeLevel(0, 0, 17);
+	if (keyboard[66]) this.levelManager.changeLevel(0, 0, 15);
 
     // MapOverlay
     this.showMapOverlay = keyboard[77] && this.levelManager.link.hasMap;

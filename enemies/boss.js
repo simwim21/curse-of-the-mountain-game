@@ -21,8 +21,9 @@ function Boss(x, y, width, height, fps, world)
     this.maxHealth = 10;
     this.currentHealth = this.maxHealth;
 
-    this.fire = AudioFX("sounds/zap.mp3");
+    this.fire = AudioFX("sounds/fire.mp3");
     this.win = AudioFX("sounds/win.mp3");
+    this.lamp = AudioFX("sounds/lamp.mp3");
 
     this._attackCooldown = 50;
 
@@ -219,6 +220,7 @@ Boss.prototype.checkHurtbox = function() {
 
     // 2. Reduce health by 1
     this.currentHealth -= 1;
+    this.lamp.play();
 
     // 3. Knockback: move away from Link's center by 20px, smoothly, but stop if collision occurs
     const buzz = this;

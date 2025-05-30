@@ -8,6 +8,15 @@ function LevelManager(map) {
 
     this.currentLevelDropItems = []; // Items dropped by enemies
     this.currentLevelDropItemSprites = [];
+
+    this.oldLevelEntities = []; 
+    this.oldLevelEntitySprites = [];
+
+    this.oldLevelEnemies = []; 
+    this.oldLevelEnemySprites = [];
+
+    this.oldLevelDropItems = [];
+    this.oldLevelDropItemSprites = [];
     
     this.levelList = [];
 
@@ -278,20 +287,89 @@ LevelManager.prototype.updateSprites = function(deltaTime) {
 }
 
 LevelManager.prototype.drawSprites = function() {
+    const map = this.map;
 
-    for (let i = 0; i < this.currentLevelEntitySprites.length; i++) {
-        this.currentLevelEntitySprites[i].draw();
+    // If not transitioning, draw as usual
+    if (!map.transitioning) {
+        for (let i = 0; i < this.currentLevelEntitySprites.length; i++) {
+            this.currentLevelEntitySprites[i].draw();
+        }
+
+        for (let i = 0; i < this.currentLevelEnemies.length; i++) {
+            this.currentLevelEnemies[i].draw();
+        }
+        for (let i = 0; i < this.currentLevelDropItemSprites.length; i++) {
+            this.currentLevelDropItemSprites[i].draw();
+        }
+        return;
     }
 
+    // --- Dual rendering for transition ---
+
+    // 1. Draw old level's entities/enemies/items at transitionOffset
+    for (let i = 0; i < this.oldLevelEntities.length; i++) {
+        const sprite = this.oldLevelEntitySprites[i];
+        const origX = sprite.x, origY = sprite.y;
+        sprite.x += map.transitionOffsetX;
+        sprite.y += map.transitionOffsetY;
+        sprite.draw();
+        sprite.x = origX;
+        sprite.y = origY;
+    }
+    for (let i = 0; i < this.oldLevelEnemies.length; i++) {
+        const sprite = this.oldLevelEnemySprites[i];
+        const origX = sprite.x, origY = sprite.y;
+        sprite.x += map.transitionOffsetX;
+        sprite.y += map.transitionOffsetY;
+        sprite.draw();
+        sprite.x = origX;
+        sprite.y = origY;
+    }
+    for (let i = 0; i < this.oldLevelDropItemSprites.length; i++) {
+        const sprite = this.oldLevelDropItemSprites[i];
+        const origX = sprite.x, origY = sprite.y;
+        sprite.x += map.transitionOffsetX;
+        sprite.y += map.transitionOffsetY;
+        sprite.draw();
+        sprite.x = origX;
+        sprite.y = origY;
+    }
+
+
+    // 2. Draw new level's entities/enemies/items at transitionOffset + nx/ny
+    let nx = 0, ny = 0;
+    if (map.transitionOffsetX !== 0) nx = (map.transitionOffsetX > 0 ? -160 : 160);
+    if (map.transitionOffsetY !== 0) ny = (map.transitionOffsetY > 0 ? -144 : 144);
+
+    for (let i = 0; i < this.currentLevelEntities.length; i++) {
+        const sprite = this.currentLevelEntitySprites[i];
+        const origX = sprite.x, origY = sprite.y;
+        sprite.x += map.transitionOffsetX + nx;
+        sprite.y += map.transitionOffsetY + ny;
+        sprite.draw();
+        sprite.x = origX;
+        sprite.y = origY;
+    }
     for (let i = 0; i < this.currentLevelEnemies.length; i++) {
-        this.currentLevelEnemies[i].draw();
+        const sprite = this.currentLevelEnemySprites[i];
+        const origX = sprite.x, origY = sprite.y;
+        sprite.x += map.transitionOffsetX + nx;
+        sprite.y += map.transitionOffsetY + ny;
+        sprite.draw();
+        sprite.x = origX;
+        sprite.y = origY;
     }
     for (let i = 0; i < this.currentLevelDropItemSprites.length; i++) {
-        this.currentLevelDropItemSprites[i].draw();
+        const sprite = this.currentLevelDropItemSprites[i];
+        const origX = sprite.x, origY = sprite.y;
+        sprite.x += map.transitionOffsetX + nx;
+        sprite.y += map.transitionOffsetY + ny;
+        sprite.draw();
+        sprite.x = origX;
+        sprite.y = origY;
     }
 
 }
-
 
 LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
 {
@@ -306,6 +384,15 @@ LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
         return;  
     }
 
+    this.oldLevelEntities = this.currentLevelEntities;
+    this.oldLevelEntitySprites = this.currentLevelEntitySprites;
+
+    this.oldLevelEnemies = this.currentLevelEnemies;
+    this.oldLevelEnemySprites = this.currentLevelEnemySprites;
+
+    this.oldLevelDropItems = this.currentLevelDropItems;
+    this.oldLevelDropItemSprites = this.currentLevelDropItemSprites;
+
     // x == -1 -> left
     // x == 1 -> right
     // y == -1 -> up
@@ -314,20 +401,48 @@ LevelManager.prototype.changeLevel = function(x, y, newLevel = 0)
 
     if (x == -1) {
         this.levelSwitcher.switch(this.map.currentLevelIndex, this.levelList[this.map.currentLevelIndex].leftNeighbor, "LEFT");
-        return;  
+        this.map.renderLevel(this.levelList[this.map.currentLevelIndex].leftNeighbor);
+        this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].leftNeighbor;
+        this.fillCurrentLevelEntities(this.map.entityData);
+        this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
+        this.checkDarkness();
+        return; 
     }
     else if (x == 1) {
         this.levelSwitcher.switch(this.map.currentLevelIndex, this.levelList[this.map.currentLevelIndex].rightNeighbor, "RIGHT");
+        this.map.renderLevel(this.levelList[this.map.currentLevelIndex].rightNeighbor);
+        this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].rightNeighbor;
+        this.fillCurrentLevelEntities(this.map.entityData);
+        this.fillCurrentLevelEnemies(this.map.enemyData);
+        this.currentLevelDropItems = [];
+        this.currentLevelDropItemSprites = [];
+        this.checkDarkness();
         return;  
     }
     else if (y == -1) {
-        this.levelSwitcher.switch(this.map.currentLevelIndex, this.levelList[this.map.currentLevelIndex].upNeighbor, "UP");
-        return; 
-    }
-    else if (y == 1) {
-        this.levelSwitcher.switch(this.map.currentLevelIndex, this.levelList[this.map.currentLevelIndex].downNeighbor, "DOWN");
-        return; 
-    }
+    this.levelSwitcher.switch(this.map.currentLevelIndex, this.levelList[this.map.currentLevelIndex].upNeighbor, "UP");
+    this.map.renderLevel(this.levelList[this.map.currentLevelIndex].upNeighbor);
+    this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].upNeighbor;
+    this.fillCurrentLevelEntities(this.map.entityData);
+    this.fillCurrentLevelEnemies(this.map.enemyData);
+    this.currentLevelDropItems = [];
+    this.currentLevelDropItemSprites = [];
+    this.checkDarkness();
+    return; 
+}
+else if (y == 1) {
+    this.levelSwitcher.switch(this.map.currentLevelIndex, this.levelList[this.map.currentLevelIndex].downNeighbor, "DOWN");
+    this.map.renderLevel(this.levelList[this.map.currentLevelIndex].downNeighbor);
+    this.map.currentLevelIndex = this.levelList[this.map.currentLevelIndex].downNeighbor;
+    this.fillCurrentLevelEntities(this.map.entityData);
+    this.fillCurrentLevelEnemies(this.map.enemyData);
+    this.currentLevelDropItems = [];
+    this.currentLevelDropItemSprites = [];
+    this.checkDarkness();
+    return; 
+}
 
 }
 

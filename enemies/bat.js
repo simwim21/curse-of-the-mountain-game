@@ -290,5 +290,19 @@ Bat.prototype.checkHurtbox = function() {
 
 Bat.prototype.draw = function()
 {
+    // Save original position
+    const origX = this.Sprite.x;
+    const origY = this.Sprite.y;
+    
+    // Offset for camera
+    this.Sprite.x += this.levelManager.map.offsetX;
+    this.Sprite.y += this.levelManager.map.offsetY;
+    
+    // Draw
     this.Sprite.draw();
+    
+    // Restore
+    this.Sprite.x = origX;
+    this.Sprite.y = origY;
+    
 }

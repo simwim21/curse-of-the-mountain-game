@@ -213,8 +213,30 @@ Guard.prototype.updateAnimation = function () {
 
 Guard.prototype.draw = function()
 {
+    // Save original position
+    const origX = this.Sprite.x;
+    const origY = this.Sprite.y;
+
+    const origGX = this.spearSprite.x;
+    const origGY = this.spearSprite.y;
+    
+    // Offset for camera
+    this.Sprite.x += this.levelManager.map.offsetX;
+    this.Sprite.y += this.levelManager.map.offsetY;
+
+    this.spearSprite.x += this.levelManager.map.offsetX;
+    this.spearSprite.y += this.levelManager.map.offsetY;
+    
+    // Draw
     this.Sprite.draw();
     this.spearSprite.draw();
+    
+    // Restore
+    this.Sprite.x = origX;
+    this.Sprite.y = origY;
+    this.spearSprite.x = origGX;
+    this.spearSprite.y = origGY;
+    
 }
 
 

@@ -77,6 +77,8 @@ function Link(x, y, width, height, fps, world)
 	this.isHoldingItem = false;
 
 	this.isCheatInvincible = false;
+
+	this.isTransitioning = false;
 }
 
 Link.prototype.loadAnimations = function() 
@@ -189,7 +191,7 @@ Link.prototype.loadAnimations = function()
 
 Link.prototype.updateAnimation = function()
 {	
-
+	if (this.isTransitioning) return;
 
 	if (!this.runningAnimation) {
 		this.swordSprite.setVisibility(false);
@@ -743,8 +745,20 @@ Link.prototype.handleDamage = function(hitbox) {
     }
 };
 
+
 Link.prototype.draw = function() {
-    this.Sprite.draw(); // Draw Link
-	this.swordSprite.draw(); // Draw Link's sword
-    this.drawPickupItem(); // Draw the picked-up item above Link
+    // Save original position
+    const origX = this.Sprite.x;
+    const origY = this.Sprite.y;
+
+    this.Sprite.x += this.levelManager.map.offsetX;
+    this.Sprite.y += this.levelManager.map.offsetY;
+
+    this.Sprite.draw();
+
+	this.Sprite.x = origX;
+    this.Sprite.y = origY;
+
+    this.swordSprite.draw();
+	this.drawPickupItem();
 };

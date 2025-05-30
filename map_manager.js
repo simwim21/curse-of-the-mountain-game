@@ -8,6 +8,16 @@ function Map() {
     this.currentLevelIndex = 0;
 
     this.loaded = false;
+
+    this.offsetX = 0;
+    this.offsetY = 0;
+
+    // Add these properties:
+    this.transitioning = false;
+    this.transitionOldLevel = null;
+    this.transitionNewLevel = null;
+    this.transitionOffsetX = 0;
+    this.transitionOffsetY = 0;
 }
 
 Map.prototype.loadMapData = function () {
@@ -101,32 +111,88 @@ Map.prototype.renderLevel = function (levelIndex) {
 };
 
 Map.prototype.renderTiles = function () {
-    if (!this.tileData || !this.tilesetImage.complete) return; // Ensure image is loaded
+    if (!this.tileData || !this.tilesetImage.complete) return;
 
     const tileset = this.mapData.defs.tilesets[0];
     const tileWidth = this.gridSize;
     const tileHeight = this.gridSize;
 
-    // Render tile layers
-    for (const layerName in this.tileData) {
-        this.tileData[layerName].forEach(tile => {
-            const sourceX = tile.src[0];
-            const sourceY = tile.src[1];
-            const destX = tile.px[0];
-            const destY = tile.px[1];
+    // If not transitioning, draw normally
+    if (!this.transitioning) {
+        for (const layerName in this.tileData) {
+            this.tileData[layerName].forEach(tile => {
+                const sourceX = tile.src[0];
+                const sourceY = tile.src[1];
+                const destX = tile.px[0];
+                const destY = tile.px[1];
 
-            this.context.drawImage(
-                this.tilesetImage,
-                sourceX,
-                sourceY,
-                tileWidth,
-                tileHeight,
-                destX,
-                destY,
-                tileWidth,
-                tileHeight
-            );
-        });
+                this.context.drawImage(
+                    this.tilesetImage,
+                    sourceX,
+                    sourceY,
+                    tileWidth,
+                    tileHeight,
+                    destX,
+                    destY,
+                    tileWidth,
+                    tileHeight
+                );
+            });
+        }
+        return;
+    }
+
+    // --- Dual rendering for transition ---
+    // 1. Draw old level at current offset
+    const oldLevel = this.mapData.levels[this.transitionOldLevel];
+    for (const layer of oldLevel.layerInstances) {
+        if (layer.__type === "Tiles") {
+            layer.gridTiles.forEach(tile => {
+                const sourceX = tile.src[0];
+                const sourceY = tile.src[1];
+                const destX = tile.px[0] + this.transitionOffsetX;
+                const destY = tile.px[1] + this.transitionOffsetY;
+                this.context.drawImage(
+                    this.tilesetImage,
+                    sourceX,
+                    sourceY,
+                    tileWidth,
+                    tileHeight,
+                    destX,
+                    destY,
+                    tileWidth,
+                    tileHeight
+                );
+            });
+        }
+    }
+
+    // 2. Draw new level at offset + full screen in direction
+    let nx = 0, ny = 0;
+    if (this.transitionOffsetX !== 0) nx = (this.transitionOffsetX > 0 ? -160 : 160);
+    if (this.transitionOffsetY !== 0) ny = (this.transitionOffsetY > 0 ? -128 : 128);
+
+    const newLevel = this.mapData.levels[this.transitionNewLevel];
+    for (const layer of newLevel.layerInstances) {
+        if (layer.__type === "Tiles") {
+            layer.gridTiles.forEach(tile => {
+                const sourceX = tile.src[0];
+                const sourceY = tile.src[1];
+                const destX = tile.px[0] + this.transitionOffsetX + nx;
+                const destY = tile.px[1] + this.transitionOffsetY + ny;
+                this.context.drawImage(
+                    this.tilesetImage,
+                    sourceX,
+                    sourceY,
+                    tileWidth,
+                    tileHeight,
+                    destX,
+                    destY,
+                    tileWidth,
+                    tileHeight
+                );
+            });
+        }
     }
 };
 

@@ -919,7 +919,24 @@ const mapData = {
 					"seed": 3255108,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Bat",
+							"__grid": [4,3],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#733E39",
+							"iid": "aba5d340-3740-11f0-9889-6db4d2b0f325",
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [64,48],
+							"fieldInstances": [],
+							"__worldX": 64,
+							"__worldY": 48
+						}
+					]
 				},
 				{
 					"__identifier": "Entities",

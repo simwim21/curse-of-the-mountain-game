@@ -295,6 +295,29 @@ Boss.prototype.checkHurtbox = function() {
 
 Boss.prototype.draw = function()
 {
+
+    // Save original position
+    const origX = this.Sprite.x;
+    const origY = this.Sprite.y;
+
+    const origGX = this.Genie.x;
+    const origGY = this.Genie.y;
+    
+    // Offset for camera
+    this.Sprite.x += this.levelManager.map.offsetX;
+    this.Sprite.y += this.levelManager.map.offsetY;
+
+    this.Genie.x += this.levelManager.map.offsetX;
+    this.Genie.y += this.levelManager.map.offsetY;
+    
+    // Draw
     this.Sprite.draw();
     this.Genie.draw();
+    
+    // Restore
+    this.Sprite.x = origX;
+    this.Sprite.y = origY;
+    this.Genie.x = origGX;
+    this.Genie.y = origGY;
+    
 }

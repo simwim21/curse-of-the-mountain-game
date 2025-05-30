@@ -339,7 +339,7 @@ LevelManager.prototype.drawSprites = function() {
     // 2. Draw new level's entities/enemies/items at transitionOffset + nx/ny
     let nx = 0, ny = 0;
     if (map.transitionOffsetX !== 0) nx = (map.transitionOffsetX > 0 ? -160 : 160);
-    if (map.transitionOffsetY !== 0) ny = (map.transitionOffsetY > 0 ? -144 : 144);
+    if (map.transitionOffsetY !== 0) ny = (map.transitionOffsetY > 0 ? -128 : 128);
 
     for (let i = 0; i < this.currentLevelEntities.length; i++) {
         const sprite = this.currentLevelEntitySprites[i];

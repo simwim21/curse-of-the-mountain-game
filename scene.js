@@ -92,7 +92,7 @@ Scene.prototype.draw = function ()
 
 	// Tiles Rendering
 	this.map.renderTiles();
-	this.toolbar.draw();
+	
 
 
 	// Draw sprites
@@ -104,12 +104,13 @@ Scene.prototype.draw = function ()
 	// Draw Mask
 	this.mask.render();
 
-	this.text.draw();
+	
 
 	// Draw Map
 	if (this.showMapOverlay) {
         this.mapOverlay.paintMap();
     }
-
+	this.toolbar.draw();
+	this.text.draw();
 }
 

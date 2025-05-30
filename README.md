@@ -48,13 +48,11 @@ In order to make the game easier for traversing and experiencing everything, the
 
 ## 3. Overview of the Game
 
-The game opens with a Main Menu. Selecting Start launches a Prologue Sequence that sets the tone of the adventure, providing a brief background story:
+The game opens with a Main Menu. When started, a prologue sequence is shown, setting the tone for the game:
 
 **"For centuries the mountain stood silent, its peak shrouded in mysteries and shadows.
 Now there are whispers of an ancient evil disturbing the peace.
 The mountain awaits the hero that dares to break this curse...**
-
-Following this, the player is shown a still frame of the adventurer before the mountain, marking the beginning of the actual gameplay.
 
 ## 4. Narrative and Gameplay Progression
 ### 4.1 The Cave Entrance

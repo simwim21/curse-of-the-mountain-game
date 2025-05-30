@@ -19,7 +19,7 @@ In order to navigate the depths of the cave the player has the following control
 
 **Arrow Keys:** Movement
 
-**Z:** Attack
+**Z:** Attack (**Y** on QWERTZ-keyboard layouts)
 
 **X:** Block 
 

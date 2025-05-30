@@ -104,8 +104,6 @@ Scene.prototype.draw = function ()
 	// Draw Mask
 	this.mask.render();
 
-	
-
 	// Draw Map
 	if (this.showMapOverlay) {
         this.mapOverlay.paintMap();

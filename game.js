@@ -8,7 +8,6 @@ var scene = new Scene();
 var previousTimestamp;
 var keyboard = [];
 var interacted;
-window.paused = false; // Tracks whether the game is paused
 
 // Control keyboard events
 
@@ -16,12 +15,6 @@ function keyDown(keycode)
 {
     if (keycode.which >= 0 && keycode.which < 256)
         keyboard[keycode.which] = true;
-
-    // Toggle pause when "P" is pressed
-    if (keycode.which === 80) { // Keycode for "P"
-        window.paused = !window.paused;
-        console.log(window.paused ? "Game Paused" : "Game Resumed");
-    }
 }
 
 function keyUp(keycode)
@@ -52,12 +45,6 @@ function init()
 
 function frameUpdate(timestamp)
 {
-    if (window.paused) {
-        // If paused, skip updating and drawing
-        window.requestAnimationFrame(frameUpdate);
-		console.log("Game is paused. No updates or drawing will occur.");
-        return;
-    }
 
     var bUpdated = false;
     var deltaTime = timestamp - previousTimestamp;

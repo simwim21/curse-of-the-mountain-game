@@ -37,7 +37,7 @@ In order to make the game easier for traversing and experiencing everything, the
 
 **I:** Get all relevant items (except the flower)
 
-**H:** Fully heal  
+**H:** Fully heal
 
 **J:** Reduce to one health
 

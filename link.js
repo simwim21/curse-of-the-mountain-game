@@ -631,7 +631,7 @@ Link.prototype.checkInteraction = function() {
 			else if (entity instanceof Door) {
 				if (this.hasKey1 && this.levelManager.map.currentLevelIndex == 3) {
 					this.hasKey1 = false; // Use the key
-					TouchList.hasFlower = false;
+					this.hasFlower = false;
 					entity.Sprite.setAnimation(DOOR_OPENED);
 					this.levelManager.door1opened = true;
 					this.levelManager.soundManager.playSound("door");

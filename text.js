@@ -29,7 +29,7 @@ Text.prototype.write = function(text) {
 
 Text.prototype.update = function() {
     // Hide text if ENTER (key code 13) is pressed
-    if (this.isActive && (keyboard[13] || keyboard["Enter"])) {
+    if (this.isActive && (keyboard[13] || keyboard["Enter"] || keyboard[67])) {
         this.isActive = false;
         this.activeText = null;
     }

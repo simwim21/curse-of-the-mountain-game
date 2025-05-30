@@ -57,7 +57,7 @@ Midboss.prototype.loadAnimations = function()
 
     this.Sprite.setAnimation(MIDBOSS_STAND);
 
-    this.levelManager.text.write("Hahaha! Your will never defeat me and find my key!");
+    this.levelManager.text.write("Hahaha! You will never defeat me and find my key!");
 
 }
 

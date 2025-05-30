@@ -559,6 +559,7 @@ Link.prototype.checkInteraction = function() {
 					return false;
 				}
 				if (this.levelManager.map.currentLevelIndex == 16) {
+					if (this.hasKey3) this.levelManager.text.write("Vendor: Hey! Are you trying to rob me? I expected more of you!");
 					this.levelManager.text.write("Vendor: Are you trying to rob me? The Key will now cost 5 rupees more!");
 					this.levelManager.vendorPrice += 5;
 				} else if (this.levelManager.map.currentLevelIndex == 21 && !this.hasKey4) {

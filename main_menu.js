@@ -12,26 +12,19 @@ function MainMenu(onStartCallback) {
     // Load button images
     this.startButtonImg = new Image();
     this.startButtonImg.src = "images/menu/start_button.png";
-    this.instructionsButtonImg = new Image();
-    this.instructionsButtonImg.src = "images/menu/menu_button.png";
 
     // Load the adventure title image
     this.titleImg = new Image();
     this.titleImg.src = "images/menu/adventure.png";
 
-    // Adjusted button positions for alignment
+    // Center the start button horizontally
+    const buttonWidth = 340;
+    const buttonHeight = 80;
     this.startButton = {
-        x: 440,
+        x: (this.canvas.width - buttonWidth) / 2,
         y: 900,
-        width: 340,
-        height: 80
-    };
-
-    this.instructionsButton = {
-        x: 880,
-        y: 900,
-        width: 340,
-        height: 80
+        width: buttonWidth,
+        height: buttonHeight
     };
 
     this.isActive = true;
@@ -48,7 +41,6 @@ function MainMenu(onStartCallback) {
 
     // Draw loop
     this.draw();
-
 }
 
 MainMenu.prototype.draw = function() {
@@ -66,7 +58,6 @@ MainMenu.prototype.draw = function() {
 
     // Draw the adventure title image, centered at the top and resized
     if (this.titleImg.complete) {
-        // Choose a good width (e.g. 900px or 1000px) and keep aspect ratio
         const desiredWidth = 1000;
         const scale = desiredWidth / this.titleImg.width;
         const desiredHeight = this.titleImg.height * scale;
@@ -83,7 +74,7 @@ MainMenu.prototype.draw = function() {
         this.titleImg.onload = () => this.draw();
     }
 
-    // Draw the start button image
+    // Draw the start button image centered
     if (this.startButtonImg.complete) {
         this.context.drawImage(
             this.startButtonImg,
@@ -94,19 +85,6 @@ MainMenu.prototype.draw = function() {
         );
     } else {
         this.startButtonImg.onload = () => this.draw();
-    }
-
-    // Draw the instructions/menu button image
-    if (this.instructionsButtonImg.complete) {
-        this.context.drawImage(
-            this.instructionsButtonImg,
-            this.instructionsButton.x,
-            this.instructionsButton.y,
-            this.instructionsButton.width,
-            this.instructionsButton.height
-        );
-    } else {
-        this.instructionsButtonImg.onload = () => this.draw();
     }
 };
 
@@ -128,24 +106,15 @@ MainMenu.prototype.handleClick = function(event) {
 
         // Start fade out effect
         this.startFadeOut(() => {
-        	this.hide();
-        	showPrologue(() => {
-        	    if (typeof this.onStart === "function") this.onStart();
-        	});
+            this.hide();
+            showPrologue(() => {
+                if (typeof this.onStart === "function") this.onStart();
+            });
         });
 
         return;
     }
-
-    // Check if click is inside the instructions button (does nothing yet)
-    if (
-        mouseX >= this.instructionsButton.x && mouseX <= this.instructionsButton.x + this.instructionsButton.width &&
-        mouseY >= this.instructionsButton.y && mouseY <= this.instructionsButton.y + this.instructionsButton.height
-    ) {
-        // Placeholder for future instructions logic
-        this.buttonClicked.play();
-        return;
-    }
+    // No instructions/menu button anymore
 };
 
 // Add fade out logic

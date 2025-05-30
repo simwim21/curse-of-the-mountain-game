@@ -11,7 +11,7 @@ function DestructableWall(x, y, width, height, fps, world)
     this.levelManager = world;
 
     this.Box = new Box(x, y, width, height); // Create a box for collision detection
-    this.health = 1;
+    this.health = 2;
 
 }
 

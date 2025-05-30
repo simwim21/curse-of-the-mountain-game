@@ -1,4 +1,6 @@
 function showPrologue(onDone) {
+
+    window.prologueSkipped = false;
     // Create overlay
     const overlay = document.createElement("div");
     overlay.id = "prologue-overlay";
@@ -141,7 +143,7 @@ function showPrologue(onDone) {
             skipFn = fadeImage("images/events/black.png", 5000, nextStep, "images/events/prologue_text3.png");
         } else if (step === 4) {
             unsheath = AudioFX("sounds/unsheath.mp3");
-            unsheath.play();
+            if (!window.prologueSkipped) unsheath.play();
             skipFn = fadeImage("images/events/prologue.png", 5000, () => {
                 overlay.style.transition = "opacity 2s";
                 overlay.style.opacity = "0";
@@ -157,6 +159,7 @@ function showPrologue(onDone) {
     function skipPrologue(e) {
         if (e.key === "Enter") {
             window.removeEventListener("keydown", skipPrologue);
+            window.prologueSkipped = true;
             if (skipFn) skipFn();
             overlay.style.transition = "opacity 0.7s";
             overlay.style.opacity = "0";
